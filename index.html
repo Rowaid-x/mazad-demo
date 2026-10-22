@@ -956,8 +956,8 @@ V.otp=()=>`<div class="auth"><button class="x" aria-label="رجوع" onclick="ba
  <div class="otp rv" style="--d:1">${[0,1,2,3,4,5].map(i=>`<span id="o${i}"></span>`).join('')}</div>
  <div class="otps" id="otpS">بانتظار الرمز…</div><p class="fine">إعادة الإرسال بعد <bdi>0:45</bdi></p></div>`;
 V.name=()=>`<div class="auth"><div class="auth-h rv" style="margin-top:10px">${LOGO(56)}<h2 class="ds">أهلاً بك</h2><p>أكمل بياناتك لإنشاء حسابك</p></div>
- <div class="rv" style="--d:1"><label class="fl">الاسم الأول<input class="in" id="fn" placeholder="خالد"></label>
- <label class="fl">اسم العائلة<input class="in" id="ln" placeholder="المري"></label>
+ <div class="rv" style="--d:1"><label class="fl">الاسم الأول<input class="in" id="fn" placeholder="فيصل"></label>
+ <label class="fl">اسم العائلة<input class="in" id="ln" placeholder="عبدالعزيز"></label>
  <div class="cons">نسجّل نشاطك داخل التطبيق (الصفحات والقطع التي تشاهدها) لنخدمك بشكل أفضل. التفاصيل في <a onclick="rulesSheet()">سياسة الخصوصية</a>.</div>
  <label class="ck"><input type="checkbox" id="offers"><i></i><span>أرغب في استلام العروض وإشعارات المزادات الجديدة (يمكن إيقافها في أي وقت)</span></label></div>
  <div class="grow"></div><p class="fine" style="margin-bottom:10px">التسجيل لمن عمره 18 سنة فأكثر.</p><button class="btn rv" style="--d:2" onclick="createAcct()">إنشاء الحساب</button></div>`;
@@ -1183,7 +1183,7 @@ const CCS=['+974','+966','+971','+965','+973','+968','+44'];
 function cc(b){S.cc=CCS[(CCS.indexOf(S.cc)+1)%CCS.length];b.textContent=S.cc}
 function sendOtp(){const v=($('#ph').value||'').trim();S.phone=v||'5512 3456';go('otp')}
 function createAcct(){if(S.me)return resume();
- const fn=$('#fn').value.trim()||'خالد',ln=$('#ln').value.trim()||'المري';
+ const fn=$('#fn').value.trim()||'فيصل',ln=$('#ln').value.trim()||'عبدالعزيز';
  if(S.acct){S.acct=null;S.wallet={avail:0,held:0,card:0};S.dep={};S.orders=[];S.tx=[];S.inbox=[];NUMSEQ++} // a different person on this device
  S.me={first:fn,last:ln,num:NUMSEQ?`#${5136+NUMSEQ}`:'#4821',phone:`${S.cc} ${S.phone||'5512 3456'}`,verified:false,terms:false,offers:$('#offers').checked,addr:null};
  S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:`رقم المزايد الخاص بك <bdi>${S.me.num}</bdi> — يظهر بدلاً من اسمك في كل المزادات.`,icn:'user',un:1});
@@ -1306,7 +1306,7 @@ function doWd(cp,bp){let v='';if(bp){v=($('#iban').value||'').replace(/\s/g,'').
 function demoWin(){
  const a=A.filter(x=>x.st==='live').sort((x,y)=>x.t1-y.t1)[0];if(!a)return toast('لا توجد مزادات مباشرة الآن');
  closeSheet();
- if(!S.me){if(S.acct){S.me=S.acct;S.acct=null}else{S.me={first:'خالد',last:'المري',num:'#4821',phone:'+974 5512 3456',verified:true,idState:'ok',terms:true,offers:false,addr:Object.assign({},DEFADR)};
+ if(!S.me){if(S.acct){S.me=S.acct;S.acct=null}else{S.me={first:'فيصل',last:'عبدالعزيز',num:'#4821',phone:'+974 5512 3456',verified:true,idState:'ok',terms:true,offers:false,addr:Object.assign({},DEFADR)};
   S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:'رقم المزايد الخاص بك <bdi>#4821</bdi>',icn:'user',un:1})}}
  if(!S.me.addr)S.me.addr=Object.assign({},DEFADR);
  const d=S.dep[a.id];if(!d||d.state!=='held'){S.dep[a.id]={amt:a.dep,state:'held',src:'card'};S.wallet.held+=a.dep;txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','بطاقة')}

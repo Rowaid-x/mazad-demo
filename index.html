@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>مزاد الفاخر — نموذج تفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Brand: navy #071B56 + champagne gold #BB9E7C (MZAD AL FAKHER guidelines).
+   Fonts: Alexandria stands in for Doran (titles), IBM Plex Sans Arabic for DIN Next (text). Logo is temporary. */
+:root{
+  --paper:#F7F4EE; --card:#FFFFFF; --navy:#071B56; --navy2:#12307C; --ink:#0D1633; --ink2:#4B5068;
+  --mute:#736D60; --line:#EAE3D7; --line2:#F2EDE4;
+  --gold:#BB9E7C; --gold2:#D6C2A5; --goldt:#8A6C49; --goldl:#F6F0E7;
+  --blue:#6087C5; --grey:#90918C; --ok:#2E7A57; --okl:#E9F3EE; --bad:#B1373B; --badl:#FBEDEC;
+  --pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='60' viewBox='0 0 44 60'%3E%3Cpath d='M12 12h20M12 48h20M14 12v4c0 6 8 9 8 14s-8 8-8 14v4M30 12v4c0 6-8 9-8 14s8 8 8 14v4' fill='none' stroke='%23BB9E7C' stroke-opacity='.22' stroke-width='1'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--paper) var(--pat);font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;color:var(--ink);
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+input,select{font-family:inherit}
+bdi,.num{unicode-bidi:isolate;direction:ltr}
+.ds{font-family:'Alexandria','IBM Plex Sans Arabic',sans-serif}
+.hide{display:none!important}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- stage + device ---------- */
+.stage{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 12px;gap:12px}
+.note{margin:0;font-size:12.5px;color:var(--mute);text-align:center;letter-spacing:.02em}
+.note b{color:var(--navy);font-weight:600}
+.wrap{position:relative;width:417px;height:876px;flex:none}
+.dev{position:absolute;top:0;left:0;width:417px;height:876px;border-radius:66px;padding:3px;transform-origin:0 0;
+  background:linear-gradient(150deg,#F4EFE7 0%,#D3CBBD 45%,#EDE7DD 100%);
+  box-shadow:0 1px 0 #fff inset,0 50px 90px -40px rgba(7,27,86,.35),0 18px 30px -18px rgba(0,0,0,.25)}
+.bez{width:100%;height:100%;border-radius:63px;background:#0A0A0C;padding:9px}
+.scr{position:relative;width:393px;height:852px;border-radius:54px;overflow:hidden;overflow:clip;background:var(--paper);
+  display:flex;flex-direction:column;padding-top:50px;isolation:isolate}
+.sb{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:center;justify-content:space-between;
+  padding:4px 34px 0 30px;font-weight:600;font-size:15.5px;z-index:30;color:var(--ink);pointer-events:none}
+.sb .ics{display:flex;gap:6px;align-items:center}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:124px;height:36px;border-radius:20px;background:#000;z-index:31}
+.hi{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:99px;background:#0D0D10;z-index:80;pointer-events:none}
+.demo{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--mute)}
+.demo button{height:32px;padding:0 13px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:600;color:var(--navy)}
+
+/* ---------- app chrome ---------- */
+.hd{flex:none;height:56px;display:flex;align-items:center;gap:10px;padding:0 18px;position:relative;z-index:5}
+.bnd{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.bnd .t1{font-family:'Alexandria';font-weight:600;font-size:17px;color:var(--navy);line-height:1.1}
+.bnd .t2{font-family:'Alexandria';font-size:7.5px;letter-spacing:.34em;color:var(--goldt);margin-top:4px;direction:ltr;text-align:right}
+.hb{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;position:relative;flex:none;color:var(--navy)}
+.hb .i{width:19px;height:19px}
+.hb .dt{position:absolute;top:5px;inset-inline-end:6px;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #fff}
+.lgn{height:36px;padding:0 15px;border-radius:99px;background:var(--navy);color:#F7F1E7;font-size:13px;font-weight:600;flex:none}
+.ttlx{flex:1;text-align:center;font-family:'Alexandria';font-weight:500;font-size:15.5px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp40{width:40px;flex:none}
+.sc{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative}
+.sc::-webkit-scrollbar{display:none}
+.pg{padding:6px 18px 30px}
+.dock{flex:none;display:none;align-items:center;gap:14px;padding:12px 18px;background:rgba(255,255,255,.95);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.dock.on{display:flex}
+.dock .btn{flex:1}
+.dki .k{font-size:11px;color:var(--mute)}
+.dki .pr{font-size:18px;margin-top:1px}
+.nv{flex:none;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.97);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 4px 30px}
+.nv button{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;font-weight:500;color:#857F72;position:relative;padding:4px 0;text-align:center}
+.nv .i{width:23px;height:23px;stroke-width:1.45}
+.nv button.on{color:var(--navy);font-weight:600}
+.nv button.on::after{content:'';position:absolute;bottom:-6px;width:4px;height:4px;border-radius:50%;background:var(--gold)}
+.bdg{position:absolute;top:-1px;left:calc(50% - 22px);min-width:17px;height:17px;border-radius:99px;background:var(--bad);color:#fff;
+  font-size:10px;font-weight:700;display:grid;place-items:center;padding:0 4px;box-shadow:0 0 0 2px #fff}
+
+/* ---------- motion ---------- */
+.enter{animation:fd .28s ease both}
+.enter .rv{animation:rv .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d,0) * 70ms)}
+@keyframes fd{from{opacity:0}to{opacity:1}}
+@keyframes rv{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:none;opacity:1}}
+@keyframes pl{0%{box-shadow:0 0 0 0 rgba(210,70,63,.45)}70%{box-shadow:0 0 0 7px rgba(210,70,63,0)}100%{box-shadow:0 0 0 0 rgba(210,70,63,0)}}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes fl{0%{color:var(--gold)}100%{color:var(--navy)}}
+@keyframes nb{from{background:rgba(187,158,124,.28)}to{background:transparent}}
+@keyframes sf{to{stroke-dashoffset:-2.3}}
+
+/* ---------- type + common ---------- */
+.k{font-size:11px;color:var(--mute);letter-spacing:.01em}
+.br{font-family:'Alexandria';font-size:10px;letter-spacing:.24em;color:var(--goldt);font-weight:500;direction:ltr;text-align:right}
+.nm{font-size:14.5px;font-weight:600;margin-top:4px;line-height:1.45;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pr,.pr2,.pr3{font-family:'Alexandria';font-weight:600;color:var(--navy)}
+.pr{font-size:17px;margin-top:2px}
+.pr2{font-size:24px}
+.pr3{font-size:28px;margin-top:3px}
+.pr small,.pr2 small,.pr3 small,.big small{font-family:'IBM Plex Sans Arabic';font-size:.56em;font-weight:500;color:var(--goldt);margin-inline-start:4px}
+.pr3.flash{animation:fl 1.4s}
+.ttl{padding:6px 2px 12px}
+.ttl h1{margin:0;font-size:26px;font-weight:600;color:var(--navy);letter-spacing:-.01em}
+.ttl p{margin:5px 0 0;font-size:13px;color:var(--mute)}
+.sh2{display:flex;align-items:baseline;justify-content:space-between;margin:22px 2px 11px}
+.sh2 h3{margin:0;font-family:'Alexandria';font-weight:500;font-size:16.5px;color:var(--navy)}
+.sh2 a,.sh2 em{font-style:normal;font-size:12.5px;color:var(--goldt);font-weight:500;cursor:pointer}
+.orn{display:flex;align-items:center;gap:12px;margin:24px 0 2px}
+.orn i{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.tg{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:99px;background:var(--goldl);color:var(--goldt);white-space:nowrap}
+.tg.ok{background:var(--okl);color:var(--ok)}
+.tg.bad{background:var(--badl);color:var(--bad)}
+.tg.nv{background:var(--navy);color:#F6EFE4}
+.tg .i{width:13px;height:13px}
+.btn{width:100%;height:52px;border-radius:15px;background:var(--navy);color:#F7F1E7;font-size:15.5px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s,opacity .2s;text-align:center}
+.btn:active{transform:scale(.985)}
+.btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--line)}
+.btn.gold{background:linear-gradient(180deg,#D3BB9A,#B89A76);color:var(--navy)}
+.btn[disabled]{opacity:.42;pointer-events:none}
+.btn.sm{height:40px;font-size:13.5px;border-radius:12px;width:auto;padding:0 16px}
+.btn+.btn{margin-top:9px}
+.dock .btn+.btn,.wbt .btn+.btn{margin-top:0}
+div.num{text-align:right}
+.btn .i{width:18px;height:18px}
+.lnk{display:inline-block;font-size:12.5px;color:var(--goldt);font-weight:600;cursor:pointer;margin-top:6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:4px 16px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line2);font-size:13.5px}
+.kv:last-child{border:0}
+.kv span{color:var(--mute);flex:none}
+.kv b{font-weight:600;text-align:end}
+.kv.tot b{font-family:'Alexandria';font-size:16px;color:var(--navy)}
+.desc{font-size:14px;line-height:1.9;color:var(--ink2);margin:14px 2px}
+.nt{display:flex;gap:10px;font-size:12.5px;line-height:1.75;color:var(--ink2);padding:12px 14px;border-radius:14px;background:#F2EDE4;margin-top:10px}
+.nt .i{width:17px;height:17px;color:var(--goldt);margin-top:3px}
+.nt.w{background:var(--badl);color:#7E2A2D}
+.nt.w .i{color:var(--bad)}
+.nt.g{background:var(--okl);color:#1F5A40}
+.nt.g .i{color:var(--ok)}
+.sample{font-size:10px;font-weight:600;color:var(--bad);background:var(--badl);padding:2px 8px;border-radius:99px;margin-inline-start:6px;white-space:nowrap}
+
+/* ---------- placeholder imagery (line drawings until real photos arrive) ---------- */
+.ph{position:relative;background:radial-gradient(110% 85% at 50% 35%,#FFFFFF 0%,#F5EFE6 62%,#EEE6D9 100%);display:grid;place-items:center;overflow:hidden}
+.art{color:var(--gold);fill:none;stroke:currentColor;stroke-width:1.25px;stroke-linecap:round;stroke-linejoin:round}
+.art *{vector-effect:non-scaling-stroke}
+.ph .art{width:64%;height:auto;max-height:84%}
+.soon{position:absolute;bottom:8px;inset-inline-start:8px;font-size:9.5px;color:var(--mute);background:rgba(255,255,255,.85);
+  border:1px solid var(--line);padding:2px 8px;border-radius:99px;letter-spacing:.02em}
+.live{position:absolute;top:10px;inset-inline-start:10px;display:flex;align-items:center;gap:6px;background:#fff;color:var(--ink);
+  font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;border:1px solid var(--line);z-index:2}
+.live em,.ldot{width:7px;height:7px;border-radius:50%;background:#D2463F;display:inline-block;animation:pl 1.6s infinite;flex:none}
+.cdp{position:absolute;top:10px;inset-inline-end:10px;display:flex;align-items:center;gap:5px;background:rgba(7,27,86,.92);color:#F6EFE4;
+  font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:99px;z-index:2;transition:background .3s}
+.cdp .i{width:13px;height:13px}
+.cdp.hot{background:var(--bad)}
+.so{position:absolute;inset:0;display:grid;place-items:center;background:rgba(247,244,238,.6);z-index:2}
+.so span{background:var(--navy);color:#F6EFE4;font-size:12px;font-weight:600;padding:6px 14px;border-radius:99px}
+
+/* ---------- hourglass (brand mark as live timer) ---------- */
+.hg{display:block;flex:none;overflow:visible}
+.hg .sand{fill:var(--navy)}
+.hg .strm{stroke:var(--navy);stroke-width:.55;stroke-dasharray:.9 1.4;animation:sf .6s linear infinite}
+.hg.still .strm{display:none}
+.tp .hg .sand,.door.dk .hg .sand,.wc .hg .sand,.awc .hg .sand{fill:#F1E4CE}
+.tp .hg .strm,.door.dk .hg .strm,.awc .hg .strm{stroke:#F1E4CE}
+
+/* ---------- splash + auth ---------- */
+.splash{position:relative;min-height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:30px 26px 28px;overflow:hidden;
+  background:radial-gradient(120% 70% at 50% 30%,#FFFFFF 0%,#F7F2EA 55%,#EFE7DA 100%)}
+.sp-pat{position:absolute;top:0;bottom:0;inset-inline-start:0;width:58px;background-image:var(--pat);background-size:30px 41px;opacity:.9;
+  -webkit-mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent)}
+.sp-pat.r{inset-inline-start:auto;inset-inline-end:0}
+.sp-in{text-align:center;margin-top:110px;position:relative}
+.sp-in .mk{margin:0 auto}
+.wm{font-family:'Alexandria';font-weight:700;font-size:40px;color:var(--navy);margin:24px 0 0;letter-spacing:-.01em}
+.wl{font-family:'Alexandria';font-size:10.5px;letter-spacing:.52em;color:var(--goldt);margin-top:8px;direction:ltr;padding-left:.52em}
+.sp-t{font-size:14.5px;line-height:1.95;color:var(--ink2);margin:30px 0 0}
+.sp-b{position:relative}
+.fine{font-size:11.5px;color:var(--mute);text-align:center;line-height:1.75;margin:14px 0 0}
+.fine a{color:var(--goldt);font-weight:600;cursor:pointer}
+.auth{padding:14px 22px 26px;min-height:100%;display:flex;flex-direction:column}
+.x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;background:#fff;color:var(--navy)}
+.auth-h{text-align:center;margin:24px 0 30px}
+.auth-h .mk{margin:0 auto}
+.auth-h h2{margin:18px 0 6px;font-size:24px;font-weight:600;color:var(--navy)}
+.auth-h p{margin:0;font-size:13.5px;color:var(--mute);line-height:1.75}
+.fl{display:block;font-size:12.5px;color:var(--mute);margin-bottom:14px}
+.in{width:100%;height:50px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:0 14px;font-size:15px;color:var(--ink);margin-top:6px;outline:0;-webkit-appearance:none;appearance:none}
+.in:focus{border-color:var(--gold)}
+select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238A6C49' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat left 16px center;padding-left:38px}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.seg2 button{height:40px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;color:var(--ink2);text-align:center}
+.seg2 button.on{border-color:var(--navy);color:var(--navy);box-shadow:0 0 0 1px var(--navy) inset}
+.evl{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--goldt);font-weight:600;margin-top:6px}
+.evl .i{width:14px;height:14px}
+.phone{display:flex;gap:8px;margin-top:6px;direction:ltr}
+.phone .in{margin:0;flex:1;letter-spacing:.08em;text-align:left}
+.cc{height:50px;padding:0 14px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:15px;color:var(--navy);flex:none}
+.otp{display:flex;gap:9px;justify-content:center;margin:6px 0 16px;direction:ltr}
+.otp span{width:46px;height:58px;border-radius:14px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-family:'Alexandria';font-size:23px;font-weight:600;color:var(--navy)}
+.otp span.f{border-color:var(--gold);animation:pop .25s}
+.otps{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--mute);min-height:22px}
+.otps .i{width:16px;height:16px;color:var(--ok)}
+.ck{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.75;color:var(--ink2);cursor:pointer;margin:10px 0}
+.ck input{display:none}
+.ck i{width:22px;height:22px;border-radius:7px;border:1.5px solid #CFC5B5;flex:none;display:grid;place-items:center;margin-top:1px;background:#fff;transition:.15s}
+.ck input:checked+i{background:var(--navy);border-color:var(--navy)}
+.ck input:checked+i::after{content:'';width:10px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.cons{font-size:12.5px;line-height:1.85;color:var(--ink2);background:#F2EDE4;border-radius:14px;padding:12px 14px;margin:4px 0 6px}
+.cons a{color:var(--goldt);font-weight:600;cursor:pointer}
+.grow{flex:1}
+
+/* ---------- home ---------- */
+.hello{padding:8px 2px 16px}
+.hello .k{margin:0;font-size:12.5px}
+.hello h1{margin:4px 0 0;font-size:27px;font-weight:600;color:var(--navy);letter-spacing:-.01em}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.door{position:relative;height:222px;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;text-align:start}
+.door.lt{background:radial-gradient(120% 80% at 50% 25%,#fff 0%,#F3ECE1 72%);border:1px solid var(--line)}
+.door.dk{background:linear-gradient(160deg,#16367F 0%,#071B56 70%);color:#F6EFE4}
+.door.dk::before{content:'';position:absolute;inset:0;background-image:var(--pat);background-size:30px 41px;opacity:.5}
+.door-art{position:absolute;inset:14px 10px 70px;display:grid;place-items:center}
+.door.lt .art{width:136px;height:136px}
+.door-tx{position:relative}
+.door-tx b{display:block;font-family:'Alexandria';font-weight:600;font-size:18px}
+.door.lt .door-tx b{color:var(--navy)}
+.door-tx span{display:flex;align-items:center;gap:6px;font-size:12px;opacity:.78;margin-top:4px}
+.door .arr{position:absolute;top:12px;inset-inline-end:12px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid currentColor;opacity:.32}
+.door .arr .i{width:15px;height:15px}
+.door.lt .arr{color:var(--navy)}
+.hs{display:flex;gap:11px;overflow-x:auto;margin:0 -18px;padding:0 18px 4px;scroll-snap-type:x mandatory;scroll-padding-inline:18px;scrollbar-width:none}
+.hs::-webkit-scrollbar{display:none}
+.hs>*{scroll-snap-align:start;flex:none}
+.ac{width:252px;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;text-align:start}
+.ac .ph{height:168px}
+.ac-b{padding:12px 14px 14px}
+.rwb{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:10px}
+.bc{font-size:11.5px;color:var(--mute);white-space:nowrap}
+.acv{display:block;width:100%;margin-bottom:12px}
+.acv .ph{height:212px}
+.acv .mt{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.pc{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;text-align:start;display:block;width:100%}
+.pc .ph{aspect-ratio:1/1.12}
+.pc-b{padding:10px 12px 12px}
+.pc .br{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.16em}
+.pc .nm{font-size:13.5px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4;min-height:2.8em}
+.pc .pr{font-size:15px}
+.up1{display:flex;gap:12px;align-items:stretch;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;width:100%;text-align:start}
+.up1 .ph{width:118px;flex:none}
+.up1 .ph .art{width:80%}
+.up1 .b{padding:12px 4px 12px 12px;flex:1;min-width:0}
+.up1 .st{font-size:12px;color:var(--goldt);font-weight:600;margin-top:8px;display:flex;gap:6px;align-items:center}
+.up1 .st .i{width:14px;height:14px}
+.store{display:flex;gap:14px;align-items:center;margin-top:24px;padding:16px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+.ic2{width:48px;height:48px;border-radius:14px;background:var(--goldl);display:grid;place-items:center;color:var(--goldt);flex:none}
+.store b{font-size:14.5px;display:block}
+.store p{margin:3px 0 0;font-size:12px;color:var(--mute);line-height:1.6}
+.ctr{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0 0}
+.cb{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:14px;border:1px solid var(--line);background:#fff;font-size:13.5px;font-weight:600;color:var(--navy)}
+.cb .i{width:18px;height:18px;color:var(--goldt)}
+
+/* ---------- shop ---------- */
+.srch{display:flex;align-items:center;gap:10px;height:46px;border-radius:14px;background:#fff;border:1px solid var(--line);padding:0 14px;color:var(--mute)}
+.srch input{flex:1;border:0;outline:0;background:none;font-size:14px;color:var(--ink);min-width:0}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.cat{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px 9px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:center}
+.cat-a{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#fff,#F1E9DD);display:grid;place-items:center}
+.cat-a .art{width:42px;height:42px}
+.cat b{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.3}
+.cat em{font-style:normal;font-size:10px;color:var(--mute)}
+.chips{display:flex;gap:7px;overflow-x:auto;margin:0 -18px 14px;padding:0 18px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:34px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:12.8px;font-weight:500;color:var(--ink2)}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#F6EFE4}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:#EEE8DD;border-radius:14px;padding:4px;margin:4px 0 12px}
+.seg button{height:38px;border-radius:11px;font-size:13.5px;font-weight:500;color:var(--ink2);text-align:center}
+.seg button.on{background:#fff;color:var(--navy);font-weight:600;box-shadow:0 1px 2px rgba(7,27,86,.08)}
+.empty{text-align:center;padding:44px 12px}
+.empty .hg{margin:0 auto}
+.empty h3{font-family:'Alexandria';font-weight:600;font-size:18px;color:var(--navy);margin:18px 0 6px}
+.empty p{font-size:13.5px;color:var(--mute);line-height:1.85;margin:0 0 18px}
+
+/* ---------- detail ---------- */
+.gal{position:relative}
+.gal-s{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.gal-s::-webkit-scrollbar{display:none}
+.gph{flex:none;width:100%;height:332px;scroll-snap-align:center;position:relative;display:grid;place-items:center;
+  background:radial-gradient(110% 85% at 50% 38%,#FFFFFF 0%,#F5EFE6 62%,#ECE3D5 100%)}
+.gph .art{width:58%;height:auto}
+.gph.vid{cursor:pointer}
+.vw{position:absolute;bottom:16px;inset-inline-end:18px;font-size:11px;color:var(--mute);letter-spacing:.03em}
+.gal-d{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.gal-d i{width:5px;height:5px;border-radius:99px;background:#CFC6B8;transition:.25s}
+.gal-d i.on{width:16px;background:var(--navy)}
+.gal .soon{bottom:auto;top:12px;inset-inline-start:auto;inset-inline-end:12px}
+.play{position:absolute;width:60px;height:60px;border-radius:50%;background:rgba(7,27,86,.9);display:grid;place-items:center;color:#fff}
+.play .i{width:22px;height:22px;fill:#fff;stroke:none;margin-inline-start:-3px}
+.pd{padding-top:16px}
+.nm2{margin:6px 0 0;font-size:22px;font-weight:600;color:var(--navy);line-height:1.4}
+.md{font-size:12.5px;color:var(--mute);margin-top:5px;font-family:'Alexandria';letter-spacing:.02em;direction:ltr;text-align:right}
+.prw{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.bd{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:6px 11px;border-radius:99px;border:1px solid var(--line);background:#fff;color:var(--ink2)}
+.bd .i{width:15px;height:15px}
+.bd.au{border-color:var(--gold2);color:var(--goldt);background:var(--goldl)}
+.szl{font-size:12.5px;color:var(--mute);margin:4px 2px 8px}
+.szs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sz{min-width:54px;height:42px;padding:0 10px;border-radius:12px;border:1px solid var(--line);background:#fff;font-family:'Alexandria';font-weight:500;font-size:14px;color:var(--ink);text-align:center}
+.sz.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sz.x{color:#C8C0B2;text-decoration:line-through;background:#F6F3EE;pointer-events:none}
+.auc{display:flex;gap:12px;align-items:flex-start;margin-top:14px;padding:14px 16px;border-radius:18px;background:var(--goldl);border:1px solid #EADFCF}
+.auc .i{color:var(--goldt);width:22px;height:22px;margin-top:2px}
+.auc b{display:block;font-size:13.5px;color:var(--navy)}
+.auc p{margin:3px 0 0;font-size:12.5px;line-height:1.75;color:var(--ink2)}
+.tp{display:flex;align-items:center;gap:16px;margin-top:16px;padding:16px 18px;border-radius:20px;background:linear-gradient(160deg,#16367F,#071B56);color:#F6EFE4;position:relative;overflow:hidden;transition:background .4s}
+.tp::after{content:'';position:absolute;inset:0;background-image:var(--pat);background-size:30px 41px;opacity:.35;pointer-events:none}
+.tp>*{position:relative;z-index:1}
+.tp .k{color:rgba(246,239,228,.68)}
+.tp .cd{font-family:'Alexandria';font-weight:500;font-size:30px;letter-spacing:.04em;margin-top:2px;direction:ltr;text-align:right}
+.tp .d{font-size:11.5px;color:rgba(246,239,228,.72);margin-top:4px;line-height:1.6}
+.tp.hot{background:linear-gradient(160deg,#7E2026,#4A0F14)}
+.tp.end{background:linear-gradient(160deg,#5A5F72,#2E3246)}
+.ext{display:inline-flex;align-items:center;gap:5px;background:var(--gold2);color:var(--navy);font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;margin-top:6px}
+.pp{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}
+.pp-top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.stats{display:flex;gap:16px;text-align:center}
+.stats b{display:block;font-family:'Alexandria';font-size:17px;font-weight:600;color:var(--navy)}
+.stats span{font-size:10.5px;color:var(--mute)}
+.mst{margin-top:12px;font-size:13px;font-weight:600;padding:10px 12px;border-radius:12px;display:flex;align-items:center;gap:8px}
+.mst .i{width:17px;height:17px}
+.mst.ok{background:var(--okl);color:var(--ok)}
+.mst.bad{background:var(--badl);color:var(--bad)}
+.ik{font-size:11.5px;color:var(--mute);margin-top:14px}
+.incs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.inc{border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center;background:#FCFAF6}
+.inc span{display:block;font-size:11px;color:var(--goldt);font-weight:600}
+.inc b{display:block;font-family:'Alexandria';font-weight:600;font-size:14px;color:var(--navy);margin-top:3px}
+.inc.on{border-color:var(--navy);background:var(--navy)}
+.inc.on span{color:var(--gold2)}
+.inc.on b{color:#fff}
+.depok{margin-top:12px;font-size:12px;color:var(--ok);display:flex;align-items:center;gap:6px}
+.depok .i{width:15px;height:15px}
+.gate{margin-top:14px;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--goldl);border:1px dashed var(--gold2)}
+.gate .i{color:var(--goldt);width:22px;height:22px}
+.gate b{display:block;font-size:13.5px;color:var(--navy)}
+.gate span{font-size:12px;color:var(--ink2);line-height:1.6}
+.hist{background:#fff;border:1px solid var(--line);border-radius:18px;max-height:298px;overflow-y:auto;padding:2px 14px;scrollbar-width:none}
+.hist.fade{-webkit-mask-image:linear-gradient(#000 calc(100% - 30px),transparent);mask-image:linear-gradient(#000 calc(100% - 30px),transparent)}
+.tiers{margin:6px 0 2px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:#FCFAF6}
+.tiers .kv{padding:8px 0;font-size:12.5px}
+.hist::-webkit-scrollbar{display:none}
+.hr{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line2);font-size:13.5px;border-radius:8px}
+.hr:last-child{border-bottom:0}
+.hn{display:flex;align-items:center;gap:7px;font-family:'Alexandria';font-weight:500;color:var(--ink2)}
+.hn i{font-style:normal;font-family:'IBM Plex Sans Arabic';font-size:10px;font-weight:600;background:var(--navy);color:#fff;padding:1px 7px;border-radius:99px}
+.hn em{width:6px;height:6px;border-radius:50%;background:transparent;flex:none}
+.hr.top .hn em{background:var(--gold)}
+.ha{font-family:'Alexandria';font-weight:600;color:var(--navy)}
+.hr.top .ha{color:var(--goldt)}
+.ht{font-size:11px;color:var(--mute);min-width:56px;text-align:end}
+.hr.new{animation:nb 1.6s}
+.morebtn{display:block;width:100%;text-align:center;font-size:12.5px;font-weight:600;color:var(--goldt);padding:12px 0 4px}
+.rules{margin-top:14px;border-radius:18px;padding:16px;background:var(--goldl);border:1px solid #EADFCF}
+.rules h4{margin:0 0 8px;font-family:'Alexandria';font-weight:500;font-size:14.5px;color:var(--navy)}
+.rules ul,.lst{margin:0;padding-inline-start:18px;font-size:12.8px;line-height:1.9;color:var(--ink2)}
+
+/* ---------- mine / account / wallet ---------- */
+.row2{display:flex;gap:12px;align-items:center;padding:10px;background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:9px;cursor:pointer;width:100%;text-align:start}
+.row2 .ph{width:76px;height:76px;border-radius:13px;flex:none}
+.row2 .ph .art{width:74%}
+.row2 .mid{flex:1;min-width:0}
+.row2 .nm{font-size:13.5px;margin-top:2px}
+.row2 .ln{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
+.row2 .ln .pr{font-size:14.5px;margin:0}
+.row2 .ln .cd2{font-size:12px;color:var(--ink2);font-weight:600;display:flex;gap:4px;align-items:center}
+.row2 .ln .cd2 .i{width:13px;height:13px}
+.awc{display:flex;gap:14px;align-items:center;padding:16px;border-radius:20px;background:linear-gradient(160deg,#16367F,#071B56);color:#F6EFE4;margin-bottom:10px;cursor:pointer;width:100%;text-align:start}
+.awc .k{color:rgba(246,239,228,.7)}
+.awc .t{font-weight:600;font-size:14.5px;margin-top:2px}
+.awc .c{font-family:'Alexandria';font-size:22px;font-weight:500;margin-top:4px;letter-spacing:.03em;text-align:right}
+.awc .btn{width:auto;height:36px;font-size:12.5px;border-radius:11px;padding:0 13px;margin-top:10px;background:var(--gold2);color:var(--navy);display:inline-flex}
+.prof{text-align:center;padding:8px 0 16px}
+.av{width:72px;height:72px;border-radius:50%;background:linear-gradient(160deg,#16367F,#071B56);color:#F3E7D3;font-family:'Alexandria';font-size:26px;font-weight:600;
+  display:grid;place-items:center;margin:0 auto 12px;box-shadow:0 0 0 4px #fff,0 0 0 5px var(--gold2)}
+.av .i{width:32px;height:32px;stroke-width:1.4;color:#F3E7D3}
+.prof h2{margin:0;font-size:20px;font-family:'Alexandria';font-weight:600;color:var(--navy)}
+.prof .ph2{font-size:12.5px;color:var(--mute);margin-top:4px}
+.bn{display:inline-flex;align-items:center;gap:10px;margin-top:12px;padding:8px 16px;border-radius:99px;border:1px solid var(--gold2);background:var(--goldl)}
+.bn span{font-size:11.5px;color:var(--goldt)}
+.bn b{font-family:'Alexandria';font-size:17px;color:var(--navy)}
+.vf{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;margin-top:10px;color:var(--ok);font-weight:600}
+.vf.no{color:var(--goldt)}
+.vf .i{width:14px;height:14px}
+.menu{background:#fff;border:1px solid var(--line);border-radius:20px;padding:2px 16px;margin-top:12px}
+.mi{display:flex;align-items:center;gap:13px;padding:14px 0;border-bottom:1px solid var(--line2);width:100%;text-align:start;font-size:14.5px;font-weight:500;color:var(--ink)}
+.mi:last-child{border:0}
+.mi>.i{color:var(--goldt)}
+.mi .go{margin-inline-start:auto;color:#B9AF9F;font-size:12.5px;display:flex;align-items:center;gap:6px}
+.mi .go .i{width:16px;height:16px}
+.mi.out{color:var(--bad)}
+.mi.out>.i{color:var(--bad)}
+.wc{border-radius:24px;padding:20px;color:#F6EFE4;background:linear-gradient(155deg,#17388A 0%,#071B56 65%);position:relative;overflow:hidden;cursor:pointer;display:block;width:100%;text-align:start}
+.wc::before{content:'';position:absolute;inset:0;background-image:var(--pat);background-size:30px 41px;opacity:.45;pointer-events:none}
+.wc>*{position:relative}
+.wc .k{color:rgba(246,239,228,.66)}
+.wc .bal{font-family:'Alexandria';font-size:34px;font-weight:600;margin-top:4px}
+.wc .bal small{font-size:13px;color:var(--gold2);font-family:'IBM Plex Sans Arabic';margin-inline-start:4px}
+.wc .row{display:flex;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid rgba(187,158,124,.35);font-size:12px;color:rgba(246,239,228,.7)}
+.wc .row b{font-family:'Alexandria';font-weight:500;font-size:15px;display:block;margin-top:3px;color:#F6EFE4}
+.wc .chip2{position:absolute;top:18px;left:18px;font-family:'Alexandria';font-size:9px;letter-spacing:.3em;color:var(--gold2);direction:ltr}
+.wc.mini{padding:16px 18px;margin-top:4px}
+.wc.mini .bal{font-size:26px}
+.wbt{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.txl{background:#fff;border:1px solid var(--line);border-radius:18px;padding:2px 14px}
+.tx{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
+.tx:last-child{border:0}
+.tx .ic{width:38px;height:38px;border-radius:12px;background:var(--goldl);display:grid;place-items:center;color:var(--goldt);flex:none}
+.tx .ic .i{width:18px;height:18px}
+.tx .t{font-size:13.2px;font-weight:600;line-height:1.5}
+.tx .d{font-size:11.5px;color:var(--mute);margin-top:1px}
+.tx .v{margin-inline-start:auto;font-family:'Alexandria';font-weight:600;font-size:14px;white-space:nowrap}
+.v.p{color:var(--ok)}
+.v.h{color:var(--goldt)}
+.opt{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:15px;background:#fff;margin-bottom:8px;cursor:pointer;width:100%;text-align:start}
+.opt.on{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy) inset}
+.opt .rd{width:20px;height:20px;border-radius:50%;border:1.5px solid #CFC5B5;flex:none;display:grid;place-items:center}
+.opt.on .rd{border-color:var(--navy)}
+.opt.on .rd::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--navy)}
+.opt .t{font-size:14px;font-weight:600}
+.opt .d{font-size:11.5px;color:var(--mute);margin-top:2px;line-height:1.55}
+.opt .v{margin-inline-start:auto;font-family:'Alexandria';font-weight:600;font-size:13.5px;color:var(--navy);white-space:nowrap}
+.opt .oi{width:38px;height:38px;border-radius:11px;background:var(--goldl);display:grid;place-items:center;color:var(--goldt);flex:none}
+.adr{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fff;width:100%;text-align:start}
+.adr .i{color:var(--goldt)}
+.adr b{font-size:13.5px;display:block}
+.adr span{font-size:12px;color:var(--mute)}
+.adr em{margin-inline-start:auto;font-style:normal;font-size:12px;font-weight:600;color:var(--goldt)}
+.bank{background:#fff;border:1px solid var(--line);border-radius:18px;padding:2px 16px}
+.bk{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line2)}
+.bk:last-child{border:0}
+.bk .k{width:78px;flex:none;font-size:12px}
+.bk b{flex:1;font-size:13.5px;font-weight:600;min-width:0}
+.bk b.mono{font-family:'Alexandria';letter-spacing:.02em;font-size:12.5px;font-weight:500}
+.cp{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;color:var(--goldt);flex:none;background:#fff}
+.cp .i{width:16px;height:16px}
+.upl{width:100%;height:96px;border-radius:18px;border:1.5px dashed #D9CEBD;background:#FCFAF6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:600;color:var(--navy);margin-top:12px;text-align:center}
+.upl .i{color:var(--goldt);width:24px;height:24px}
+.upl span{font-size:11.5px;color:var(--mute);font-weight:400}
+.tl{position:relative;padding-inline-start:26px;margin:4px 0}
+.tl::before{content:'';position:absolute;inset-inline-start:8px;top:16px;bottom:16px;width:1.5px;background:var(--line)}
+.tl .n{position:relative;padding:10px 0}
+.tl .n::before{content:'';position:absolute;inset-inline-start:-23px;top:15px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #D6CCBD}
+.tl .n.done::before{background:var(--navy);border-color:var(--navy)}
+.tl .n.now::before{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(187,158,124,.25)}
+.tl .t{font-size:14px;font-weight:600}
+.tl .n:not(.done):not(.now) .t{color:var(--mute);font-weight:500}
+.tl .d{font-size:11.5px;color:var(--mute);margin-top:2px;line-height:1.6}
+.pcode{text-align:center;padding:20px;border-radius:22px;background:linear-gradient(160deg,#16367F,#071B56);color:#F6EFE4;position:relative;overflow:hidden}
+.pcode::before{content:'';position:absolute;inset:0;background-image:var(--pat);background-size:30px 41px;opacity:.4}
+.pcode>*{position:relative}
+.pcode .k{color:rgba(246,239,228,.7)}
+.pcode .c{font-family:'Alexandria';font-size:32px;letter-spacing:.2em;font-weight:600;margin:6px 0 0;direction:ltr}
+.qr{width:128px;height:128px;background:#fff;border-radius:14px;padding:10px;margin:14px auto 6px}
+.qr svg{width:100%;height:100%}
+.doc{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 18px;box-shadow:0 22px 40px -30px rgba(7,27,86,.45);font-size:12px}
+.doc-h{display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px solid var(--navy);padding-bottom:12px}
+.doc-h b{font-family:'Alexandria';font-size:15px;color:var(--navy);display:block}
+.doc h5{margin:16px 0 4px;font-size:12.5px;color:var(--navy);font-family:'Alexandria';font-weight:600}
+.doc table{width:100%;border-collapse:collapse}
+.doc td{padding:7px 0;border-bottom:1px solid var(--line2);vertical-align:top}
+.doc td:last-child{text-align:end;font-family:'Alexandria';white-space:nowrap}
+.doc .none{color:var(--mute);padding:6px 0}
+.rsec{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:10px}
+.rsec h4{margin:0 0 8px;font-family:'Alexandria';font-weight:600;font-size:15px;color:var(--navy)}
+.rsec ul{margin:0;padding-inline-start:18px;font-size:13px;line-height:1.95;color:var(--ink2)}
+.nf{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line2);cursor:pointer;width:100%;text-align:start}
+.nf .ic{width:40px;height:40px;border-radius:12px;background:var(--goldl);display:grid;place-items:center;color:var(--goldt);flex:none}
+.nf .t{font-size:14px;font-weight:600}
+.nf .b{font-size:12.5px;color:var(--ink2);margin-top:2px;line-height:1.6}
+.nf .tm{font-size:11px;color:var(--mute);margin-top:4px}
+.nf.un .t::after{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-inline-start:7px;vertical-align:middle}
+.swr{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line2)}
+.swr:last-child{border:0}
+.swr .t{font-size:14px;font-weight:600}
+.swr .d{font-size:11.5px;color:var(--mute);margin-top:2px;line-height:1.55}
+.sw{width:46px;height:28px;border-radius:99px;background:#DDD5C8;position:relative;flex:none;cursor:pointer;transition:.2s;margin-inline-start:auto}
+.sw::after{content:'';position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.sw.on{background:var(--navy)}
+.sw.on::after{inset-inline-start:21px}
+.sw.lock{opacity:.55;pointer-events:none}
+
+/* ---------- overlays ---------- */
+.ov{position:absolute;inset:0;background:rgba(10,18,45,.34);opacity:0;pointer-events:none;transition:opacity .3s;z-index:50}
+.ov.on{opacity:1;pointer-events:auto}
+.sh{position:absolute;left:0;right:0;bottom:0;max-height:90%;overflow-y:auto;background:#fff;border-radius:28px 28px 0 0;padding:10px 20px 36px;
+  transform:translateY(105%);transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s .4s;z-index:51;scrollbar-width:none;visibility:hidden}
+.sh::-webkit-scrollbar{display:none}
+.sh.on{transform:none;visibility:visible;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.sh::before{content:'';display:block;width:38px;height:5px;border-radius:99px;background:#E2DACC;margin:0 auto 12px}
+.shh h3{margin:6px 0 4px;font-family:'Alexandria';font-weight:600;font-size:19px;color:var(--navy)}
+.shh p{margin:0 0 14px;font-size:13px;color:var(--mute);line-height:1.75}
+.step{font-size:11px;letter-spacing:.04em;color:var(--goldt);font-weight:600}
+.big{font-family:'Alexandria';font-weight:600;font-size:34px;color:var(--navy);text-align:center;margin:8px 0 2px}
+.bigs{text-align:center;font-size:13px;color:var(--mute);margin-bottom:6px}
+.ups{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.up{height:96px;border-radius:16px;border:1.5px dashed #D9CEBD;background:#FCFAF6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:500;color:var(--ink2);text-align:center}
+.up .i{color:var(--goldt);width:24px;height:24px}
+.up.done{border-style:solid;border-color:var(--ok);background:var(--okl);color:var(--ok)}
+.up.done .i{color:var(--ok)}
+.succ{text-align:center;padding:14px 0 6px}
+.succ .ring{width:74px;height:74px;border-radius:50%;background:var(--okl);color:var(--ok);display:grid;place-items:center;margin:0 auto 14px;animation:pop .4s}
+.succ .ring .i{width:34px;height:34px;stroke-width:2}
+.succ h3{margin:0 0 6px;font-family:'Alexandria';font-weight:600;font-size:19px;color:var(--navy)}
+.succ p{margin:0 0 18px;font-size:13px;color:var(--mute);line-height:1.8}
+.spin{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--navy);animation:sp .8s linear infinite;margin:26px auto 12px}
+.bnum{font-family:'Alexandria';font-size:44px;font-weight:600;color:var(--navy);margin:6px 0;letter-spacing:.04em}
+.ts{position:absolute;left:18px;right:18px;bottom:110px;background:var(--navy);color:#F6EFE4;padding:13px 16px;border-radius:15px;font-size:13.5px;font-weight:500;
+  text-align:center;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none;z-index:60;line-height:1.6;
+  border:1px solid rgba(214,194,165,.55);box-shadow:0 14px 34px -14px rgba(7,27,86,.45)}
+.ts.on{opacity:1;transform:none}
+.dock.on~.ts{bottom:180px}
+.pb{position:absolute;top:54px;left:10px;right:10px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:22px;
+  padding:11px 13px;display:flex;gap:11px;align-items:center;box-shadow:0 18px 40px -16px rgba(7,27,86,.38);border:1px solid rgba(234,227,215,.9);
+  transform:translateY(-200%);transition:transform .45s cubic-bezier(.2,.8,.2,1),visibility 0s .45s;z-index:70;cursor:pointer;visibility:hidden}
+.pb.on{transform:none;visibility:visible;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.pb .a{font-size:10.5px;color:var(--mute);display:flex;justify-content:space-between}
+.pb .t{font-size:13px;font-weight:600;color:var(--ink);margin-top:1px}
+.pb .b{font-size:12.5px;color:var(--ink2);margin-top:1px;line-height:1.5}
+
+/* ---------- phone-sized viewport: drop the frame ---------- */
+@media (max-width:480px){
+  .stage{padding:0;gap:0}
+  .note,.demo{display:none}
+  .wrap{width:100%!important;height:100dvh!important}
+  .dev{position:static;width:100%;height:100dvh;border-radius:0;padding:0;background:none;box-shadow:none;transform:none!important}
+  .bez{border-radius:0;padding:0;background:none}
+  .scr{width:100%;height:100dvh;border-radius:0;padding-top:env(safe-area-inset-top,0px)}
+  .sb,.island,.hi{display:none}
+  .nv{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .pb{top:calc(10px + env(safe-area-inset-top,0px))}
+  .ts{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  .dock.on~.ts{bottom:calc(156px + env(safe-area-inset-bottom,0px))}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs"></defs></svg>
+<div class="stage">
+  <p class="note"><b>مزاد الفاخر</b> · نموذج تفاعلي لتطبيق العملاء · الشعار والصور مؤقتة</p>
+  <div class="wrap" id="wrap">
+    <div class="dev" id="dev"><div class="bez"><div class="scr" id="scr">
+      <div class="sb"><span>9:41</span><span class="ics">
+        <svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.4 6.8a6.5 6.5 0 0 1 9.2 0l-1.4 1.4a4.5 4.5 0 0 0-6.4 0zM1 4.4a9.9 9.9 0 0 1 14 0l-1.4 1.4a7.9 7.9 0 0 0-11.2 0z" fill="currentColor"/></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2" fill="currentColor"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2" fill="currentColor" opacity=".45"/></svg>
+      </span></div>
+      <div class="island"></div>
+      <header class="hd" id="hd"></header>
+      <main class="sc" id="sc"></main>
+      <div class="dock" id="dock"></div>
+      <nav class="nv" id="nv">
+        <button data-t="home" onclick="go('home')"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 10.5 12 4l8.5 6.5V20a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1z"/></svg>الرئيسية</button>
+        <button data-t="shop" onclick="go('shop')"><svg class="i" viewBox="0 0 24 24"><path d="M5 8h14l-1.1 12.1a1 1 0 0 1-1 .9H7.1a1 1 0 0 1-1-.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>المتجر</button>
+        <button data-t="auc" onclick="go('auc')"><svg class="i" viewBox="0 0 24 24"><path d="M6.5 3h11M6.5 21h11"/><path d="M8 3v3a4 4 0 0 0 1.6 3.2L12 12l2.4-2.8A4 4 0 0 0 16 6V3M8 21v-3a4 4 0 0 1 1.6-3.2L12 12l2.4 2.8A4 4 0 0 1 16 18v3"/></svg>المزادات</button>
+        <button data-t="mine" onclick="go('mine')"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7M9.5 21h5M10 7.5h4M10 10h2.5"/></svg>مزايداتي<span class="bdg hide" id="bm"></span></button>
+        <button data-t="me" onclick="go('me')"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.8-4 4-6 7.5-6s6.7 2 7.5 6"/></svg>حسابي</button>
+      </nav>
+      <div class="pb" id="pb"></div>
+      <div class="ts" id="ts"></div>
+      <div class="ov" id="ov" onclick="ovTap()"></div>
+      <div class="sh" id="sh"></div>
+      <div class="hi"></div>
+    </div></div></div>
+  </div>
+  <div class="demo"><span>اختصارات العرض:</span>
+    <button onclick="demoWin()">محاكاة الفوز بمزاد</button>
+    <button onclick="location.reload()">إعادة البدء</button></div>
+</div>
+
+<script>
+/* ============ helpers ============ */
+const $=s=>document.querySelector(s);
+const H=36e5, MIN=6e4, DAY=864e5, T0=Date.now();
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const qar=n=>`${fmt(n)}<small>ر.ق</small>`;
+const pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+/* Arabic counted nouns: [one, two, 3–10, 11+] */
+function cnt(n,[one,two,few,many]){if(n===1)return one;if(n===2)return two;const r=n%100;return `${fmt(n)} ${r>=3&&r<=10?few:many}`}
+const W_PC=['قطعة واحدة','قطعتان','قطع','قطعة'],W_BID=['مزايدة واحدة','مزايدتان','مزايدات','مزايدة'],W_BDR=['مزايد واحد','مزايدان','مزايدين','مزايداً'],
+ W_LIVE=['مزاد مباشر واحد','مزادان مباشران','مزادات مباشرة','مزاداً مباشراً'],W_ORD=['طلب واحد','طلبان','طلبات','طلباً'];
+function dur(ms){if(ms<0)ms=0;const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h?`${pad(h)}:${pad(m)}:${pad(x)}`:`${pad(m)}:${pad(x)}`}
+function durD(ms){if(ms<DAY)return dur(ms);const d=Math.floor(ms/DAY),h=Math.floor(ms%DAY/H),m=Math.floor(ms%H/MIN);return `${d===1?'يوم':d===2?'يومان':cnt(d,['','','أيام','يوماً'])} و ${pad(h)}:${pad(m)}`}
+function ago(t){const s=(Date.now()-t)/1000;if(s<40)return 'الآن';
+ const [n,w]=s<3600?[Math.max(1,Math.round(s/60)),['دقيقة','دقيقتين','دقائق','دقيقة']]:s<86400?[Math.round(s/3600),['ساعة','ساعتين','ساعات','ساعة']]:[Math.round(s/86400),['يوم','يومين','أيام','يوماً']];
+ return 'قبل '+(n===1?w[0]:n===2?w[1]:`${n} ${n%100>=3&&n%100<=10?w[2]:w[3]}`)}
+function clock(t){const d=new Date(t);let h=d.getHours();const m=d.getMinutes(),pm=h>=12;h=h%12||12;return `${h}:${pad(m)} ${pm?'م':'ص'}`}
+const DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+function dayLbl(t){const a=new Date(t),b=new Date();a.setHours(0,0,0,0);b.setHours(0,0,0,0);const d=Math.round((a-b)/DAY);return d===0?'اليوم':d===1?'غداً':d===-1?'أمس':DAYS[new Date(t).getDay()]}
+function dateLbl(t){const d=new Date(t);return `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`}
+const pastLbl=t=>{const l=dayLbl(t);return l==='اليوم'||l==='أمس'?l:dateLbl(t)};
+const tier=p=>p<=100000?500:p<=300000?2500:5000;
+const GCC=['السعودية','الإمارات','الكويت','البحرين','عُمان'];
+const zone=c=>c==='قطر'?'qa':GCC.includes(c)?'gcc':'intl';
+
+const IC={
+ x:'<path d="M6 6l12 12M18 6 6 18"/>',
+ back:'<path d="m9 5 7 7-7 7"/>',
+ chev:'<path d="m15 5-7 7 7 7"/>',
+ bell:'<path d="M18 9.5a6 6 0 1 0-12 0c0 6-2.5 7.5-2.5 7.5h17S18 15.5 18 9.5"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/>',
+ search:'<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>',
+ clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+ pin:'<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+ wa:'<path d="M20 11.6a8.4 8.4 0 0 1-12.4 7.4L3.5 20.3l1.3-3.9A8.4 8.4 0 1 1 20 11.6z"/><path d="M9 8.6c.2 2.9 2.6 5.3 5.6 5.6l.9-1.3-1.8-.9-.8.8a4 4 0 0 1-2.3-2.3l.8-.8-.9-1.8z"/>',
+ copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
+ up:'<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
+ check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+ shield:'<path d="M12 3 5 6v5c0 4.5 3 8.4 7 10 4-1.6 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/>',
+ truck:'<path d="M3 6h11v10H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
+ store:'<path d="M4 9.5 5.5 4h13L20 9.5M4 9.5h16M4 9.5V20h16V9.5"/><path d="M9.5 20v-5h5v5"/>',
+ wallet:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/><path d="M6 6l9-3 1.5 3"/>',
+ card:'<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
+ bank:'<path d="M3 9.5 12 4l9 5.5M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/>',
+ doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/>',
+ lock:'<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+ id:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.5-1.5 1.7-2.3 3-2.3s2.5.8 3 2.3M14 10h4M14 13.5h3"/>',
+ out:'<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>',
+ glass:'<path d="M6.5 3h11M6.5 21h11"/><path d="M8 3v3a4 4 0 0 0 1.6 3.2L12 12l2.4-2.8A4 4 0 0 0 16 6V3M8 21v-3a4 4 0 0 1 1.6-3.2L12 12l2.4 2.8A4 4 0 0 1 16 18v3"/>',
+ shop:'<path d="M5 8h14l-1.1 12.1a1 1 0 0 1-1 .9H7.1a1 1 0 0 1-1-.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+ warn:'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21c.8-4 4-6 7.5-6s6.7 2 7.5 6"/>',
+ play:'<path d="M8 5v14l11-7z"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ up2:'<path d="M12 19V5M6 11l6-6 6 6"/>',
+ down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
+ passport:'<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16.5h6"/>',
+};
+const ic=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24">${IC[n]}</svg>`;
+
+/* ---------- brand mark (rebuilt from the guidelines PDF; temporary) ---------- */
+const TF='matrix(1 0 0 -1 -656.719 342.273)';
+const P_TOP='M684.082 323.478L684.082 318.372C684.082 314.108 685.757 310.016 688.747 306.977L693.842 301.797L700.908 301.797L706.003 306.977C708.993 310.016 710.669 314.108 710.669 318.372L710.669 323.478ZM697.217 305.23L692.57 310.09C690.401 312.358 689.19 315.374 689.19 318.513L705.56 318.513C705.56 315.374 704.35 312.358 702.181 310.09L697.375 305.066Z';
+const P_BOT='M700.907 301.796L693.844 301.797L688.747 296.617C685.757 293.578 684.082 289.485 684.082 285.222L684.082 280.116L710.669 280.116L710.669 285.222C710.669 289.485 708.993 293.578 706.003 296.617L700.908 301.797ZM692.57 293.504L697.217 298.363L697.349 298.49L697.471 298.354L702.181 293.504C704.35 291.236 705.56 288.22 705.56 285.081L689.19 285.081C689.19 288.22 690.401 291.236 692.57 293.504Z';
+const P_MID='M692.631 303.028L693.844 301.797L697.349 298.49L698.376 297.422L701.897 300.791L700.907 301.796L697.375 305.066L696.244 306.249Z';
+const IN_TOP='M697.217 305.23L692.57 310.09C690.401 312.358 689.19 315.374 689.19 318.513L705.56 318.513C705.56 315.374 704.35 312.358 702.181 310.09L697.375 305.066Z';
+const IN_BOT='M692.57 293.504L697.217 298.363L697.349 298.49L697.471 298.354L702.181 293.504C704.35 291.236 705.56 288.22 705.56 285.081L689.19 285.081C689.19 288.22 690.401 291.236 692.57 293.504Z';
+const GLASS=`<path d="${P_TOP}"/><path d="${P_BOT}"/><path d="${P_MID}"/>`;
+$('#defs').innerHTML=`
+ <linearGradient id="gNavy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16367F"/><stop offset="1" stop-color="#071B56"/></linearGradient>
+ <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8C3A3"/><stop offset=".5" stop-color="#BB9E7C"/><stop offset="1" stop-color="#9E805E"/></linearGradient>
+ <clipPath id="cTop" clipPathUnits="userSpaceOnUse"><path transform="${TF}" d="${IN_TOP}"/></clipPath>
+ <clipPath id="cBot" clipPathUnits="userSpaceOnUse"><path transform="${TF}" d="${IN_BOT}"/></clipPath>`;
+function LOGO(s){return `<svg class="mk" width="${s}" height="${s}" viewBox="0 0 81.352 81.352"><rect width="81.352" height="81.352" rx="17.987" fill="url(#gNavy)"/><g fill="url(#gGold)" fill-rule="evenodd" transform="${TF}">${GLASS}</g></svg>`}
+/* Hourglass timer: the brand mark's own glass, with sand that drains as the auction runs. */
+function hg(key,h,f){if(f==null)f=.55;const A1=13.3,A2=13.45;
+ return `<svg class="hg${key?'':' still'}" ${key?`data-hg="${key}"`:''} viewBox="26.4 17.8 28.8 45.6" height="${h}" width="${(h*28.8/45.6).toFixed(1)}"><g fill="url(#gGold)" fill-rule="evenodd" transform="${TF}">${GLASS}</g><g clip-path="url(#cTop)"><rect class="st sand" x="27" width="27" y="${(37.05-f*A1).toFixed(2)}" height="${(f*A1).toFixed(2)}"/></g><g clip-path="url(#cBot)"><rect class="sb2 sand" x="27" width="27" y="${(57.2-(1-f)*A2).toFixed(2)}" height="${((1-f)*A2).toFixed(2)}"/></g><line class="strm" x1="40.47" y1="37.3" x2="40.47" y2="57"/></svg>`}
+function setSand(svg,f){f=Math.max(0,Math.min(1,f));const t=svg.querySelector('.st'),b=svg.querySelector('.sb2'),s=svg.querySelector('.strm');
+ t.setAttribute('y',(37.05-f*13.3).toFixed(2));t.setAttribute('height',(f*13.3).toFixed(2));
+ b.setAttribute('y',(57.2-(1-f)*13.45).toFixed(2));b.setAttribute('height',((1-f)*13.45).toFixed(2));
+ s.style.display=f<=0?'none':''}
+const orn=()=>`<div class="orn"><i></i>${hg(null,18,.5)}<i></i></div>`;
+
+/* ---------- line-drawn placeholders (no stock/AI imagery; replaced by the store's photos) ---------- */
+function art(cat,v=0){
+ const rot=[0,-7,8,-3,5][v%5],sc=[1,.9,1.05,.95,1][v%5];let g='';
+ if(cat==='watch'){let t='';for(let k=0;k<12;k++){const a=k*Math.PI/6,r1=k%3?27:24,r2=29.5;t+=`<line x1="${(100+r1*Math.sin(a)).toFixed(1)}" y1="${(100-r1*Math.cos(a)).toFixed(1)}" x2="${(100+r2*Math.sin(a)).toFixed(1)}" y2="${(100-r2*Math.cos(a)).toFixed(1)}"/>`}
+  g=`<path d="M84 65 L86 26 Q86 20 92 20 H108 Q114 20 114 26 L116 65"/><path d="M84 135 L86 174 Q86 180 92 180 H108 Q114 180 114 174 L116 135"/><circle cx="100" cy="100" r="38"/><circle cx="100" cy="100" r="33"/>${t}<rect x="137.5" y="95" width="7" height="10" rx="2"/><path d="M100 100 L100 78 M100 100 L114 107"/><circle cx="100" cy="100" r="1.6"/>`}
+ else if(cat==='pen')g=`<g transform="rotate(-38 100 100)"><rect x="32" y="93" width="114" height="14" rx="7"/><path d="M146 95.5 L171 100 L146 104.5"/><path d="M160 100 H171"/><path d="M92 93 V107 M96.5 93 V107"/><path d="M42 93 V86 H84 Q88 86 88 90 V93"/></g>`;
+ else if(cat==='cuff')g=`<circle cx="74" cy="84" r="24"/><circle cx="74" cy="84" r="16"/><path d="M74 108 V128 M62 128 H86"/><rect x="104" y="92" width="44" height="44" rx="9"/><rect x="112" y="100" width="28" height="28" rx="5"/><path d="M126 136 V154 M114 154 H138"/>`;
+ else if(cat==='bag')g=`<path d="M66 86 C66 44 134 44 134 86" stroke-dasharray="2.5 3"/><path d="M54 86 H146 Q152 86 152 92 V152 Q152 158 146 158 H54 Q48 158 48 152 V92 Q48 86 54 86 Z"/><path d="M48 96 Q100 134 152 96"/><rect x="92" y="112" width="16" height="11" rx="2.5"/>`;
+ else if(cat==='duffle')g=`<rect x="34" y="92" width="132" height="62" rx="30"/><path d="M78 92 C78 62 122 62 122 92"/><path d="M56 101 H144"/><path d="M66 93 V153 M134 93 V153" stroke-dasharray="2 3"/>`;
+ else if(cat==='cap')g=`<path d="M50 122 C50 70 150 70 150 122 Z"/><path d="M50 122 C74 137 152 145 176 126 C166 120 152 120 148 121"/><circle cx="100" cy="72" r="3"/><path d="M100 75 C92 96 92 110 96 122 M100 75 C108 96 110 110 108 122"/>`;
+ else if(cat==='shoe')g=`<path d="M34 130 C36 112 58 106 80 104 C94 103 102 94 116 94 C130 94 138 106 150 113 C162 120 170 124 170 132 C170 138 164 141 156 141 H42 C35 141 33 136 34 130 Z"/><path d="M36 134 H168"/><path d="M108 100 l10 6 M103 103 l10 6 M98 106 l10 6"/>`;
+ else if(cat==='shirt')g=`<path d="M72 48 L58 54 L36 74 L50 94 L62 86 V162 H138 V86 L150 94 L164 74 L142 54 L128 48 C124 58 112 64 100 64 C88 64 76 58 72 48 Z"/><path d="M84 50 L100 70 L116 50"/><path d="M100 70 V98"/><circle cx="100" cy="80" r="1.6"/><circle cx="100" cy="90" r="1.6"/>`;
+ return `<svg class="art" viewBox="0 0 200 200"><g transform="rotate(${rot} 100 100) translate(100 100) scale(${sc}) translate(-100 -100)">${g}</g></svg>`}
+function qrSvg(seed){let s='';for(let y=0;y<21;y++)for(let x=0;x<21;x++){const e=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);
+ const on=e?((x===0||x===6||y===0||y===6||(x>1&&x<5&&y>1&&y<5))?1:0):((x*3+y*17+((x*y+seed)%5))%3===0?1:0);if(on)s+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}
+ return `<svg viewBox="0 0 21 21" shape-rendering="crispEdges" fill="#071B56">${s}</svg>`}
+
+/* ============ sample data (stand-ins until the store sends real pieces) ============ */
+const POOL=['#2741','#1093','#5520','#3307','#6618','#8042','#1475','#7390','#2268','#9154','#3861'];
+function mkHist(cur,inc,n,until,span){const h=[];let a=cur,t=until;for(let i=0;i<n;i++){h.push({n:POOL[(i*7+3)%POOL.length],a,t});a-=inc*(i%3===2?2:1);t-=span/n*(.5+((i*37)%10)/10)}return h}
+/* One auction can hold several pieces: they close one after another, 5 minutes apart, from the owner's end time. */
+const EV={e1:{n:'مزاد الساعات الفاخرة',end:T0+H+12*MIN+9e3}};
+const A=[
+ {id:'a1',ev:'e1',lot:1,b:'ROLEX',n:'رولكس دايتونا «باندا»',m:'Cosmograph Daytona · 116500LN',cat:'watch',f:'ساعات',start:118000,cur:142000,inc:500,st:'live',t0:T0-5.8*H,older:9,
+  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'116500LN','سنة الإصدار':'2021','المقاس':'40 مم','الخامة':'ستيل أويستر','الضمان المتبقي':'منتهٍ'},
+  desc:'ساعة كرونوغراف بقرص أبيض وعدادات سوداء، بحالة ممتازة مع آثار استخدام خفيفة جداً على السوار. فحصها فريق المحل وتأكد من أصالتها.'},
+ {id:'a2',ev:'e1',lot:2,b:'PATEK PHILIPPE',n:'باتيك فيليب نوتيلوس',m:'Nautilus · 5711/1A-010',cat:'watch',f:'ساعات',start:380000,cur:512000,inc:1000,st:'live',t0:T0-5.8*H,older:6,
+  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'5711/1A-010','سنة الإصدار':'2019','المقاس':'40 مم','الخامة':'ستيل','الضمان المتبقي':'منتهٍ'},
+  desc:'القرص الأزرق المتدرّج الشهير، من آخر إصدارات الموديل قبل توقّف إنتاجه. تُسلَّم مع العلبة والأوراق الأصلية.'},
+ {id:'a3',b:'CARTIER',n:'قلم سانتوس دو كارتييه',m:'Santos de Cartier · Ballpoint',cat:'pen',f:'أقلام',start:2500,cur:4200,inc:100,st:'live',t0:T0-6.9*H,t1:T0+6*MIN+40e3,older:4,
+  cond:'جديد',incl:'العلبة والضمان الدولي',specs:{'النوع':'قلم حبر جاف','الخامة':'مطلي بالذهب','الطراز':'سانتوس'},
+  desc:'قلم من مجموعة سانتوس بتشطيب ذهبي وبراغي الإطار المميزة. جديد بالعلبة والضمان الدولي.'},
+ {id:'a4',b:'HERMÈS',n:'هيرمس بيركن 30',m:'Birkin 30 · Togo · Gold',cat:'bag',f:'حقائب',start:85000,cur:85000,inc:500,st:'up',t0:T0+26*H+20*MIN,t1:T0+33*H+20*MIN,older:0,
+  cond:'جديدة · غير مستخدمة',incl:'العلبة، الكيس، القفل والمفاتيح',specs:{'المقاس':'30 سم','الخامة':'جلد توغو','اللون':'Gold · معدن ذهبي'},
+  desc:'من أكثر الحقائب طلباً في العالم، بلون Gold الكلاسيكي ومعدن ذهبي. جديدة وغير مستخدمة مع كامل الملحقات.'},
+ {id:'a5',b:'ROLEX',n:'رولكس جي إم تي ماستر II «بيبسي»',m:'GMT-Master II · 126710BLRO',cat:'watch',f:'ساعات',start:72000,cur:98500,inc:500,st:'end',t0:T0-2*DAY-10*H,t1:T0-2*DAY-3*H,older:21,
+  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',specs:{'الرقم المرجعي':'126710BLRO','سنة الإصدار':'2020','المقاس':'40 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي','الضمان المتبقي':'منتهٍ'},
+  desc:'إطار أحمر وأزرق على سوار جوبيلي.'},
+ {id:'a6',b:'CARTIER',n:'أزرار أكمام سانتوس دو كارتييه',m:'Santos de Cartier · Cufflinks',cat:'cuff',f:'أزرار أكمام',start:3500,cur:6800,inc:100,st:'end',t0:T0-4*DAY-7*H,t1:T0-4*DAY,older:8,
+  cond:'جديدة',incl:'العلبة',specs:{'الخامة':'ستيل وذهب وردي'},desc:'تصميم سانتوس المربع ببراغي الإطار.'},
+];
+A.forEach(a=>{if(a.ev)a.t1=EV[a.ev].end+(a.lot-1)*5*MIN;a.dep=tier(a.start);a.rival=0;
+ a.hist=a.st==='up'?[]:mkHist(a.cur,a.inc,a.st==='end'?10:12,a.st==='end'?a.t1-60e3:T0-25e3,a.st==='end'?5*H:a.lot===2?2.5*H:4*H);if(a.st==='end')a.final=a.cur});
+const lotsOf=ev=>A.filter(x=>x.ev===ev).sort((x,y)=>x.lot-y.lot);
+const PR=[
+ {id:'s10',b:'ROLEX',n:'رولكس صب مارينر ديت',m:'Submariner Date · 126610LN',cat:'watch',c:'ساعات',price:62000,cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',
+  specs:{'الرقم المرجعي':'126610LN','سنة الإصدار':'2023','المقاس':'41 مم','الخامة':'ستيل أويستر','الضمان المتبقي':'حتى 2028'},desc:'ساعة الغوص الأيقونية بإطار سيراميك أسود، بحالة ممتازة مع العلبة والأوراق.'},
+ {id:'s1',b:'OMEGA',n:'أوميغا سبيدماستر مون ووتش',m:'Speedmaster Moonwatch · 310.30.42.50.01.001',cat:'watch',c:'ساعات',price:27500,cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',
+  specs:{'الرقم المرجعي':'310.30.42.50.01.001','سنة الإصدار':'2022','المقاس':'42 مم','الخامة':'ستيل','الضمان المتبقي':'سنة و4 أشهر'},desc:'كرونوغراف يدوي التعبئة بحركة Master Chronometer، في حالة ممتازة مع العلبة والأوراق.'},
+ {id:'s2',b:'MONTBLANC',n:'مون بلان مايسترستوك 149',m:'Meisterstück 149 · Fountain Pen',cat:'pen',c:'أقلام',price:3450,cond:'جديد',incl:'العلبة والضمان الدولي',
+  specs:{'الريشة':'ذهب 14 قيراط','الخامة':'راتنج أسود ثمين','التعبئة':'محبرة'},desc:'القطعة الأيقونية من مون بلان، قلم حبر سائل بريشة ذهبية. جديد بالعلبة والضمان.'},
+ {id:'s3',b:'CARTIER',n:'أزرار أكمام ديكور C',m:'Décor C de Cartier · Cufflinks',cat:'cuff',c:'أزرار أكمام',price:4900,cond:'جديدة',incl:'العلبة والشهادة',
+  specs:{'الخامة':'فضة إسترلينية','اللون':'فضي'},desc:'أزرار أكمام بشعار C المزدوج الكلاسيكي. جديدة بالعلبة.'},
+ {id:'s4',b:'LOUIS VUITTON',n:'لويس فيتون كيبول 50',m:'Keepall Bandoulière 50',cat:'duffle',c:'حقائب رجالية',price:9800,cond:'مستعملة · ممتازة',incl:'حزام الكتف والكيس',
+  specs:{'المقاس':'50 × 29 × 23 سم','الخامة':'قماش مونوغرام','اللون':'بني'},desc:'حقيبة السفر الكلاسيكية بقماش المونوغرام مع حزام للكتف، وعليها آثار استخدام خفيفة على المقابض.'},
+ {id:'s5',b:'CHANEL',n:'شانيل كلاسيك فلاب متوسطة',m:'Classic Flap Medium · Caviar',cat:'bag',c:'حقائب نسائية',price:38000,cond:'مستعملة · جيدة جداً',incl:'العلبة، الكيس وبطاقة الأصالة',
+  specs:{'المقاس':'25 سم','الخامة':'جلد كافيار','اللون':'أسود · معدن ذهبي'},desc:'جلد كافيار أسود مع سلسلة ذهبية، من أكثر حقائب شانيل طلباً.'},
+ {id:'s6',b:'LORO PIANA',n:'كاب لورو بيانا كشمير',m:'Cashmere Baseball Cap',cat:'cap',c:'كابات',price:1450,cond:'جديد',incl:'الكيس',sizes:['S','M','L'],out:['S'],g:'رجالي',
+  specs:{'الخامة':'كشمير','اللون':'كحلي'},desc:'كاب من الكشمير الناعم بلون كحلي.'},
+ {id:'s7',b:'BERLUTI',n:'حذاء بيرلوتي أليساندرو',m:'Alessandro Démesure · Oxford',cat:'shoe',c:'أحذية',price:6200,cond:'جديد',incl:'العلبة والأكياس',sizes:['41','42','43','44'],out:['44'],g:'رجالي',
+  specs:{'الخامة':'جلد فينيتسيا','اللون':'بني تاباكو','المقاسات':'أوروبية'},desc:'أكسفورد من قطعة جلد واحدة بتدرّج باتينا يدوي.'},
+ {id:'s8',b:'BRUNELLO CUCINELLI',n:'بولو برونيلو كوتشينيلي',m:'Cotton Piqué Polo',cat:'shirt',c:'ملابس',price:2900,cond:'جديد',incl:'—',sizes:['S','M','L','XL'],out:[],g:'رجالي',
+  specs:{'الخامة':'قطن بيكيه','اللون':'بيج'},desc:'بولو من قطن البيكيه الناعم بلون بيج.'},
+ {id:'s9',b:'ROLEX',n:'رولكس ديت جست 41',m:'Datejust 41 · 126334',cat:'watch',c:'ساعات',price:46000,cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',sold:true,
+  specs:{'الرقم المرجعي':'126334','المقاس':'41 مم'},desc:'تم بيع هذه القطعة.'},
+];
+const CATS=[['ساعات','watch'],['أقلام','pen'],['أزرار أكمام','cuff'],['حقائب رجالية','duffle'],['حقائب نسائية','bag'],['ملابس','shirt'],['كابات','cap'],['أحذية','shoe']];
+const FEES={qa:{n:'توصيل داخل قطر',d:'1–2 يوم عمل من تأكيد الدفع',v:50,i:'truck'},gcc:{n:'توصيل لدول الخليج',d:'3–5 أيام عمل · أرامكس',v:150,i:'globe'},
+ intl:{n:'توصيل خارج الخليج',d:'5–10 أيام عمل · أرامكس · الجمارك على المشتري',v:300,i:'globe'},pick:{n:'استلام من المحل',d:'جاهز خلال 24 ساعة من تأكيد الدفع',v:0,i:'store'}};
+const COUNTRIES=['قطر','السعودية','الإمارات','الكويت','البحرين','عُمان','دولة أخرى'];
+const DEFADR={country:'قطر',city:'لوسيل',line:'مبنى 12، شارع 300، منطقة 69'};
+const AA=id=>A.find(a=>a.id===id), PP=id=>PR.find(p=>p.id===id);
+
+/* ============ state ============ */
+const S={me:null,acct:null,cc:'+974',phone:'',wallet:{avail:0,held:0,card:0},dep:{},orders:[],tx:[],inbox:[],rem:{},after:null};
+let AS='live',AF='الكل',Q='',CB={},CG={},SZ={},BSEL={},CO={s:'del'},DF=null,OSEQ=516,HALL={},NUMSEQ=0;
+const OO=id=>S.orders.find(o=>o.id===id);
+const bids=a=>a.hist.length+a.older;
+const bidders=a=>new Set(a.hist.map(h=>h.n)).size+Math.floor(a.older/3);
+const myMax=a=>S.me?a.hist.filter(h=>h.n===S.me.num).reduce((m,h)=>Math.max(m,h.a),0):0;
+const isLead=a=>!!(S.me&&a.hist[0]&&a.hist[0].n===S.me.num);
+const hasDep=id=>!!(S.me&&S.dep[id]&&(S.dep[id].state==='held'||S.dep[id].state==='pending'));
+const held=o=>!!o&&(o.state==='await'||o.state==='review');
+const ONEOFF={watch:1,pen:1,cuff:1,bag:1,duffle:1};
+/* delivery: the zone (and fee) follows the address country; pickup is the other choice */
+const effM=s=>s==='pick'?'pick':(S.me&&S.me.addr?zone(S.me.addr.country):null);
+const feeV=m=>m?FEES[m].v:0;
+const feeTx=v=>v?fmt(v)+' ر.ق':'مجاناً';
+
+/* ============ navigation ============ */
+let stack=[{k:'splash'}],cur=stack[0];
+const ROOT={home:1,shop:1,auc:1,mine:1,me:1},BARE={splash:1,login:1,otp:1,name:1},NOREF={splash:1,login:1,otp:1,name:1};
+const LIVE={home:1,auc:1,lot:1,mine:1,me:1,wallet:1,pay:1,order:1,orders:1,inbox:1,stmt:1};
+function go(k,p){if(ROOT[k])stack=[{k,p}];else stack.push({k,p});cur=stack[stack.length-1];render(true)}
+function replace(k,p){stack[stack.length-1]={k,p};cur=stack[stack.length-1];render(true)}
+function back(){if(stack.length>1)stack.pop();else stack=[{k:'home'}];cur=stack[stack.length-1];render(true)}
+const KEEP='.hs,.chips,.gal-s,.hist';
+function render(anim){
+ const sc=$('#sc'),top=sc.scrollTop,keep=[...sc.querySelectorAll(KEEP)].map(e=>[e.scrollLeft,e.scrollTop]);
+ const ae=document.activeElement,fid=ae&&sc.contains(ae)&&ae.id?ae.id:'',sel=fid&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
+ $('#nv').classList.toggle('hide',!!BARE[cur.k]);$('#hd').classList.toggle('hide',!!BARE[cur.k]);
+ if(!BARE[cur.k])$('#hd').innerHTML=hdr();
+ sc.innerHTML=V[cur.k](cur.p);
+ const d=DOCK[cur.k]?DOCK[cur.k](cur.p):'',dk=$('#dock');dk.innerHTML=d;dk.classList.toggle('on',!!d);
+ navUpd();
+ if(anim){sc.scrollTop=0;sc.classList.remove('enter');void sc.offsetWidth;sc.classList.add('enter');if(AFTER[cur.k])AFTER[cur.k](cur.p)}
+ else{sc.classList.remove('enter');sc.scrollTop=top;sc.querySelectorAll(KEEP).forEach((e,i)=>{if(keep[i]){e.scrollLeft=keep[i][0];e.scrollTop=keep[i][1]}});
+  const g=sc.querySelector('.gal-s');if(g)galDots(g);
+  if(fid){const n=document.getElementById(fid);if(n){n.focus({preventScroll:true});if(sel)try{n.setSelectionRange(sel[0],sel[1])}catch(e){}}}}
+ sc.querySelectorAll('.hist').forEach(histFade);
+ tick();
+}
+function refresh(){if(NOREF[cur.k]){navUpd();return}render(false)}
+/* background events (other bidders, store confirmations) only redraw screens that show live data */
+function bgRefresh(){if(NOREF[cur.k]||!LIVE[cur.k]){navUpd();return}render(false)}
+const TITLES={cat:p=>p,item:()=>'تفاصيل القطعة',lot:id=>{const a=AA(id);return a.st==='live'?'مزاد مباشر':a.st==='up'?'مزاد قادم':'مزاد منتهٍ'},
+ checkout:()=>'إتمام الشراء',pay:id=>held(OO(id))?'إتمام الدفع':'تفاصيل الطلب',order:()=>'تفاصيل الطلب',wallet:()=>'المحفظة',orders:()=>'طلباتي',stmt:()=>'كشف حسابي',
+ rules:()=>'القواعد والسياسات',addr:()=>'عنوان التوصيل',settings:()=>'الإشعارات والعروض',inbox:()=>'الإشعارات'};
+function hdr(){
+ if(ROOT[cur.k]){const un=S.me&&S.inbox.some(n=>n.un);
+  return `<div class="bnd">${LOGO(34)}<div><div class="t1">مزاد الفاخر</div><div class="t2">MZAD AL FAKHER</div></div></div>
+   ${S.me?'':`<button class="lgn" onclick="needLogin({k:'${cur.k}'})">دخول</button>`}
+   <button class="hb" aria-label="الإشعارات" onclick="go('inbox')">${ic('bell')}${un?'<span class="dt"></span>':''}</button>`}
+ return `<button class="hb" aria-label="رجوع" onclick="back()">${ic('back')}</button><div class="ttlx">${TITLES[cur.k]?TITLES[cur.k](cur.p):''}</div><span class="sp40"></span>`}
+function navUpd(){
+ document.querySelectorAll('.nv button').forEach(b=>b.classList.toggle('on',b.dataset.t===stack[0].k));
+ const n=S.me?S.orders.filter(o=>o.kind==='auction'&&o.state==='await').length+A.filter(a=>a.st==='live'&&myMax(a)&&!isLead(a)).length:0;
+ const bm=$('#bm');bm.textContent=n;bm.classList.toggle('hide',!n);
+ if(ROOT[cur.k]&&!BARE[cur.k]){const hb=$('#hd .hb .dt'),un=!!(S.me&&S.inbox.some(x=>x.un));if(!!hb!==un)$('#hd').innerHTML=hdr()}
+}
+function histFade(el){el.classList.toggle('fade',el.scrollHeight>el.clientHeight+2&&el.scrollTop+el.clientHeight<el.scrollHeight-2)}
+
+/* ============ live engine ============ */
+function cdT(s){const [t,id]=s.split(':');if(t==='a'){const a=AA(id);return a?a.t1:null}if(t==='s'){const a=AA(id);return a?a.t0:null}if(t==='o'){const o=OO(id);return o?o.deadline:null}return null}
+function hgF(s){const now=Date.now(),[t,id]=s.split(':');
+ if(t==='a'){const a=AA(id);if(a.st==='up')return 1;if(a.st==='end')return 0;return (a.t1-now)/(a.t1-a.t0)}
+ if(t==='o'){const o=OO(id);return o?(o.deadline-now)/o.span:0}
+ return 1-((now/1000)%90)/90}
+function tick(){
+ const now=Date.now();
+ A.forEach(a=>{if(a.st!=='live')return;if(now>=a.t1)return finish(a);
+  if(S.me&&!a.soon&&a.t1-now<5*MIN&&(hasDep(a.id)||myMax(a))){a.soon=1;push('المزاد قارب على الانتهاء',`${a.n} ينتهي خلال أقل من 5 دقائق`,['lot',a.id],'clock')}});
+ document.querySelectorAll('[data-cd]').forEach(el=>{const k=el.dataset.cd,tg=cdT(k);if(tg==null)return;const r=tg-now;el.textContent=k[0]==='s'?durD(r):dur(r);
+  if(k[0]==='a'){const p=el.closest('.cdp,.tp');if(p)p.classList.toggle('hot',r<120e3)}});
+ document.querySelectorAll('[data-hg]').forEach(s=>setSand(s,hgF(s.dataset.hg)));
+ document.querySelectorAll('[data-ago]').forEach(el=>el.textContent=ago(+el.dataset.ago));
+}
+setInterval(tick,1000);
+function placeBid(a,n,amt){
+ a.hist.unshift({n,a:amt,t:Date.now(),fresh:1});a.cur=amt;
+ if(a.t1-Date.now()<120e3){a.t1=Date.now()+120e3;a.ext=1;if(cur.k==='lot'&&cur.p===a.id)toast('مزايدة في اللحظات الأخيرة — عاد العداد إلى دقيقتين')}
+ if(a.ev){let prev=null;lotsOf(a.ev).forEach(x=>{if(prev&&x.st==='live'&&x.t1<prev.t1+5*MIN)x.t1=prev.t1+5*MIN;prev=x})}
+}
+function finish(a){
+ a.st='end';a.final=a.cur;const w=a.hist[0]&&a.hist[0].n,acct=S.me||S.acct;
+ if(acct&&w===acct.num){
+  const o=newOrder({kind:'auction',itemId:a.id,title:a.n,b:a.b,cat:a.cat,price:a.cur,dep:a.dep,state:'await',deadline:Date.now()+48*H,span:48*H,s:'del'});a.oid=o.id;
+  push('مبروك، فزت بالمزاد',`${a.n} بـ ${fmt(a.cur)} ر.ق — ادفع خلال 48 ساعة`,['pay',o.id],'glass');
+ }else{const d=S.dep[a.id];
+  if(d&&d.state==='held'){releaseDep(a.id,'لم تفز');push('انتهى المزاد',`لم تفز بـ ${a.n}. أُعيد تأمينك ${fmt(d.amt)} ر.ق إلى محفظتك.`,['wallet'],'wallet')}
+  else if(d&&d.state==='pending'){d.state='refund';push('انتهى المزاد',`لم تفز بـ ${a.n}. سيُضاف تأمينك ${fmt(d.amt)} ر.ق إلى محفظتك فور وصول التحويل.`,['wallet'],'wallet')}}
+ if(DF&&DF.id===a.id)closeSheet();
+ bgRefresh();
+}
+function releaseDep(id,why){const d=S.dep[id],a=AA(id);if(!d||d.state==='returned')return;
+ if(d.state==='held'){S.wallet.held-=d.amt;S.wallet.avail+=d.amt;S.wallet.card+=d.src==='card'?d.amt:d.src==='wallet'?(d.cardAmt||0):0;txAdd(`إرجاع تأمين — ${a.n}`,d.amt,'p',why)}d.state='returned'}
+function rival(a){
+ if(a.rival>=2||a.rT)return;
+ a.rT=setTimeout(()=>{a.rT=0;if(a.st!=='live'||!isLead(a)||a.rival>=2)return;a.rival++;
+  const n=POOL[(a.hist.length*5+a.rival)%POOL.length],amt=a.cur+a.inc*(a.rival===1?1:2);placeBid(a,n,amt);
+  push('تم تجاوز مزايدتك',`<bdi>${n}</bdi> زايد بـ ${fmt(amt)} ر.ق على ${a.n}`,['lot',a.id],'glass');bgRefresh()},6500+Math.random()*3500)}
+setInterval(()=>{ // other bidders on the two big watches
+ const a=A.find(x=>x.id===(Math.random()<.5?'a1':'a2'));if(!a||a.st!=='live'||Math.random()<.45)return;
+ const lead=isLead(a);if(lead&&a.rival>=2)return;if(lead)a.rival++;
+ let n=POOL[Math.floor(Math.random()*POOL.length)];if(a.hist[0]&&n===a.hist[0].n)n=POOL[(POOL.indexOf(n)+1)%POOL.length];
+ placeBid(a,n,a.cur+a.inc);if(lead)push('تم تجاوز مزايدتك',`<bdi>${n}</bdi> زايد بـ ${fmt(a.cur)} ر.ق على ${a.n}`,['lot',a.id],'glass');bgRefresh()},16000);
+
+/* ============ ui primitives ============ */
+let tsT;function toast(m){const t=$('#ts');t.textContent=m;t.classList.add('on');clearTimeout(tsT);tsT=setTimeout(()=>t.classList.remove('on'),2600)}
+let pbT;function push(t,b,nav,icn){
+ S.inbox.unshift({t:Date.now(),title:t,body:b,nav,icn:icn||'bell',un:1});
+ if(!S.me){navUpd();return}
+ const el=$('#pb');el.innerHTML=`${LOGO(38)}<div style="flex:1;min-width:0"><div class="a"><span>مزاد الفاخر</span><span>الآن</span></div><div class="t">${t}</div><div class="b">${b}</div></div>`;
+ el.onclick=()=>{el.classList.remove('on');if(nav){closeSheet();go(nav[0],nav[1])}};el.classList.add('on');clearTimeout(pbT);pbT=setTimeout(()=>el.classList.remove('on'),4600);navUpd()}
+let SHF=null,SHX=null;
+function openSheet(fn,opt){SHF=fn;SHX=opt||null;const s=$('#sh');s.innerHTML=fn();s.scrollTop=0;s.classList.add('on');$('#ov').classList.add('on')}
+function upSheet(){if(SHF)$('#sh').innerHTML=SHF()}
+function closeSheet(){SHF=null;SHX=null;DF=null;$('#sh').classList.remove('on');$('#ov').classList.remove('on')}
+function ovTap(){const o=SHX;if(o&&o.modal)return;closeSheet();if(o&&o.onClose)o.onClose()}
+function copy(v){try{navigator.clipboard.writeText(v).catch(()=>{})}catch(e){}toast('تم النسخ')}
+function wa(){toast('يفتح محادثة واتساب مع المحل (يُضاف رقم المحل)')}
+function maps(){toast('يفتح موقع المحل في خرائط Google (يُضاف رابط المحل)')}
+function txAdd(l,a,k,d){S.tx.unshift({t:Date.now(),l,a,k,d:d||''})}
+function newOrder(o){OSEQ++;o.id=`MZ-${(S.me||S.acct)?(S.me||S.acct).num.slice(1):'0000'}-0${OSEQ}`;o.created=Date.now();S.orders.unshift(o);return o}
+function markSold(o){if(o.kind!=='shop')return;const p=PP(o.itemId);if(p&&ONEOFF[p.cat]){p.sold=true;p.res=null}}
+/* simulated store/server events keep a handle on the account they belong to */
+const mine=w=>!!S.me&&S.wallet===w;
+const contact=()=>`<div class="ctr"><button class="cb" onclick="maps()">${ic('pin')}موقع المحل</button><button class="cb" onclick="wa()">${ic('wa')}استفسار واتساب</button></div>`;
+const myTag=a=>{if(!S.me)return '';if(isLead(a))return `<span class="tg ok">${ic('check')}أنت الأعلى</span>`;if(myMax(a))return `<span class="tg bad">تم تجاوزك</span>`;if(hasDep(a.id))return `<span class="tg">التأمين مدفوع</span>`;return ''};
+const evLine=a=>a.ev?`<div class="evl">${ic('glass')}${EV[a.ev].n} · القطعة ${a.lot} من ${lotsOf(a.ev).length}</div>`:'';
+const authCard=()=>`<div class="auc">${ic('shield')}<div><b>ضمان الأصالة</b><p>مع كل قطعة شهادة أصالة موقّعة من المحل، واسترجاع كامل للمبلغ إذا ثبت أن القطعة غير أصلية.</p></div></div>`;
+const bigShipBadge=p=>p>300000?`<span class="bd">${ic('globe')}الشحن خارج قطر بعد موافقة المحل</span>`:'';
+
+/* ============ cards ============ */
+const aCardH=a=>`<button class="ac" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span><span class="soon">صورة قريباً</span></div>
+ <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div><div class="rwb"><div><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><div class="bc">${cnt(bids(a),W_BID)}</div></div>${myTag(a)?`<div style="margin-top:8px">${myTag(a)}</div>`:''}</div></button>`;
+const aCardV=a=>`<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span><span class="soon">صورة قريباً</span></div>
+ <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>${evLine(a)}<div class="rwb"><div><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><div class="bc">${cnt(bids(a),W_BID)} · تأمين ${fmt(a.dep)} ر.ق</div></div>${myTag(a)?`<div class="mt">${myTag(a)}</div>`:''}</div></button>`;
+const aUp=a=>`<button class="up1" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}</div><div class="b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
+ <div class="k" style="margin-top:6px">سعر البداية</div><div class="pr" style="font-size:15px">${qar(a.start)}</div><div class="st">${ic('clock')}يبدأ ${dayLbl(a.t0)} ${clock(a.t0)}${S.rem[a.id]?' · سنذكّرك':''}</div></div></button>`;
+const aEnd=a=>{const won=S.me&&a.hist[0]&&a.hist[0].n===S.me.num;return `<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}<span class="live" style="color:var(--mute)">انتهى</span><span class="soon">صورة قريباً</span></div>
+ <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div><div class="rwb"><div><div class="k">بيعت بـ</div><div class="pr">${qar(a.final)}</div></div><div class="bc">${cnt(bids(a),W_BID)} · ${pastLbl(a.t1)}</div></div>${won?`<div class="mt"><span class="tg ok">${ic('check')}فزت بهذه القطعة</span></div>`:''}</div></button>`};
+function pCard(p){const o=p.res&&OO(p.res),r=held(o)&&S.me;
+ return `<button class="pc" onclick="go('item','${p.id}')"><div class="ph">${art(p.cat)}<span class="soon">صورة قريباً</span>${p.sold?'<div class="so"><span>تم البيع</span></div>':r?'<div class="so"><span>محجوزة لك</span></div>':''}</div>
+ <div class="pc-b"><div class="br">${p.b}</div><div class="nm">${p.n}</div><div class="pr">${qar(p.price)}</div></div></button>`}
+function gallery(cat,live){
+ const V4=cat==='watch'?['الواجهة','الظهر','على المعصم','العلبة والأوراق']:['الواجهة','الخلف','التفاصيل','العلبة والملحقات'];
+ return `<div class="gal"><div class="gal-s" onscroll="galDots(this)">${V4.map((v,i)=>`<div class="gph">${art(cat,i)}<span class="vw">${v}</span></div>`).join('')}
+  <div class="gph vid" onclick="toast('تشغيل فيديو القطعة — بانتظار فيديو المحل')">${art(cat,4)}<span class="play">${ic('play')}</span><span class="vw">فيديو · 0:15</span></div></div>
+  <div class="gal-d">${[0,1,2,3,4].map(i=>`<i class="${i?'':'on'}"></i>`).join('')}</div><span class="soon">صور توضيحية — بانتظار صور المحل</span>${live?'<span class="live"><em></em>مباشر</span>':''}</div>`}
+function galDots(el){const i=Math.round(Math.abs(el.scrollLeft)/el.clientWidth);el.parentNode.querySelectorAll('.gal-d i').forEach((d,j)=>d.classList.toggle('on',j===i))}
+const storeCard=()=>`<div class="store"><div class="ic2">${ic('store')}</div><div><b>محل مزاد الفاخر · الدوحة</b><p>العرض والاستلام في المحل · ساعات العمل تُضاف</p></div></div>${contact()}`;
+/* delivery choice: zone + fee follow the saved address; pickup is free */
+function shipOpts(s,on,price){const a=S.me&&S.me.addr,m=a?zone(a.country):null,f=m?FEES[m]:null;
+ return `<button class="opt ${s!=='pick'?'on':''}" onclick="${on.replace('$',"'del'")}"><span class="rd"></span><div><div class="t">${a?`توصيل إلى ${esc(a.country)}`:'توصيل إلى عنوانك'}</div><div class="d">${f?f.d:'أضف العنوان لمعرفة الرسوم'}${f&&m!=='qa'&&price>300000?' · الشحن بعد موافقة المحل':''}</div></div><span class="v">${f?feeTx(f.v):'حسب الدولة'}</span></button>
+ <button class="opt ${s==='pick'?'on':''}" onclick="${on.replace('$',"'pick'")}"><span class="rd"></span><div><div class="t">${FEES.pick.n}</div><div class="d">${FEES.pick.d}</div></div><span class="v">مجاناً</span></button>
+ <p class="k" style="margin:2px 2px 0">رسوم الشحن مؤقتة — بانتظار تأكيد المحل</p>`}
+function shipNotes(m,price){return (m==='gcc'||m==='intl'?`<div class="nt">${ic('info')}<span>الجمارك والضرائب في بلد الاستلام على المشتري. كل شحنة مؤمّنة بكامل قيمتها وتُسلَّم بالتوقيع والهوية.</span></div>`:'')+
+ (price>300000&&(m==='gcc'||m==='intl')?`<div class="nt w">${ic('globe')}<span>القطع التي تزيد على 300,000 ر.ق تُشحن خارج قطر بعد موافقة المحل.</span></div>`:'')}
+function adrRow(){const a=S.me&&S.me.addr;return a?`<button class="adr" onclick="addrSheet()">${ic('pin')}<div><b>${esc(a.country)} — ${esc(a.city)}</b><span>${esc(a.line)}</span></div><em>تغيير</em></button>`:`<button class="adr" onclick="addrSheet()">${ic('plus')}<div><b>أضف عنوان التوصيل</b><span>مطلوب لإنشاء الشحنة تلقائياً</span></div></button>`}
+
+/* ============ screens ============ */
+const V={};
+V.splash=()=>`<div class="splash"><div class="sp-pat"></div><div class="sp-pat r"></div>
+ <div class="sp-in"><div class="rv">${LOGO(88)}</div><h1 class="wm rv" style="--d:1">مزاد الفاخر</h1><div class="wl rv" style="--d:2">MZAD AL FAKHER</div>
+ <p class="sp-t rv" style="--d:3">ساعات، أقلام، حقائب وقطع فاخرة<br>للشراء المباشر وفي مزادات مباشرة</p></div>
+ <div class="sp-b rv" style="--d:4"><button class="btn" onclick="needLogin({k:'home'})">تسجيل الدخول</button><button class="btn ghost" onclick="go('home')">تصفّح كضيف</button>
+ <p class="fine">بالمتابعة توافق على <a onclick="go('rules')">الشروط وسياسة الخصوصية</a></p></div></div>`;
+V.login=()=>`<div class="auth"><button class="x" aria-label="إغلاق" onclick="back()">${ic('x')}</button>
+ <div class="auth-h rv">${LOGO(56)}<h2 class="ds">تسجيل الدخول</h2><p>أدخل رقم جوالك وسنرسل لك رمز تحقق</p></div>
+ <label class="fl rv" style="--d:1">رقم الجوال<div class="phone"><button class="cc" onclick="cc(this)">${S.cc}</button><input class="in" id="ph" inputmode="tel" placeholder="5512 3456" value="${esc(S.phone)}"></div></label>
+ <div class="rv" style="--d:2"><button class="btn" onclick="sendOtp()">إرسال الرمز</button>
+ <p class="fine">رقمك لا يظهر لأحد. في المزادات يظهر رقم المزايد الخاص بك فقط.</p></div></div>`;
+V.otp=()=>`<div class="auth"><button class="x" aria-label="رجوع" onclick="back()">${ic('back')}</button>
+ <div class="auth-h rv">${LOGO(56)}<h2 class="ds">رمز التحقق</h2><p>أرسلنا رمزاً من 6 أرقام إلى<br><bdi>${S.cc} ${esc(S.phone)}</bdi></p></div>
+ <div class="otp rv" style="--d:1">${[0,1,2,3,4,5].map(i=>`<span id="o${i}"></span>`).join('')}</div>
+ <div class="otps" id="otpS">بانتظار الرمز…</div><p class="fine">إعادة الإرسال بعد <bdi>0:45</bdi></p></div>`;
+V.name=()=>`<div class="auth"><div class="auth-h rv" style="margin-top:10px">${LOGO(56)}<h2 class="ds">أهلاً بك</h2><p>أكمل بياناتك لإنشاء حسابك</p></div>
+ <div class="rv" style="--d:1"><label class="fl">الاسم الأول<input class="in" id="fn" placeholder="خالد"></label>
+ <label class="fl">اسم العائلة<input class="in" id="ln" placeholder="المري"></label>
+ <div class="cons">نسجّل نشاطك داخل التطبيق (الصفحات والقطع التي تشاهدها) لنخدمك بشكل أفضل. التفاصيل في <a onclick="rulesSheet()">سياسة الخصوصية</a>.</div>
+ <label class="ck"><input type="checkbox" id="offers"><i></i><span>أرغب في استلام العروض وإشعارات المزادات الجديدة (يمكن إيقافها في أي وقت)</span></label></div>
+ <div class="grow"></div><p class="fine" style="margin-bottom:10px">التسجيل لمن عمره 18 سنة فأكثر.</p><button class="btn rv" style="--d:2" onclick="createAcct()">إنشاء الحساب</button></div>`;
+
+V.home=()=>{const live=A.filter(a=>a.st==='live').sort((x,y)=>x.t1-y.t1),up=A.filter(a=>a.st==='up'),h=new Date().getHours(),av=PR.filter(p=>!p.sold).length;
+ return `<div class="pg"><div class="hello rv"><p class="k">${h<12?'صباح الخير':'مساء الخير'}</p><h1 class="ds">${S.me?'أهلاً '+esc(S.me.first):'أهلاً بك'}</h1></div>
+ <div class="duo rv" style="--d:1">
+  <button class="door lt" onclick="go('shop')"><div class="door-art">${art('watch')}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
+  <button class="door dk" onclick="go('auc')"><div class="door-art">${hg('x',96)}</div><div class="door-tx"><b>المزاد</b><span><em class="ldot"></em>${live.length?cnt(live.length,W_LIVE):'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div>
+ ${orn()}
+ ${live.length?`<div class="sh2 rv" style="--d:2"><h3>ينتهي قريباً</h3><a onclick="go('auc')">كل المزادات</a></div><div class="hs rv" style="--d:2">${live.map(aCardH).join('')}</div>`:''}
+ <div class="sh2 rv" style="--d:3"><h3>وصل حديثاً</h3><a onclick="go('shop')">المتجر</a></div><div class="grid rv" style="--d:3">${PR.filter(p=>!p.sold).slice(0,4).map(pCard).join('')}</div>
+ ${up.length?`<div class="sh2"><h3>مزاد قادم</h3></div>${up.map(aUp).join('')}`:''}
+ ${storeCard()}</div>`};
+
+function shopList(){const q=Q.trim().toLowerCase();return PR.filter(p=>!q||(p.b+' '+p.n+' '+p.m).toLowerCase().includes(q))}
+function shopGrid(){const l=shopList();return l.length?l.map(pCard).join(''):'<p class="k" style="grid-column:1/-1;text-align:center;padding:20px">لا توجد نتائج</p>'}
+const avail=l=>`${cnt(l.filter(p=>!p.sold).length,W_PC)} متاحة`;
+V.shop=()=>`<div class="pg"><div class="ttl rv"><h1 class="ds">المتجر</h1><p>قطع أصلية مضمونة للشراء المباشر</p></div>
+ <div class="srch rv">${ic('search')}<input id="q" placeholder="ابحث بالماركة أو الموديل" oninput="srch(this.value)" value="${esc(Q)}"></div>
+ <div class="cats rv" style="--d:1">${CATS.map(([n,c])=>`<button class="cat" onclick="go('cat','${n}')"><span class="cat-a">${art(c)}</span><b>${n}</b><em>${cnt(PR.filter(p=>p.c===n&&!p.sold).length,W_PC)}</em></button>`).join('')}</div>
+ <div class="sh2"><h3>كل القطع</h3><em id="sn">${avail(shopList())}</em></div><div class="grid" id="sg">${shopGrid()}</div></div>`;
+function srch(v){Q=v;const g=$('#sg');if(g){g.innerHTML=shopGrid();$('#sn').textContent=avail(shopList())}}
+V.cat=c=>{const all=PR.filter(p=>p.c===c),brands=[...new Set(all.map(p=>p.b))],b=CB[c]||'الكل',gn=CG[c]||'الكل',gend=(c==='ملابس'||c==='أحذية');
+ const l=all.filter(p=>(b==='الكل'||p.b===b)&&(gn==='الكل'||p.g===gn));
+ return `<div class="pg"><div class="ttl rv"><h1 class="ds">${c}</h1><p>${avail(all)}</p></div>
+ <div class="chips rv">${['الكل',...brands].map(x=>`<button class="chip ${x===b?'on':''}" onclick="CB['${c}']='${x}';refresh()">${x==='الكل'?'كل الماركات':x}</button>`).join('')}</div>
+ ${gend?`<div class="chips">${['الكل','رجالي','نسائي'].map(x=>`<button class="chip ${x===gn?'on':''}" onclick="CG['${c}']='${x}';refresh()">${x}</button>`).join('')}</div>`:''}
+ ${l.length?`<div class="grid rv" style="--d:1">${l.map(pCard).join('')}</div>`:`<div class="empty">${hg(null,64,.2)}<h3>لا توجد قطع حالياً</h3><p>نضيف قطعاً جديدة باستمرار.</p></div>`}</div>`};
+V.item=id=>{const p=PP(id),o=p.res&&OO(p.res),r=held(o)&&S.me;
+ return `${gallery(p.cat,false)}<div class="pg pd"><div class="br rv">${p.b}</div><h1 class="ds nm2 rv">${p.n}</h1><div class="md rv">${p.m}</div>
+ <div class="prw rv" style="--d:1"><div class="pr2">${qar(p.price)}</div>${p.sold?'<span class="tg nv">تم البيع</span>':r?`<span class="tg">${o.state==='review'?'محجوزة لك — قيد مراجعة التحويل':'محجوزة لك'}</span>`:''}</div>
+ <div class="badges rv" style="--d:1"><span class="bd au">${ic('shield')}أصالة مضمونة</span><span class="bd">${p.cond}</span>${bigShipBadge(p.price)}</div>
+ ${p.sizes?`<div class="szl">المقاس</div><div class="szs">${p.sizes.map(s=>`<button class="sz ${(p.out||[]).includes(s)?'x':''} ${SZ[id]===s?'on':''}" onclick="SZ['${id}']='${s}';refresh()">${s}</button>`).join('')}</div>`:''}
+ <div class="card rv" style="--d:2"><div class="kv"><span>الحالة</span><b>${p.cond}</b></div><div class="kv"><span>المرفقات</span><b>${p.incl}</b></div>${Object.entries(p.specs).map(([k,v])=>`<div class="kv"><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+ <p class="desc">${p.desc}</p>${authCard()}
+ ${p.price>=50000?`<div class="nt">${ic('id')}<span>طلبات المتجر من 50,000 ر.ق فأكثر تتطلب التحقق من الهوية مرة واحدة.</span></div>`:''}
+ <div class="sh2"><h3>التوصيل والاستلام</h3></div><div class="card">${Object.values(FEES).map(f=>`<div class="kv"><span>${f.n}</span><b>${feeTx(f.v)}</b></div>`).join('')}</div>
+ <p class="k" style="margin:8px 2px 0">رسوم الشحن مؤقتة — بانتظار تأكيد المحل</p>
+ ${contact()}<a class="lnk" onclick="go('rules')">سياسة الاسترجاع والشحن</a></div>`};
+V.checkout=id=>{const p=PP(id),m=effM(CO.s),fv=feeV(m),tot=p.price+fv,card=tot<=10000;
+ return `<div class="pg"><div class="row2" style="cursor:default"><div class="ph">${art(p.cat)}</div><div class="mid"><div class="br">${p.b}</div><div class="nm">${p.n}</div>${SZ[id]?`<div class="k" style="margin-top:3px">المقاس: ${SZ[id]}</div>`:''}<div class="pr" style="font-size:15px">${qar(p.price)}</div></div></div>
+ <div class="sh2"><h3>طريقة الاستلام</h3></div>${shipOpts(CO.s,'setCO($)',p.price)}
+ ${CO.s!=='pick'?`<div class="sh2"><h3>عنوان التوصيل</h3></div>${adrRow()}${shipNotes(m,p.price)}`:`<div class="nt">${ic('store')}<span>يُجهَّز طلبك خلال 24 ساعة من تأكيد الدفع ويُحفظ 14 يوماً. تستلمه بالبطاقة الشخصية ورمز الاستلام.</span></div>`}
+ <div class="sh2"><h3>الدفع</h3></div>
+ ${card?`<div class="opt on" style="cursor:default"><span class="oi">${ic('card')}</span><div><div class="t">بطاقة ائتمانية أو بطاقة خصم</div><div class="d">دفع آمن ومباشر</div></div></div>`
+ :`<div class="opt on" style="cursor:default"><span class="oi">${ic('bank')}</span><div><div class="t">تحويل بنكي</div><div class="d">للطلبات فوق 10,000 ر.ق — بدون رسوم بطاقات</div></div></div>
+  <div class="nt">${ic('clock')}<span>نحجز القطعة لك <b>24 ساعة</b> بعد الطلب (بحد أقصى حجزان غير مدفوعين). حوّل المبلغ وارفع الإيصال، ونؤكد خلال يوم عمل.</span></div>`}
+ ${tot>=50000&&!S.me.verified?`<div class="nt">${ic('id')}<span>طلبات المتجر من 50,000 ر.ق فأكثر تتطلب التحقق من الهوية مرة واحدة قبل إتمام الطلب.</span></div>`:''}
+ <div class="sh2"><h3>الملخص</h3></div><div class="card"><div class="kv"><span>سعر القطعة</span><b>${fmt(p.price)} ر.ق</b></div><div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>الإجمالي</span><b>${fmt(tot)} ر.ق</b></div></div></div>`};
+function setCO(s){CO.s=s;refresh()}
+
+V.auc=()=>{const fl=['الكل','ساعات','أقلام','حقائب','أزرار أكمام'],l=A.filter(a=>a.st===AS&&(AF==='الكل'||a.f===AF)).sort((x,y)=>AS==='end'?y.t1-x.t1:x.t1-y.t1),c=s=>A.filter(a=>a.st===s).length;
+ return `<div class="pg"><div class="ttl rv"><h1 class="ds">المزادات</h1><p>زايد مباشرة · رقمك يظهر بدلاً من اسمك</p></div>
+ <div class="seg rv">${[['live','مباشر'],['up','قادم'],['end','منتهٍ']].map(([k,n])=>`<button class="${AS===k?'on':''}" onclick="AS='${k}';refresh()">${n} (${c(k)})</button>`).join('')}</div>
+ <div class="chips rv">${fl.map(x=>`<button class="chip ${x===AF?'on':''}" onclick="AF='${x}';refresh()">${x}</button>`).join('')}</div>
+ <div class="rv" style="--d:1">${l.length?l.map(AS==='live'?aCardV:AS==='up'?a=>aUp(a)+'<div style="height:10px"></div>':aEnd).join(''):`<div class="empty">${hg(null,64,.2)}<h3>لا توجد مزادات هنا الآن</h3><p>فعّل الإشعارات لتعرف عند فتح مزاد جديد.</p></div>`}</div></div>`};
+
+V.lot=id=>{const a=AA(id);
+ return `${gallery(a.cat,a.st==='live')}<div class="pg pd"><div class="br rv">${a.b}</div><h1 class="ds nm2 rv">${a.n}</h1><div class="md rv">${a.m}</div>
+ <div class="rv" style="--d:1">${timePanel(a)}</div><div class="rv" style="--d:2">${a.st==='live'?livePanel(a):a.st==='up'?upPanel(a):endPanel(a)}</div>
+ ${a.st!=='up'?histPanel(a):''}
+ <div class="sh2"><h3>تفاصيل القطعة</h3></div><div class="badges"><span class="bd au">${ic('shield')}أصالة مضمونة</span><span class="bd">${a.cond}</span>${bigShipBadge(a.cur)}</div>
+ <div class="card"><div class="kv"><span>الحالة</span><b>${a.cond}</b></div><div class="kv"><span>المرفقات</span><b>${a.incl}</b></div>${Object.entries(a.specs).map(([k,v])=>`<div class="kv"><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+ <p class="desc">${a.desc}</p>${authCard()}${contact()}${rulesBox(a)}</div>`};
+function timePanel(a){
+ const ev=a.ev?`<div class="d" style="color:var(--gold2)">${EV[a.ev].n} · القطعة ${a.lot} من ${lotsOf(a.ev).length} · تُغلق القطع بالتتابع بفارق 5 دقائق</div>`:'';
+ if(a.st==='live')return `<div class="tp">${hg('a:'+a.id,74)}<div><div class="k">ينتهي المزاد بعد</div><div class="cd" data-cd="a:${a.id}"></div><div class="d">ينتهي ${dayLbl(a.t1)} ${clock(a.t1)} · أي مزايدة في آخر دقيقتين تعيد العداد إلى دقيقتين</div>${ev}${a.ext?`<span class="ext">${ic('clock')}عاد العداد إلى دقيقتين</span>`:''}</div></div>`;
+ if(a.st==='up')return `<div class="tp">${hg('a:'+a.id,74)}<div><div class="k">يبدأ المزاد بعد</div><div class="cd" data-cd="s:${a.id}" style="font-size:24px"></div><div class="d">${dayLbl(a.t0)} ${clock(a.t0)} — ينتهي ${dayLbl(a.t1)} ${clock(a.t1)}</div></div></div>`;
+ return `<div class="tp end">${hg(null,74,0)}<div><div class="k">انتهى المزاد</div><div class="cd" style="font-size:22px">${dateLbl(a.t1)}</div><div class="d">${dayLbl(a.t1)} ${clock(a.t1)}</div>${ev}</div></div>`}
+function livePanel(a){const lead=isLead(a),mine=myMax(a),dep=S.me&&S.dep[a.id],sel=BSEL[a.id]||1;
+ let st='';if(lead)st=`<div class="mst ok">${ic('check')}أنت صاحب أعلى مزايدة · رقمك <bdi>${S.me.num}</bdi></div>`;else if(mine)st=`<div class="mst bad">${ic('warn')}تم تجاوز مزايدتك (${fmt(mine)} ر.ق)</div>`;
+ let ctl='';
+ if(dep&&dep.state==='held')ctl=`<div class="ik">اختر مبلغ مزايدتك · أقل زيادة ${fmt(a.inc)} ر.ق</div><div class="incs">${[1,2,5].map(m=>`<button class="inc ${sel===m?'on':''}" onclick="BSEL['${a.id}']=${m};refresh()"><span><bdi>+${fmt(a.inc*m)}</bdi></span><b>${fmt(a.cur+a.inc*m)}</b></button>`).join('')}</div>
+  <div class="depok">${ic('check')}تأمينك ${fmt(dep.amt)} ر.ق محجوز — يرجع لمحفظتك إذا لم تفز</div>`;
+ else if(dep&&dep.state==='pending')ctl=`<div class="gate">${ic('clock')}<div><b>تحويل التأمين قيد التأكيد</b><span>نؤكد وصوله خلال يوم عمل، ثم يمكنك المزايدة.</span></div></div>`;
+ else ctl=`<div class="gate">${ic('lock')}<div><b>ادفع التأمين للمزايدة</b><span>تأمين هذه القطعة ${fmt(a.dep)} ر.ق، ويرجع كاملاً إلى محفظتك إذا لم تفز.</span></div></div>`;
+ return `<div class="pp"><div class="pp-top"><div><div class="k">المزايدة الحالية</div><div class="pr3 ${a.flash?'flash':''}">${qar(a.cur)}</div></div><div class="stats"><div><b>${fmt(bids(a))}</b><span>مزايدة</span></div><div><b>${fmt(bidders(a))}</b><span>مزايد</span></div></div></div>${st}${ctl}</div>`}
+function upPanel(a){return `<div class="pp"><div class="pp-top"><div><div class="k">سعر البداية</div><div class="pr3">${qar(a.start)}</div></div></div>
+ <div class="card" style="margin-top:12px"><div class="kv"><span>التأمين</span><b>${fmt(a.dep)} ر.ق</b></div><div class="kv"><span>أقل زيادة</span><b>${fmt(a.inc)} ر.ق</b></div></div>
+ ${hasDep(a.id)?`<div class="depok">${ic('check')}دفعت التأمين مسبقاً — جاهز للمزايدة عند البدء</div>`:''}</div>`}
+function endPanel(a){const won=S.me&&a.hist[0]&&a.hist[0].n===S.me.num,o=a.oid&&OO(a.oid);
+ return `<div class="pp"><div class="pp-top"><div><div class="k">بيعت بـ</div><div class="pr3">${qar(a.final)}</div></div><div class="stats"><div><b>${fmt(bids(a))}</b><span>مزايدة</span></div><div><b>${fmt(bidders(a))}</b><span>مزايد</span></div></div></div>
+ ${won?`<div class="mst ok">${ic('check')}فزت بهذه القطعة</div>${o&&o.state==='await'?`<div class="nt w">${ic('clock')}<span>ادفع بتحويل بنكي خلال <b class="num" data-cd="o:${o.id}"></b>، وإلا أُلغي الفوز وصودر التأمين.</span></div>`:''}`:myMax(a)?`<div class="mst bad">${ic('info')}لم تفز — أُعيد تأمينك إلى المحفظة</div>`:''}</div>`}
+function histPanel(a){const n=a.st==='end'&&!HALL[a.id]?4:99,rows=a.hist.slice(0,n);
+ return `<div class="sh2"><h3>سجل المزايدات</h3><em>${cnt(bids(a),W_BID)}</em></div><div class="hist" onscroll="histFade(this)">${rows.map((h,i)=>{const me=S.me&&h.n===S.me.num,fr=h.fresh;h.fresh=0;
+  return `<div class="hr ${i===0?'top':''} ${fr?'new':''}"><span class="hn"><em></em><bdi>${h.n}</bdi>${me?'<i>أنت</i>':''}</span><span class="ha">${fmt(h.a)}</span><span class="ht" data-ago="${h.t}">${ago(h.t)}</span></div>`}).join('')}
+  ${a.hist.length>n?`<button class="morebtn" onclick="HALL['${a.id}']=1;refresh()">عرض كل المزايدات</button>`:''}${a.older?`<div class="k" style="text-align:center;padding:8px 0">+ ${cnt(a.older,W_BID)} أقدم</div>`:''}</div>`}
+const RULE_EXT='أي مزايدة في آخر دقيقتين تعيد العداد إلى دقيقتين، ليتمكن الآخرون من الرد.';
+const RULE_SEQ='في المزاد الذي يضم أكثر من قطعة، تُغلق القطع واحدة بعد الأخرى بفارق 5 دقائق بدءاً من وقت النهاية المحدد.';
+const rulesBox=a=>`<div class="rules"><h4>قواعد هذا المزاد</h4><ul>
+ <li>تأمين ${fmt(a.dep)} ر.ق قبل أول مزايدة، يرجع كاملاً إلى محفظتك إذا لم تفز.</li><li>أقل زيادة ${fmt(a.inc)} ر.ق، والمزايدة نهائية ولا يمكن سحبها.</li>
+ <li>${RULE_EXT}</li>${a.ev?`<li>${RULE_SEQ}</li>`:''}<li>يدفع الفائز بتحويل بنكي خلال 48 ساعة ويرفع الإيصال، وإلا أُلغي الفوز وصودر التأمين.</li></ul>
+ <a class="lnk" onclick="go('rules')">كل القواعد والسياسات</a></div>`;
+
+V.mine=()=>{if(!S.me)return `<div class="pg"><div class="empty rv">${hg('x',90)}<h3>مزايداتك في مكان واحد</h3><p>سجّل الدخول لتدفع التأمين وتزايد<br>وتتابع ما فزت به.</p><button class="btn" onclick="needLogin({k:'mine'})">تسجيل الدخول</button></div></div>`;
+ const aw=S.orders.filter(o=>o.kind==='auction'&&held(o)),act=A.filter(a=>a.st!=='end'&&(hasDep(a.id)||myMax(a))),
+  deps=Object.entries(S.dep).filter(([,d])=>d.state==='held'||d.state==='pending'||d.state==='refund'),ended=A.filter(a=>a.st==='end'&&myMax(a));
+ const dl={held:'',pending:' · قيد التأكيد',refund:' · يُعاد عند وصول التحويل'};
+ const body=!aw.length&&!act.length&&!ended.length?`<div class="empty">${hg(null,80,.85)}<h3>لم تشارك في أي مزاد بعد</h3><p>ادفع تأمين القطعة التي تعجبك وابدأ المزايدة.</p><button class="btn" onclick="go('auc')">تصفّح المزادات</button></div>`:
+ `${aw.length?`<div class="sh2"><h3>بانتظار الدفع</h3></div>${aw.map(awCard).join('')}`:''}
+ ${act.length?`<div class="sh2"><h3>مزاداتي الحالية</h3></div>${act.map(actRow).join('')}`:''}
+ ${deps.length?`<div class="sh2"><h3>التأمينات المحجوزة</h3><a onclick="go('wallet')">المحفظة</a></div><div class="card">${deps.map(([id,d])=>`<div class="kv"><span>${AA(id).n}</span><b>${fmt(d.amt)} ر.ق${dl[d.state]}</b></div>`).join('')}</div>`:''}
+ ${ended.length?`<div class="sh2"><h3>منتهية</h3></div>${ended.map(endRow).join('')}`:''}`;
+ return `<div class="pg"><div class="ttl rv"><h1 class="ds">مزايداتي</h1><p>رقم المزايد الخاص بك <bdi>${S.me.num}</bdi></p></div><div class="rv" style="--d:1">${body}</div></div>`};
+const awCard=o=>`<button class="awc" onclick="go('pay','${o.id}')">${hg('o:'+o.id,64)}<div style="flex:1;min-width:0"><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>
+ <div class="t">${o.title} · ${fmt(o.price)} ر.ق</div>${o.state==='await'?`<div class="c num" data-cd="o:${o.id}"></div><span class="btn">ادفع الآن بالتحويل البنكي</span>`:`<div class="c" style="font-size:15px">قيد مراجعة التحويل</div>`}</div></button>`;
+const actRow=a=>`<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
+ <div class="ln"><div class="pr">${qar(a.cur)}</div>${a.st==='live'?`<span class="cd2">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>`:`<span class="cd2">يبدأ ${dayLbl(a.t0)}</span>`}</div><div style="margin-top:6px">${myTag(a)}</div></div></button>`;
+const endRow=a=>{const won=isLead(a);return `<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
+ <div class="ln"><div class="pr">${qar(a.final)}</div>${won?`<span class="tg ok">${ic('check')}فزت</span>`:'<span class="tg">لم تفز · أُعيد التأمين</span>'}</div></div></button>`};
+
+V.me=()=>{if(!S.me)return `<div class="pg"><div class="prof rv"><div class="av">${ic('user')}</div><h2>زائر</h2><p class="ph2">سجّل الدخول للمزايدة والشراء</p>
+ <button class="btn" style="margin-top:16px" onclick="needLogin({k:'me'})">تسجيل الدخول</button></div>
+ <div class="menu rv" style="--d:1">${mi('doc','القواعد والسياسات',"go('rules')")}${mi('wa','تواصل معنا',"wa()")}${mi('globe','اللغة',"lang()",'العربية')}</div></div>`;
+ const m=S.me,oc=S.orders.length,idl=m.idState==='ok'?`<span class="vf">${ic('shield')}تم التحقق من الهوية</span>`:m.verified?`<span class="vf no">${ic('id')}الهوية مرفوعة — قيد المراجعة</span>`:`<span class="vf no">${ic('id')}التحقق من الهوية عند أول تأمين</span>`;
+ return `<div class="pg"><div class="prof rv"><div class="av">${esc(m.first[0])}</div><h2>${esc(m.first)} ${esc(m.last)}</h2><p class="ph2"><bdi>${esc(m.phone)}</bdi></p>
+ <div class="bn"><span>رقم المزايد</span><b><bdi>${m.num}</bdi></b></div><br>${idl}</div>
+ <button class="wc mini rv" style="--d:1" onclick="go('wallet')"><span class="chip2">WALLET</span><div class="k">رصيد المحفظة المتاح</div><div class="bal">${fmt(S.wallet.avail)}<small>ر.ق</small></div>
+ <div class="row"><div>تأمينات محجوزة<b>${fmt(S.wallet.held)} ر.ق</b></div><div style="text-align:end">${ic('chev')}</div></div></button>
+ <div class="menu rv" style="--d:2">${mi('shop','طلباتي',"go('orders')",oc?cnt(oc,W_ORD):'')}${mi('pin','عنوان التوصيل',"go('addr')",m.addr?esc(m.addr.country):'أضف')}${mi('doc','كشف حسابي (PDF)',"go('stmt')")}${mi('bell','الإشعارات والعروض',"go('settings')")}</div>
+ <div class="menu rv" style="--d:3">${mi('shield','القواعد والسياسات',"go('rules')")}${mi('wa','تواصل معنا',"wa()")}${mi('globe','اللغة',"lang()",'العربية')}
+ <button class="mi out" onclick="logout()">${ic('out')}تسجيل الخروج</button></div></div>`};
+const mi=(i,t,on,v)=>`<button class="mi" onclick="${on}">${ic(i)}${t}<span class="go">${v||''}${ic('chev')}</span></button>`;
+const sgn=t=>`<bdi>${t.k==='p'&&t.a>0?'+':''}${fmt(t.a)}</bdi>`;
+V.wallet=()=>{if(!S.me)return V.me();
+ return `<div class="pg"><div class="wc rv" style="cursor:default"><span class="chip2">MZAD AL FAKHER</span><div class="k">الرصيد المتاح</div><div class="bal">${fmt(S.wallet.avail)}<small>ر.ق</small></div>
+ <div class="row"><div>تأمينات محجوزة<b>${fmt(S.wallet.held)} ر.ق</b></div><div style="text-align:end">رقم المزايد<b><bdi>${S.me.num}</bdi></b></div></div></div>
+ <div class="wbt rv" style="--d:1"><button class="btn" onclick="topSheet()">${ic('plus')}شحن المحفظة</button><button class="btn ghost" onclick="wdSheet()">${ic('bank')}سحب إلى البنك</button></div>
+ <div class="nt rv" style="--d:1">${ic('info')}<span>يمكنك دفع تأمين المزادات من رصيد المحفظة، ويرجع إليها إذا لم تفز أو بعد تأكيد دفعك إذا فزت. ويمكنك سحب الرصيد المتاح إلى حسابك البنكي في أي وقت.</span></div>
+ <div class="sh2"><h3>الحركات</h3></div>${S.tx.length?`<div class="txl">${S.tx.map(t=>`<div class="tx"><span class="ic">${ic(t.k==='p'?'down':t.k==='h'?'lock':'up2')}</span><div style="min-width:0"><div class="t">${t.l}</div><div class="d">${ago(t.t)}${t.d?' · '+t.d:''}</div></div><span class="v ${t.k==='p'?'p':t.k==='h'?'h':''}">${sgn(t)}</span></div>`).join('')}</div>`:`<p class="k" style="text-align:center;padding:16px">لا توجد حركات بعد</p>`}</div>`};
+V.orders=()=>`<div class="pg">${S.orders.length?S.orders.map(o=>`<button class="row2" onclick="go('${held(o)?'pay':'order'}','${o.id}')"><div class="ph">${art(o.cat)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div>
+ <div class="ln"><div class="pr">${qar(o.total||o.price)}</div><span class="tg ${o.state==='await'?'bad':o.state==='done'?'ok':''}">${OST[o.state]}</span></div></div></button>`).join(''):`<div class="empty">${hg(null,70,.4)}<h3>لا توجد طلبات بعد</h3><p>تظهر هنا مشترياتك وما تفوز به في المزادات.</p><button class="btn" onclick="go('shop')">تصفّح المتجر</button></div>`}</div>`;
+const OST={await:'بانتظار التحويل',review:'قيد مراجعة التحويل',paid:'تم تأكيد الدفع',prep:'قيد التجهيز',ship:'تم الشحن',ready:'جاهز للاستلام',done:'تم التسليم'};
+const bankBlock=ref=>`<div class="bank"><div class="bk"><span class="k">البنك</span><b>يُضاف من المحل</b></div><div class="bk"><span class="k">اسم الحساب</span><b>مزاد الفاخر</b><button class="cp" aria-label="نسخ" onclick="copy('مزاد الفاخر')">${ic('copy')}</button></div>
+  <div class="bk"><div style="flex:1;min-width:0"><span class="k">رقم الحساب الدولي (IBAN)</span><b class="mono" style="display:block;margin-top:3px;white-space:nowrap;font-size:12px"><bdi>QA00 XXXX 0000 0000 0000 0000 0000 0</bdi></b></div><button class="cp" aria-label="نسخ" onclick="copy('QA00XXXX000000000000000000000')">${ic('copy')}</button></div>
+  <div class="bk"><span class="k">الرقم المرجعي</span><b class="mono"><bdi>${ref}</bdi></b><button class="cp" aria-label="نسخ" onclick="copy('${ref}')">${ic('copy')}</button></div></div>`;
+
+V.pay=oid=>{const o=OO(oid);if(!o)return '';if(!held(o))return V.order(oid);
+ const isA=o.kind==='auction';if(isA)o.method=effM(o.s);const m=o.method,fv=feeV(m),tot=o.price+fv;o.fee=fv;o.total=tot;
+ const top=`<div class="tp" style="margin-top:4px">${hg('o:'+o.id,74)}<div><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>${o.state==='await'?`<div class="cd" data-cd="o:${o.id}"></div><div class="d">${isA?'إذا لم يتم الدفع خلال 48 ساعة أُلغي الفوز وصودر التأمين':'القطعة محجوزة لك حتى انتهاء المهلة'}</div>`:`<div class="cd" style="font-size:20px;margin-top:6px">قيد المراجعة</div><div class="d">نؤكد وصول المبلغ خلال يوم عمل</div>`}</div></div>`;
+ const head=`<div class="row2" style="cursor:default;margin-top:12px"><div class="ph">${art(o.cat)}</div><div class="mid"><div class="br">${o.b}</div><div class="nm">${o.title}</div><div class="k" style="margin-top:3px">${isA?'فزت بالمزاد':'طلب شراء'} · <bdi>${o.id}</bdi></div></div></div>`;
+ const sum=lbl=>`<div class="card"><div class="kv"><span>${isA?'سعر الفوز':'سعر القطعة'}</span><b>${fmt(o.price)} ر.ق</b></div><div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>${lbl}</span><b>${fmt(tot)} ر.ق</b></div></div>`;
+ if(o.state==='review')return `<div class="pg">${top}${head}<div class="nt g">${ic('check')}<span>استلمنا إيصال التحويل. لا نُسلّم الطلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل، وسنُعلمك فور التأكيد. يجب أن يصل المبلغ خلال 5 أيام عمل من رفع الإيصال، وإلا يُعتبر الطلب غير مدفوع.</span></div>
+  <div class="sh2"><h3>الملخص</h3></div>${sum('المبلغ المحوّل')}</div>`;
+ return `<div class="pg">${top}${head}
+ ${isA?`<div class="sh2"><h3>طريقة الاستلام</h3></div>${shipOpts(o.s,`setOS('${o.id}',$)`,o.price)}${o.s!=='pick'?`<div style="margin-top:10px">${adrRow()}</div>`:''}`:''}
+ ${shipNotes(m,o.price)}
+ <div class="sh2"><h3>المبلغ المطلوب تحويله</h3></div>${sum('الإجمالي')}
+ <div class="sh2"><h3>بيانات التحويل</h3><span class="sample">حساب تجريبي</span></div>${bankBlock(o.id)}
+ <div class="nt">${ic('info')}<span>اكتب الرقم المرجعي في ملاحظة التحويل. يجب أن يكون التحويل من حساب باسمك، ورسوم البنك على المحوِّل؛ إذا وصل مبلغ أقل يُستكمل الفرق قبل التسليم.</span></div>
+ ${isA?`<div class="nt g">${ic('wallet')}<span>تأمينك ${fmt(o.dep)} ر.ق يرجع إلى محفظتك فور تأكيد التحويل.</span></div>`:''}
+ <button class="upl" onclick="upReceipt('${o.id}')">${ic('up')}ارفع إيصال التحويل<span>صورة أو ملف PDF</span></button></div>`};
+function setOS(id,s){const o=OO(id);if(o){o.s=s;refresh()}}
+V.order=oid=>{const o=OO(oid);if(!o)return '';const pick=o.method==='pick';
+ const steps=pick?[['تم الطلب',''],['تم تأكيد الدفع','وصل المبلغ إلى حساب المحل'],['قيد التجهيز','يُجهَّز خلال 24 ساعة'],['جاهز للاستلام','يُحفظ 14 يوماً'],['تم الاستلام','']]
+  :[['تم الطلب',''],['تم تأكيد الدفع','وصل المبلغ إلى حساب المحل'],['قيد التجهيز','تغليف وتأمين الشحنة بكامل قيمتها'],['تم الشحن',o.awb?`أرامكس · <bdi>${o.awb}</bdi> · أُنشئت البوليصة تلقائياً`:'أرامكس'],['تم التسليم','بالتوقيع والهوية']];
+ const idx={await:0,review:0,paid:1,prep:2,ship:3,ready:3,done:4}[o.state];
+ return `<div class="pg"><div class="row2" style="cursor:default"><div class="ph">${art(o.cat)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div><div class="pr" style="font-size:15px">${qar(o.total||o.price)}</div></div></div>
+ ${o.state==='ready'?`<div class="pcode rv"><div class="k">رمز الاستلام</div><div class="c">${o.code}</div><div class="qr">${qrSvg(7)}</div><div class="k">أبرز البطاقة الشخصية (أو الجواز للزوار) باسم صاحب الحساب مع هذا الرمز</div></div>
+  <button class="adr" style="margin-top:10px" onclick="proxySheet('${o.id}')">${ic('user')}<div><b>${o.proxy?'سيستلم: '+esc(o.proxy.n):'شخص آخر سيستلم بدلاً مني'}</b><span>${o.proxy?'يُبرز بطاقته والرمز':'سجّل اسمه ورقم بطاقته مسبقاً'}</span></div><em>${o.proxy?'تعديل':'إضافة'}</em></button>`:''}
+ ${o.state==='ship'?`<div class="nt g">${ic('truck')}<span>تم إنشاء بوليصة الشحن تلقائياً عبر أرامكس. رقم الشحنة <b style="white-space:nowrap"><bdi>${o.awb}</bdi></b></span></div>`:''}
+ <div class="sh2"><h3>حالة الطلب</h3></div><div class="card" style="padding:6px 16px"><div class="tl">${steps.map(([t,d],i)=>`<div class="n ${i<idx?'done':i===idx?'now':''}"><div class="t">${t}</div>${d&&i<=idx?`<div class="d">${d}</div>`:''}</div>`).join('')}</div></div>
+ <div class="sh2"><h3>التفاصيل</h3></div><div class="card"><div class="kv"><span>طريقة الاستلام</span><b>${o.method?FEES[o.method].n:'—'}</b></div>${!pick&&S.me&&S.me.addr?`<div class="kv"><span>العنوان</span><b>${esc(S.me.addr.city)}</b></div>`:''}<div class="kv"><span>${o.kind==='auction'?'سعر الفوز':'السعر'}</span><b>${fmt(o.price)} ر.ق</b></div><div class="kv tot"><span>الإجمالي</span><b>${fmt(o.total||o.price)} ر.ق</b></div></div>
+ ${contact()}<a class="lnk" onclick="go('rules')">سياسة الاسترجاع</a></div>`};
+V.stmt=()=>{if(!S.me)return V.me();const m=S.me,deps=Object.entries(S.dep),mb=A.flatMap(a=>a.hist.filter(h=>h.n===m.num).map(h=>[a,h])),q=v=>`<bdi>${fmt(v)}</bdi> ر.ق`;
+ return `<div class="pg"><div class="doc rv"><div class="doc-h"><div><b>كشف حساب</b><span class="k">${dateLbl(Date.now())}</span></div>${LOGO(40)}</div>
+ <table style="margin-top:10px"><tr><td>الاسم</td><td style="font-family:inherit">${esc(m.first)} ${esc(m.last)}</td></tr><tr><td>رقم المزايد</td><td><bdi>${m.num}</bdi></td></tr><tr><td>رصيد المحفظة</td><td>${q(S.wallet.avail)}</td></tr><tr><td>تأمينات محجوزة</td><td>${q(S.wallet.held)}</td></tr></table>
+ <h5>التأمينات</h5>${deps.length?`<table>${deps.map(([id,d])=>`<tr><td>${AA(id).n} · ${d.state==='returned'?'أُعيد':'محجوز'}</td><td>${q(d.amt)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
+ <h5>المزايدات</h5>${mb.length?`<table>${mb.map(([a,h])=>`<tr><td>${a.n}</td><td>${q(h.a)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
+ <h5>الطلبات</h5>${S.orders.length?`<table>${S.orders.map(o=>`<tr><td>${o.title} · ${OST[o.state]}</td><td>${q(o.total||o.price)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
+ <h5>حركة المحفظة</h5>${S.tx.length?`<table>${S.tx.map(t=>`<tr><td>${t.l}</td><td>${sgn(t)} ر.ق</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
+ <p class="k" style="margin-top:14px;line-height:1.7">يشمل هذا الكشف مزايداتك وطلباتك وتأميناتك وحركة محفظتك فقط، ولا يتضمن أي بيانات عن تصفحك للتطبيق.</p></div></div>`};
+V.rules=()=>`<div class="pg"><div class="nt rv" style="margin:4px 0 12px">${ic('info')}<span>مسودة — تُعتمد النصوص النهائية من محامي المحل قبل الإطلاق.</span></div>
+ <div class="rsec rv"><h4>قواعد المزاد</h4><ul><li>يُدفع تأمين لكل قطعة قبل أول مزايدة عليها، ويُحدَّد حسب سعر البداية:
+  <div class="tiers"><div class="kv"><span>حتى 100,000 ر.ق</span><b>500 ر.ق</b></div><div class="kv"><span>100,001 – 300,000 ر.ق</span><b>2,500 ر.ق</b></div><div class="kv"><span>أكثر من 300,000 ر.ق</span><b>5,000 ر.ق</b></div></div>
+  وقد يختلف التأمين لبعض القطع، ويظهر مبلغه في صفحة كل قطعة.</li>
+ <li>أقل زيادة يحددها المحل لكل مزاد (عادةً 100 ر.ق)، والمزايدة نهائية ولا يمكن سحبها.</li><li>يظهر رقم المزايد الخاص بك بدلاً من اسمك، وهو ثابت في كل المزادات.</li>
+ <li>${RULE_EXT}</li><li>${RULE_SEQ}</li>
+ <li>يدفع الفائز بتحويل بنكي ويرفع الإيصال خلال 48 ساعة، ويجب أن يصل المبلغ خلال 5 أيام عمل؛ وإلا أُلغي الفوز وصودر التأمين.</li>
+ <li>يرجع التأمين إلى المحفظة إذا لم تفز، أو بعد تأكيد دفع الفائز.</li><li>التسجيل والمزايدة لمن عمره 18 سنة فأكثر ومن أي دولة، مع التحقق من الهوية مرة واحدة قبل أول تأمين.</li></ul></div>
+ <div class="rsec rv" style="--d:1"><h4>الدفع والمحفظة</h4><ul><li>طلبات المتجر حتى 10,000 ر.ق بالبطاقة، وما فوقها بالتحويل البنكي مع حجز القطعة 24 ساعة، وبحد أقصى حجزين غير مدفوعين لكل عميل.</li>
+ <li>طلبات المتجر من 50,000 ر.ق فأكثر تتطلب التحقق من الهوية مرة واحدة.</li><li>لا نُسلّم أي طلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل.</li>
+ <li>السحب من المحفظة خلال 3 أيام عمل بدون رسوم: ما دُفع بالبطاقة يعود إلى البطاقة نفسها، والباقي إلى حساب بنكي باسمك.</li></ul></div>
+ <div class="rsec rv" style="--d:2"><h4>الشحن والاستلام</h4><ul><li>داخل قطر 1–2 يوم عمل، الخليج 3–5، خارج الخليج 5–10 عبر أرامكس.</li><li>كل شحنة مؤمّنة بكامل قيمتها وتُسلَّم بالتوقيع والهوية. الجمارك في بلد الاستلام على المشتري.</li>
+ <li>القطع التي تزيد على 300,000 ر.ق تُشحن خارج قطر بعد موافقة المحل.</li><li>الاستلام من المحل بالبطاقة الشخصية ورمز الاستلام، ويُحفظ الطلب 14 يوماً.</li></ul></div>
+ <div class="rsec rv" style="--d:3"><h4>الاسترجاع</h4><ul><li>قطع المزاد بيعها نهائي، إلا إذا كانت غير مطابقة للوصف أو غير أصلية (يُبلَّغ خلال 48 ساعة من الاستلام).</li><li>قطع المتجر: استرجاع أو استبدال خلال 7 أيام إذا كانت غير مستخدمة وكاملة.</li><li>ضمان الأصالة: استرجاع كامل إذا ثبت أن القطعة غير أصلية.</li></ul></div>
+ <div class="rsec rv" style="--d:4"><h4>الخصوصية</h4><ul><li>نسجّل نشاطك داخل التطبيق لتحسين خدمتك، ولا نشارك بياناتك مع أي طرف خارج المحل وشركات الشحن.</li><li>العروض التسويقية فقط لمن وافق عليها، ويمكن إيقافها في أي وقت.</li><li>يمكنك تنزيل كشف بمزايداتك وطلباتك ومحفظتك من صفحة حسابي.</li></ul></div></div>`;
+V.addr=()=>S.me?`<div class="pg">${adrRow()}<div class="nt">${ic('truck')}<span>نستخدم عنوانك لإنشاء بوليصة الشحن تلقائياً لدى أرامكس أو سمسا فور تأكيد الدفع، وتُحسب رسوم التوصيل حسب الدولة.</span></div></div>`:V.me();
+V.settings=()=>S.me?`<div class="pg"><div class="card rv">
+ <div class="swr"><div><div class="t">إشعارات الخدمة</div><div class="d">تجاوز مزايدتك، قرب انتهاء المزاد، الفوز، تذكير الدفع، تأكيد التحويل، إرجاع التأمين، الشحن</div></div><span class="sw on lock"></span></div>
+ <div class="swr"><div><div class="t">رسائل SMS للفوز وتذكير الدفع</div><div class="d">حتى لا تفوتك مهلة الـ 48 ساعة</div></div><span class="sw on lock"></span></div>
+ <div class="swr"><div><div class="t">العروض والمزادات الجديدة</div><div class="d">بحد أقصى إشعاران في الأسبوع</div></div><span class="sw ${S.me.offers?'on':''}" onclick="S.me.offers=!S.me.offers;this.classList.toggle('on');toast(S.me.offers?'سنرسل لك العروض والمزادات الجديدة':'تم إيقاف العروض')"></span></div></div>
+ <p class="k" style="margin:10px 4px;line-height:1.7">إشعارات الخدمة ضرورية لإتمام المزايدة والدفع ولا يمكن إيقافها.</p></div>`:V.me();
+V.inbox=()=>{const l=S.me?S.inbox:[];l.forEach(n=>n.un=0);setTimeout(navUpd,0);
+ return `<div class="pg">${l.length?l.map(n=>`<button class="nf" onclick="${n.nav?`go('${n.nav[0]}','${n.nav[1]||''}')`:''}"><span class="ic">${ic(n.icn)}</span><div><div class="t">${n.title}</div><div class="b">${n.body}</div><div class="tm" data-ago="${n.t}">${ago(n.t)}</div></div></button>`).join('')
+ :`<div class="empty">${hg(null,70,.6)}<h3>لا توجد إشعارات</h3><p>${S.me?'تصلك هنا تنبيهات المزايدة والفوز والدفع والشحن.':'سجّل الدخول لتصلك تنبيهات المزايدة والفوز والدفع.'}</p></div>`}</div>`};
+
+/* ============ docks (sticky action bars) ============ */
+const DOCK={};
+DOCK.lot=id=>{const a=AA(id);
+ if(a.st==='live'){const dep=S.me&&S.dep[id],sel=BSEL[id]||1;
+  if(dep&&dep.state==='held'){if(isLead(a))return `<div class="dki"><div class="k">أنت الأعلى</div><div class="pr">${qar(a.cur)}</div></div><button class="btn" disabled>أنت صاحب أعلى مزايدة</button>`;
+   return `<div class="dki"><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><button class="btn" onclick="confirmBid('${id}')">زايد بـ ${fmt(a.cur+a.inc*sel)} ر.ق</button>`}
+  if(dep&&dep.state==='pending')return `<button class="btn" disabled>التأمين قيد التأكيد</button>`;
+  return `<div class="dki"><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><button class="btn gold" onclick="depositFlow('${id}')">ادفع التأمين · ${fmt(a.dep)} ر.ق</button>`}
+ if(a.st==='up')return `<button class="btn ghost" style="flex:.8" onclick="remind('${id}')">${S.rem[id]?ic('check')+'سنذكّرك':ic('bell')+'ذكّرني'}</button>${hasDep(id)?'':`<button class="btn gold" onclick="depositFlow('${id}')">ادفع التأمين مسبقاً</button>`}`;
+ const o=a.oid&&OO(a.oid);if(S.me&&o&&o.state==='await')return `<button class="btn" onclick="go('pay','${o.id}')">أكمل الدفع بالتحويل البنكي</button>`;return ''};
+DOCK.item=id=>{const p=PP(id),o=p.res&&OO(p.res);if(p.sold)return `<button class="btn" disabled>تم البيع</button>`;
+ if(S.me&&held(o))return `<button class="btn" onclick="go('pay','${o.id}')">${o.state==='review'?'متابعة الطلب — قيد مراجعة التحويل':'أكمل الدفع — القطعة محجوزة لك'}</button>`;
+ return `<div class="dki"><div class="k">السعر</div><div class="pr">${qar(p.price)}</div></div><button class="btn" onclick="buy('${id}')">اشترِ الآن</button>`};
+DOCK.checkout=id=>{const p=PP(id),m=effM(CO.s),tot=p.price+feeV(m);
+ if(CO.s!=='pick'&&!m)return `<button class="btn" onclick="addrSheet()">${ic('pin')}أضف عنوان التوصيل للمتابعة</button>`;
+ return `<div class="dki"><div class="k">الإجمالي</div><div class="pr">${qar(tot)}</div></div><button class="btn" onclick="place('${id}')">${tot<=10000?ic('lock')+'ادفع الآن':'احجز القطعة 24 ساعة'}</button>`};
+DOCK.stmt=()=>S.me?`<button class="btn" onclick="toast('تم تنزيل الكشف بصيغة PDF')">${ic('down')}تنزيل PDF</button>`:'';
+
+/* ============ flows ============ */
+const AFTER={otp(){const code='482107';let i=0;const run=()=>{if(cur.k!=='otp')return;const el=$('#o'+i);if(!el)return;el.textContent=code[i];el.classList.add('f');i++;
+ if(i<6)setTimeout(run,110);else{$('#otpS').innerHTML=`${ic('check')}تم إدخال الرمز تلقائياً من الرسائل`;setTimeout(()=>{if(cur.k!=='otp')return;
+  const k=`${S.cc} ${S.phone}`;if(S.acct&&S.acct.phone===k){S.me=S.acct;S.acct=null;toast(`أهلاً بعودتك، ${S.me.first}`);resume()}else replace('name')},700)}};setTimeout(run,1100)}};
+function needLogin(after){S.after=after;go('login')}
+const CCS=['+974','+966','+971','+965','+973','+968','+44'];
+function cc(b){S.cc=CCS[(CCS.indexOf(S.cc)+1)%CCS.length];b.textContent=S.cc}
+function sendOtp(){const v=($('#ph').value||'').trim();S.phone=v||'5512 3456';go('otp')}
+function createAcct(){if(S.me)return resume();
+ const fn=$('#fn').value.trim()||'خالد',ln=$('#ln').value.trim()||'المري';
+ if(S.acct){S.acct=null;S.wallet={avail:0,held:0,card:0};S.dep={};S.orders=[];S.tx=[];S.inbox=[];NUMSEQ++} // a different person on this device
+ S.me={first:fn,last:ln,num:NUMSEQ?`#${5136+NUMSEQ}`:'#4821',phone:`${S.cc} ${S.phone||'5512 3456'}`,verified:false,terms:false,offers:$('#offers').checked,addr:null};
+ S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:`رقم المزايد الخاص بك <bdi>${S.me.num}</bdi> — يظهر بدلاً من اسمك في كل المزادات.`,icn:'user',un:1});
+ openSheet(()=>`<div class="succ"><div class="shh"><div class="step">تم إنشاء حسابك</div><h3>رقم المزايد الخاص بك</h3></div><div class="bnum"><bdi>${S.me.num}</bdi></div>
+ <p>يظهر هذا الرقم بدلاً من اسمك في كل المزادات، وهو ثابت لحسابك.<br>لا يعرف هويتك إلا فريق المحل.</p><button class="btn" onclick="closeSheet();resume()">متابعة</button></div>`,{onClose:resume})}
+function resume(){const a=S.after||{k:'home'};S.after=null;stack=ROOT[a.k]?[{k:a.k,p:a.p}]:[{k:'home'},{k:a.k,p:a.p}];cur=stack[stack.length-1];render(true);
+ if(a.then==='dep')setTimeout(()=>depositFlow(a.p),380);if(a.then==='buy'){CO={s:'del'};go('checkout',a.p)}}
+function rulesSheet(){openSheet(()=>`<div class="shh"><h3>الشروط وسياسة الخصوصية</h3></div>${V.rules()}<button class="btn" onclick="closeSheet()">إغلاق</button>`)}
+/* logout ends the session; the account (wallet, deposits, orders) stays on the device */
+function logout(){closeSheet();S.acct=S.me;S.me=null;S.after=null;go('home');toast('تم تسجيل الخروج')}
+function lang(){toast('النسخة الإنجليزية متاحة في التطبيق الكامل')}
+function remind(id){S.rem[id]=!S.rem[id];toast(S.rem[id]?'سنذكّرك قبل بدء المزاد بساعة':'تم إلغاء التذكير');refresh()}
+
+/* deposit: one-time ID + address, auction rules, then pay */
+function depositFlow(id){if(!S.me)return needLogin({k:'lot',p:id,then:'dep'});const a=AA(id);if(a.st==='end')return;
+ DF={id,steps:[...(!S.me.verified?['id']:[]),...(!S.me.terms?['terms']:[]),'pay'],i:0,pm:S.wallet.avail>=a.dep?'wallet':'card',idt:'qid',f:0,b:0,adr:Object.assign({},S.me.addr||DEFADR)};openSheet(depSheet)}
+function idSheet(cb){DF={steps:['id'],i:0,idt:'qid',f:0,b:0,adr:Object.assign({},S.me.addr||DEFADR),cb};openSheet(depSheet)}
+function depSheet(){if(!DF)return '';const a=DF.id?AA(DF.id):null,st=DF.steps[DF.i],N=DF.steps.length,hd=t=>`<div class="shh">${N>1?`<div class="step">الخطوة ${DF.i+1} من ${N}</div>`:''}${t}</div>`;
+ if(DF.step==='proc')return `<div class="spin"></div><p class="bigs">جارٍ الدفع…</p>`;
+ if(DF.step==='done'){if(DF.pm==='bank')return `<div class="succ" style="padding-bottom:0"><div class="ring">${ic('clock')}</div><h3>بانتظار وصول تحويلك</h3><p>حوّل ${fmt(a.dep)} ر.ق إلى الحساب أدناه واذكر الرقم المرجعي في ملاحظة التحويل. نؤكد وصوله خلال يوم عمل، ثم يمكنك المزايدة.</p></div>
+  ${bankBlock(`DEP-${S.me.num.slice(1)}-${a.id.toUpperCase()}`)}<button class="btn" style="margin-top:14px" onclick="closeSheet()">حسناً</button>`;
+  return `<div class="succ"><div class="ring">${ic('check')}</div><h3>تم حجز التأمين</h3><p>تأمين ${fmt(a.dep)} ر.ق محجوز على ${a.n}.<br>يرجع كاملاً إلى محفظتك إذا لم تفز.</p><button class="btn" onclick="closeSheet()">${a.st==='live'?'ابدأ المزايدة':'تم'}</button></div>`}
+ if(st==='id'){const pp=DF.idt==='pp',ready=pp?DF.f:DF.f&&DF.b;
+  return hd(`<h3>التحقق من الهوية — مرة واحدة</h3><p>${DF.cb?'قبل إتمام طلبك':'قبل أول تأمين'} نحتاج صورة بطاقتك الشخصية (أو جواز السفر لغير المقيمين في قطر) وعنوان التوصيل. يتأكد فريق المحل من الهوية قبل تسليم أي قطعة.</p>`)+
+  `<div class="seg2"><button class="${pp?'':'on'}" onclick="saveAdr();DF.idt='qid';DF.f=DF.b=0;upSheet()">البطاقة الشخصية</button><button class="${pp?'on':''}" onclick="saveAdr();DF.idt='pp';DF.f=DF.b=0;upSheet()">جواز السفر</button></div>
+  <div class="ups">${pp?`<button class="up ${DF.f?'done':''}" style="grid-column:1/-1" onclick="upTile('f')">${ic(DF.f?'check':'passport')}${DF.f?'تم رفع صفحة البيانات':'صفحة البيانات'}</button>`
+  :`<button class="up ${DF.f?'done':''}" onclick="upTile('f')">${ic(DF.f?'check':'id')}${DF.f?'تم رفع الوجه الأمامي':'الوجه الأمامي'}</button><button class="up ${DF.b?'done':''}" onclick="upTile('b')">${ic(DF.b?'check':'id')}${DF.b?'تم رفع الوجه الخلفي':'الوجه الخلفي'}</button>`}</div>
+  ${adrFields(DF.adr)}<p class="k" style="margin:-4px 0 14px;line-height:1.7">يجب أن يطابق الاسم في الهوية اسم صاحب التحويل البنكي واسم المستلم.</p>
+  <button class="btn" ${ready?'':'disabled'} onclick="idDone()">متابعة</button>`}
+ if(st==='terms')return hd(`<h3>قواعد المزاد</h3><p>اقرأها مرة واحدة قبل أول مزايدة.</p>`)+
+  `<ul class="lst"><li>التأمين لكل قطعة، ويرجع كاملاً إلى محفظتك إذا لم تفز.</li><li>المزايدة نهائية ولا يمكن سحبها.</li><li>${RULE_EXT}</li><li>يدفع الفائز بتحويل بنكي خلال 48 ساعة ويرفع الإيصال.</li><li><b>إذا لم يتم الدفع خلال 48 ساعة أُلغي الفوز وصودر التأمين.</b></li></ul>
+  <label class="ck"><input type="checkbox" onchange="$('#tb').disabled=!this.checked"><i></i><span>قرأت قواعد المزاد وأوافق عليها، ومنها مصادرة التأمين عند عدم الدفع خلال 48 ساعة.</span></label>
+  <button class="btn" id="tb" disabled onclick="S.me.terms=true;DF.i++;upSheet()">موافق، متابعة</button>`;
+ const canW=S.wallet.avail>=a.dep;
+ return hd(`<h3>دفع التأمين</h3>`)+`<div class="big">${qar(a.dep)}</div><div class="bigs">${a.n}</div>
+  ${canW?pmOpt('wallet','wallet','من رصيد المحفظة',`المتاح ${fmt(S.wallet.avail)} ر.ق`):''}
+  ${pmOpt('card','card','بطاقة ائتمانية أو بطاقة خصم','فوري — تزايد في الحال')}
+  ${pmOpt('bank','bank','تحويل بنكي','يُؤكَّد خلال يوم عمل، وقد ينتهي المزاد قبل ذلك')}
+  <div class="nt">${ic('info')}<span>يرجع التأمين إلى محفظتك إذا لم تفز، أو بعد تأكيد دفعك إذا فزت. ويمكنك سحب رصيد المحفظة في أي وقت.</span></div>
+  <button class="btn" style="margin-top:14px" onclick="payDep()">${DF.pm==='bank'?'عرض بيانات التحويل':`ادفع ${fmt(a.dep)} ر.ق`}</button>`}
+const pmOpt=(k,i,t,d)=>`<button class="opt ${DF.pm===k?'on':''}" onclick="DF.pm='${k}';upSheet()"><span class="rd"></span><div><div class="t">${t}</div><div class="d">${d}</div></div><span class="oi" style="margin-inline-start:auto">${ic(i)}</span></button>`;
+const adrFields=a=>`<label class="fl">الدولة<select class="in" id="ac">${COUNTRIES.map(c=>`<option ${c===a.country?'selected':''}>${c}</option>`).join('')}</select></label>
+ <label class="fl">المدينة والمنطقة<input class="in" id="aci" value="${esc(a.city)}"></label><label class="fl">الشارع والمبنى<input class="in" id="al" value="${esc(a.line)}"></label>`;
+function saveAdr(){if(!DF)return;const c=$('#ac'),ci=$('#aci'),l=$('#al');if(c)DF.adr={country:c.value,city:ci.value,line:l.value}}
+function upTile(k){saveAdr();DF[k]=1;upSheet();toast('تم رفع الصورة')}
+function idDone(){saveAdr();const me=S.me;me.verified=true;me.idState='review';me.addr=Object.assign({},DF.adr);
+ setTimeout(()=>{if(me.idState!=='review')return;me.idState='ok';if(S.me===me){push('تم التحقق من هويتك','شكراً لك، اكتمل التحقق من هويتك.',['me'],'shield');bgRefresh()}},9000);
+ if(DF.cb){const cb=DF.cb;closeSheet();cb()}else{DF.i++;upSheet()}}
+function payDep(){const a=AA(DF.id),id=DF.id,df=DF,w=S.wallet,me=S.me;
+ if(DF.pm==='bank'){S.dep[id]={amt:a.dep,state:'pending',src:'bank'};DF.step='done';upSheet();refresh();
+  setTimeout(()=>{const d=S.dep[id];if(!d||me!==(S.me||S.acct))return;
+   if(d.state==='pending'){d.state='held';w.held+=d.amt;txAdd(`تأمين محجوز — ${a.n}`,d.amt,'h','تحويل بنكي');push('تم تأكيد تحويل التأمين',`يمكنك الآن المزايدة على ${a.n}`,['lot',id],'bank')}
+   else if(d.state==='refund'){w.avail+=d.amt;txAdd(`إرجاع تأمين — ${a.n}`,d.amt,'p','وصل بعد انتهاء المزاد');d.state='returned';push('أُعيد تأمينك',`أُضيف ${fmt(d.amt)} ر.ق إلى محفظتك`,['wallet'],'wallet')}
+   bgRefresh()},6000);return}
+ DF.step='proc';SHX={modal:true};upSheet();
+ setTimeout(()=>{if(DF!==df)return;const d={amt:a.dep,state:'held',src:DF.pm};S.wallet.held+=a.dep;
+  if(DF.pm==='wallet'){d.cardAmt=Math.min(S.wallet.card,a.dep);S.wallet.card-=d.cardAmt;S.wallet.avail-=a.dep;txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','من المحفظة')}else txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','بطاقة');
+  S.dep[id]=d;SHX=null;DF.step='done';upSheet();refresh()},1300)}
+function confirmBid(id){const a=AA(id),amt=a.cur+a.inc*(BSEL[id]||1);
+ openSheet(()=>`<div class="shh"><h3>تأكيد المزايدة</h3></div><div class="big">${qar(amt)}</div><div class="bigs">${a.n}</div>
+ <ul class="lst"><li>المزايدة نهائية ولا يمكن سحبها.</li><li>يظهر رقمك <bdi>${S.me.num}</bdi> في سجل المزايدات بدلاً من اسمك.</li><li>إذا فزت، تدفع بتحويل بنكي خلال 48 ساعة.</li></ul>
+ <button class="btn" onclick="doBid('${id}',${amt})">تأكيد المزايدة</button><button class="btn ghost" onclick="closeSheet()">إلغاء</button>`)}
+function doBid(id,amt){const a=AA(id);closeSheet();if(a.st!=='live')return toast('انتهى المزاد');
+ if(amt<a.cur+a.inc){BSEL[id]=1;refresh();return toast('تغيّر السعر — اختر مبلغاً جديداً')}
+ placeBid(a,S.me.num,amt);a.flash=1;BSEL[id]=1;refresh();a.flash=0;toast('أنت صاحب أعلى مزايدة');rival(a)}
+
+/* shop purchase */
+function buy(id){const p=PP(id);if(p.sizes&&!SZ[id])return toast('اختر المقاس أولاً');if(!S.me)return needLogin({k:'item',p:id,then:'buy'});CO={s:'del'};go('checkout',id)}
+function addrSheet(){DF={adr:Object.assign({},(S.me&&S.me.addr)||DEFADR)};openSheet(()=>`<div class="shh"><h3>عنوان التوصيل</h3><p>نرسله إلى شركة الشحن لإنشاء البوليصة تلقائياً، وتُحسب الرسوم حسب الدولة.</p></div>${adrFields(DF.adr)}
+ <button class="btn" onclick="saveAdr();S.me.addr=Object.assign({},DF.adr);closeSheet();refresh();toast('تم حفظ العنوان')">حفظ العنوان</button>`)}
+function place(id){const p=PP(id),m=effM(CO.s),tot=p.price+feeV(m);
+ if(p.sold)return toast('تم بيع هذه القطعة');
+ if(CO.s!=='pick'&&!m)return addrSheet();
+ if(tot>=50000&&!S.me.verified)return idSheet(()=>place(id));
+ if(tot>10000&&S.orders.filter(o=>o.kind==='shop'&&o.state==='await').length>=2)return toast('لديك حجزان بانتظار التحويل — أكمل أحدهما أولاً');
+ const data={kind:'shop',itemId:id,title:p.n+(SZ[id]?` · ${SZ[id]}`:''),b:p.b,cat:p.cat,price:p.price,method:m,fee:feeV(m),total:tot};
+ if(tot<=10000){const w=S.wallet;openSheet(()=>`<div class="spin"></div><p class="bigs">جارٍ الدفع بالبطاقة…</p>`,{modal:true});
+  setTimeout(()=>{if(!mine(w))return closeSheet();const o=newOrder(Object.assign(data,{state:'paid'}));markSold(o);closeSheet();
+   stack=[{k:'me'},{k:'orders'},{k:'order',p:o.id}];cur=stack[2];render(true);push('تم الدفع بنجاح',`طلبك <bdi>${o.id}</bdi> قيد التجهيز`,['order',o.id],'check');progress(o)},1400)}
+ else{const o=newOrder(Object.assign(data,{state:'await',deadline:Date.now()+24*H,span:24*H}));p.res=o.id;replace('pay',o.id);toast('القطعة محجوزة لك 24 ساعة')}}
+
+/* bank transfer receipt -> store confirms (simulated) -> shipment auto-created */
+function upReceipt(oid){const o=OO(oid);if(!o||o.state!=='await'||o.up)return;
+ if(o.kind==='auction'){o.method=effM(o.s);if(!o.method)return addrSheet()}
+ o.up=1;const w=S.wallet;openSheet(()=>`<div class="spin"></div><p class="bigs">جارٍ رفع الإيصال…</p>`,{modal:true});
+ setTimeout(()=>{o.state='review';closeSheet();refresh();toast('تم رفع الإيصال — قيد المراجعة');
+  setTimeout(()=>{o.state='paid';markSold(o);if(o.kind==='auction'&&S.wallet===w)releaseDep(o.itemId,'بعد تأكيد الدفع');
+   if(mine(w)){push('تم تأكيد التحويل',o.kind==='auction'?`وصل المبلغ وأُعيد تأمينك ${fmt(o.dep)} ر.ق إلى محفظتك. نجهّز طلبك الآن`:'وصل المبلغ، ونجهّز طلبك الآن',['order',o.id],'check');
+    if(cur.k==='pay'&&cur.p===o.id)replace('order',o.id);else bgRefresh()}progress(o)},6000)},1200)}
+function progress(o){const w=S.wallet;
+ setTimeout(()=>{o.state='prep';if(mine(w))bgRefresh()},3500);
+ setTimeout(()=>{if(o.method==='pick'){o.state='ready';o.code='730 418';if(mine(w))push('طلبك جاهز للاستلام',`أبرز بطاقتك الشخصية مع رمز الاستلام <bdi>${o.code}</bdi>`,['order',o.id],'store')}
+  else{o.state='ship';o.awb='4416 7720 31';if(mine(w))push('تم شحن طلبك',`أرامكس · رقم الشحنة <bdi>${o.awb}</bdi>`,['order',o.id],'truck')}if(mine(w))bgRefresh()},9000)}
+function proxySheet(oid){const o=OO(oid);openSheet(()=>`<div class="shh"><h3>شخص آخر سيستلم</h3><p>سجّل اسمه ورقم بطاقته. يُبرز بطاقته الشخصية ورمز الاستلام عند الاستلام.</p></div>
+ <label class="fl">الاسم الكامل<input class="in" id="pxn" value="${o.proxy?esc(o.proxy.n):''}" placeholder="محمد المري"></label><label class="fl">رقم البطاقة الشخصية<input class="in" id="pxq" dir="ltr" style="text-align:left" inputmode="numeric" value="${o.proxy?esc(o.proxy.q):''}" placeholder="2XX XXXX XXXX"></label>
+ <button class="btn" onclick="OO('${oid}').proxy={n:$('#pxn').value||'محمد المري',q:$('#pxq').value};closeSheet();refresh();toast('تم تسجيل المستلم')">حفظ</button>`)}
+
+/* wallet: card-funded money is refunded to the card, the rest goes to an IBAN in the customer's name */
+let TOP={a:2500,m:'card'};
+function topSheet(){TOP={a:2500,m:'card'};openSheet(()=>`<div class="shh"><h3>شحن المحفظة</h3><p>يمكنك استخدام الرصيد لدفع تأمين المزادات.</p></div>
+ <div class="chips" style="margin:0 0 12px;padding:0">${[500,2500,5000].map(v=>`<button class="chip ${v===TOP.a?'on':''}" onclick="TOP.a=${v};upSheet()">${fmt(v)} ر.ق</button>`).join('')}</div>
+ <button class="opt ${TOP.m==='card'?'on':''}" onclick="TOP.m='card';upSheet()"><span class="rd"></span><div><div class="t">بطاقة</div><div class="d">فوري</div></div></button>
+ <button class="opt ${TOP.m==='bank'?'on':''}" onclick="TOP.m='bank';upSheet()"><span class="rd"></span><div><div class="t">تحويل بنكي</div><div class="d">يُضاف بعد تأكيد الوصول، عادةً خلال يوم عمل</div></div></button>
+ <button class="btn" style="margin-top:8px" onclick="doTop()">شحن ${fmt(TOP.a)} ر.ق</button>`)}
+function doTop(){const a=TOP.a,m=TOP.m,w=S.wallet,tx=S.tx;closeSheet();
+ if(m==='card'){w.avail+=a;w.card+=a;txAdd('شحن المحفظة',a,'p','بطاقة');toast('تم شحن المحفظة');refresh()}
+ else{toast('بانتظار وصول التحويل');setTimeout(()=>{w.avail+=a;tx.unshift({t:Date.now(),l:'شحن المحفظة',a,k:'p',d:'تحويل بنكي'});if(mine(w)){push('تم استلام التحويل',`أُضيف ${fmt(a)} ر.ق إلى محفظتك`,['wallet'],'wallet');bgRefresh()}},5000)}}
+function wdSheet(){if(!S.wallet.avail)return toast('لا يوجد رصيد متاح للسحب');const cp=Math.min(S.wallet.card,S.wallet.avail),bp=S.wallet.avail-cp;
+ openSheet(()=>`<div class="shh"><h3>سحب رصيد المحفظة</h3><p>يصل خلال 3 أيام عمل، بدون رسوم. التأمينات المحجوزة لا يمكن سحبها حتى تعود إلى المحفظة (عند انتهاء المزاد، أو بعد تأكيد دفعك إذا فزت).</p></div>
+ <div class="big">${qar(S.wallet.avail)}</div><div class="bigs">الرصيد المتاح</div>
+ <div class="card" style="margin-bottom:12px">${cp?`<div class="kv"><span>إلى البطاقة المستخدمة في الدفع</span><b>${fmt(cp)} ر.ق</b></div>`:''}${bp?`<div class="kv"><span>إلى حسابك البنكي</span><b>${fmt(bp)} ر.ق</b></div>`:''}</div>
+ ${bp?`<label class="fl">رقم الحساب الدولي (IBAN)<input class="in" id="iban" dir="ltr" style="text-align:left" placeholder="QA00 XXXX 0000 0000 0000 0000 0000 0"></label>
+ <div class="nt">${ic('shield')}<span>يجب أن يكون الحساب باسمك (${esc(S.me.first)} ${esc(S.me.last)}).</span></div>`:`<div class="nt">${ic('card')}<span>يُعاد المبلغ إلى البطاقة نفسها التي دفعت بها.</span></div>`}
+ <button class="btn" style="margin-top:14px" onclick="doWd(${cp},${bp})">طلب السحب</button>`)}
+function doWd(cp,bp){let v='';if(bp){v=($('#iban').value||'').replace(/\s/g,'').toUpperCase();if(!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(v))return toast('أدخل رقم IBAN صحيحاً باسمك')}
+ if(cp)txAdd('إرجاع إلى البطاقة',-cp,'m','قيد التنفيذ · خلال 3 أيام عمل');if(bp)txAdd('سحب إلى الحساب البنكي',-bp,'m',`قيد التنفيذ · •••• ${v.slice(-4)} · خلال 3 أيام عمل`);
+ S.wallet.avail=0;S.wallet.card=0;closeSheet();toast('تم استلام طلب السحب');refresh()}
+
+/* presenter shortcut: win the soonest live auction now */
+function demoWin(){
+ const a=A.filter(x=>x.st==='live').sort((x,y)=>x.t1-y.t1)[0];if(!a)return toast('لا توجد مزادات مباشرة الآن');
+ closeSheet();
+ if(!S.me){if(S.acct){S.me=S.acct;S.acct=null}else{S.me={first:'خالد',last:'المري',num:'#4821',phone:'+974 5512 3456',verified:true,idState:'ok',terms:true,offers:false,addr:Object.assign({},DEFADR)};
+  S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:'رقم المزايد الخاص بك <bdi>#4821</bdi>',icn:'user',un:1})}}
+ if(!S.me.addr)S.me.addr=Object.assign({},DEFADR);
+ const d=S.dep[a.id];if(!d||d.state!=='held'){S.dep[a.id]={amt:a.dep,state:'held',src:'card'};S.wallet.held+=a.dep;txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','بطاقة')}
+ a.rival=9;a.cur+=a.inc;a.hist.unshift({n:S.me.num,a:a.cur,t:Date.now(),fresh:1});a.t1=Date.now();
+ stack=[{k:'mine'}];cur=stack[0];S.after=null;finish(a);render(true)}
+
+/* ============ boot ============ */
+function fit(){const w=$('#wrap'),d=$('#dev');if(innerWidth<=480){d.style.transform='';w.style.width='';w.style.height='';return}
+ const s=Math.min(1,(innerHeight-112)/876);d.style.transform=`scale(${s})`;w.style.width=417*s+'px';w.style.height=876*s+'px'}
+addEventListener('resize',fit);fit();render(true);
+</script>
+</body>
+</html>

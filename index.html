@@ -143,6 +143,10 @@ div.num{text-align:right}
 .art{color:var(--gold);fill:none;stroke:currentColor;stroke-width:1.25px;stroke-linecap:round;stroke-linejoin:round}
 .art *{vector-effect:non-scaling-stroke}
 .ph .art{width:64%;height:auto;max-height:84%}
+/* product photos: white studio backgrounds melt into the warm paper via multiply */
+.ph img,.gph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:9%;mix-blend-mode:multiply}
+.gph img{padding:7% 10%}
+.row2 .ph img{padding:6%}
 .soon{position:absolute;bottom:8px;inset-inline-start:8px;font-size:9.5px;color:var(--mute);background:rgba(255,255,255,.85);
   border:1px solid var(--line);padding:2px 8px;border-radius:99px;letter-spacing:.02em}
 .live{position:absolute;top:10px;inset-inline-start:10px;display:flex;align-items:center;gap:6px;background:#fff;color:var(--ink);
@@ -220,6 +224,7 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 .door.dk::before{content:'';position:absolute;inset:0;background-image:var(--pat);background-size:30px 41px;opacity:.5}
 .door-art{position:absolute;inset:14px 10px 70px;display:grid;place-items:center}
 .door.lt .art{width:136px;height:136px}
+.door-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
 .door-tx{position:relative}
 .door-tx b{display:block;font-family:'Alexandria';font-weight:600;font-size:18px}
 .door.lt .door-tx b{color:var(--navy)}
@@ -262,10 +267,11 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 /* ---------- shop ---------- */
 .srch{display:flex;align-items:center;gap:10px;height:46px;border-radius:14px;background:#fff;border:1px solid var(--line);padding:0 14px;color:var(--mute)}
 .srch input{flex:1;border:0;outline:0;background:none;font-size:14px;color:var(--ink);min-width:0}
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
-.cat{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px 9px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:center}
-.cat-a{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#fff,#F1E9DD);display:grid;place-items:center}
-.cat-a .art{width:42px;height:42px}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.cat{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 11px;border-radius:18px;background:#fff;border:1px solid var(--line);text-align:center}
+.cat-a{position:relative;width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#fff,#F1E9DD);display:grid;place-items:center;overflow:hidden}
+.cat-a .art{width:50px;height:50px}
+.cat-a img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10px;mix-blend-mode:multiply}
 .cat b{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.3}
 .cat em{font-style:normal;font-size:10px;color:var(--mute)}
 .chips{display:flex;gap:7px;overflow-x:auto;margin:0 -18px 14px;padding:0 18px;scrollbar-width:none}
@@ -675,6 +681,10 @@ function art(cat,v=0){
  else if(cat==='shoe')g=`<path d="M34 130 C36 112 58 106 80 104 C94 103 102 94 116 94 C130 94 138 106 150 113 C162 120 170 124 170 132 C170 138 164 141 156 141 H42 C35 141 33 136 34 130 Z"/><path d="M36 134 H168"/><path d="M108 100 l10 6 M103 103 l10 6 M98 106 l10 6"/>`;
  else if(cat==='shirt')g=`<path d="M72 48 L58 54 L36 74 L50 94 L62 86 V162 H138 V86 L150 94 L164 74 L142 54 L128 48 C124 58 112 64 100 64 C88 64 76 58 72 48 Z"/><path d="M84 50 L100 70 L116 50"/><path d="M100 70 V98"/><circle cx="100" cy="80" r="1.6"/><circle cx="100" cy="90" r="1.6"/>`;
  return `<svg class="art" viewBox="0 0 200 200"><g transform="rotate(${rot} 100 100) translate(100 100) scale(${sc}) translate(-100 -100)">${g}</g></svg>`}
+/* real product photo when the item has one (img/), otherwise the line drawing */
+const pic=(o,v=0)=>o&&o.img&&o.img.length?`<img src="img/${o.img[v%o.img.length]}" alt="" loading="lazy" decoding="async">`:art(o?o.cat:'watch',v);
+const soon=o=>o&&o.img&&o.img.length?'':'<span class="soon">صورة قريباً</span>';
+const opic=o=>pic(AA(o.itemId)||PP(o.itemId)||{cat:o.cat});
 function qrSvg(seed){let s='';for(let y=0;y<21;y++)for(let x=0;x<21;x++){const e=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);
  const on=e?((x===0||x===6||y===0||y===6||(x>1&&x<5&&y>1&&y<5))?1:0):((x*3+y*17+((x*y+seed)%5))%3===0?1:0);if(on)s+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}
  return `<svg viewBox="0 0 21 21" shape-rendering="crispEdges" fill="#071B56">${s}</svg>`}
@@ -683,52 +693,87 @@ function qrSvg(seed){let s='';for(let y=0;y<21;y++)for(let x=0;x<21;x++){const e
 const POOL=['#2741','#1093','#5520','#3307','#6618','#8042','#1475','#7390','#2268','#9154','#3861'];
 function mkHist(cur,inc,n,until,span){const h=[];let a=cur,t=until;for(let i=0;i<n;i++){h.push({n:POOL[(i*7+3)%POOL.length],a,t});a-=inc*(i%3===2?2:1);t-=span/n*(.5+((i*37)%10)/10)}return h}
 /* One auction can hold several pieces: they close one after another, 5 minutes apart, from the owner's end time. */
-const EV={e1:{n:'مزاد الساعات الفاخرة',end:T0+H+12*MIN+9e3}};
+const EV={e1:{n:'مزاد ساعات جي إم تي ماستر',end:T0+H+12*MIN+9e3}};
+/* the store's own pieces and card prices (photos: illustrative shots of the same model) */
+const RX=(k,n)=>n.map(i=>`rlx-${k}-${i}.jpg`);
 const A=[
- {id:'a1',ev:'e1',lot:1,b:'ROLEX',n:'رولكس دايتونا «باندا»',m:'Cosmograph Daytona · 116500LN',cat:'watch',f:'ساعات',start:118000,cur:142000,inc:500,st:'live',t0:T0-5.8*H,older:9,
-  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'116500LN','سنة الإصدار':'2021','المقاس':'40 مم','الخامة':'ستيل أويستر','الضمان المتبقي':'منتهٍ'},
-  desc:'ساعة كرونوغراف بقرص أبيض وعدادات سوداء، بحالة ممتازة مع آثار استخدام خفيفة جداً على السوار. فحصها فريق المحل وتأكد من أصالتها.'},
- {id:'a2',ev:'e1',lot:2,b:'PATEK PHILIPPE',n:'باتيك فيليب نوتيلوس',m:'Nautilus · 5711/1A-010',cat:'watch',f:'ساعات',start:380000,cur:512000,inc:1000,st:'live',t0:T0-5.8*H,older:6,
-  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'5711/1A-010','سنة الإصدار':'2019','المقاس':'40 مم','الخامة':'ستيل','الضمان المتبقي':'منتهٍ'},
-  desc:'القرص الأزرق المتدرّج الشهير، من آخر إصدارات الموديل قبل توقّف إنتاجه. تُسلَّم مع العلبة والأوراق الأصلية.'},
- {id:'a3',b:'CARTIER',n:'قلم سانتوس دو كارتييه',m:'Santos de Cartier · Ballpoint',cat:'pen',f:'أقلام',start:2500,cur:4200,inc:100,st:'live',t0:T0-6.9*H,t1:T0+6*MIN+40e3,older:4,
-  cond:'جديد',incl:'العلبة والضمان الدولي',specs:{'النوع':'قلم حبر جاف','الخامة':'مطلي بالذهب','الطراز':'سانتوس'},
-  desc:'قلم من مجموعة سانتوس بتشطيب ذهبي وبراغي الإطار المميزة. جديد بالعلبة والضمان الدولي.'},
- {id:'a4',b:'HERMÈS',n:'هيرمس بيركن 30',m:'Birkin 30 · Togo · Gold',cat:'bag',f:'حقائب',start:85000,cur:85000,inc:500,st:'up',t0:T0+26*H+20*MIN,t1:T0+33*H+20*MIN,older:0,
-  cond:'جديدة · غير مستخدمة',incl:'العلبة، الكيس، القفل والمفاتيح',specs:{'المقاس':'30 سم','الخامة':'جلد توغو','اللون':'Gold · معدن ذهبي'},
-  desc:'من أكثر الحقائب طلباً في العالم، بلون Gold الكلاسيكي ومعدن ذهبي. جديدة وغير مستخدمة مع كامل الملحقات.'},
- {id:'a5',b:'ROLEX',n:'رولكس جي إم تي ماستر II «بيبسي»',m:'GMT-Master II · 126710BLRO',cat:'watch',f:'ساعات',start:72000,cur:98500,inc:500,st:'end',t0:T0-2*DAY-10*H,t1:T0-2*DAY-3*H,older:21,
-  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',specs:{'الرقم المرجعي':'126710BLRO','سنة الإصدار':'2020','المقاس':'40 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي','الضمان المتبقي':'منتهٍ'},
-  desc:'إطار أحمر وأزرق على سوار جوبيلي.'},
- {id:'a6',b:'CARTIER',n:'أزرار أكمام سانتوس دو كارتييه',m:'Santos de Cartier · Cufflinks',cat:'cuff',f:'أزرار أكمام',start:3500,cur:6800,inc:100,st:'end',t0:T0-4*DAY-7*H,t1:T0-4*DAY,older:8,
-  cond:'جديدة',incl:'العلبة',specs:{'الخامة':'ستيل وذهب وردي'},desc:'تصميم سانتوس المربع ببراغي الإطار.'},
+ {id:'a1',ev:'e1',lot:1,b:'ROLEX',n:'رولكس جي إم تي ماستر II «بيبسي»',m:'GMT-Master II · 126710BLRO · Jubilee',cat:'watch',f:'ساعات',start:95000,cur:99500,inc:500,st:'live',t0:T0-5.8*H,older:7,
+  img:['auc-pepsi-1.jpg','auc-pepsi-2.jpg','auc-pepsi-3.jpg','auc-pepsi-4.jpg','auc-pepsi-5.jpg'],
+  cond:'مستعملة · ممتازة',incl:'العلبة وبطاقة الضمان',specs:{'الرقم المرجعي':'126710BLRO','سنة الإصدار':'2023','المقاس':'40 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي','الإطار':'سيراخروم أحمر وأزرق'},
+  desc:'الإطار الأحمر والأزرق الأشهر في عالم الساعات، على سوار جوبيلي بخمس حلقات. بحالة ممتازة مع العلبة وبطاقة الضمان. فحصها فريق المحل وتأكد من أصالتها.'},
+ {id:'a2',ev:'e1',lot:2,b:'ROLEX',n:'رولكس جي إم تي ماستر II «باتغيرل»',m:'GMT-Master II · 126710BLNR · Jubilee',cat:'watch',f:'ساعات',start:73000,cur:76500,inc:500,st:'live',t0:T0-5.8*H,older:5,
+  img:RX('batgirl',[1,2,3,4,5]),
+  cond:'جديدة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'126710BLNR','سنة الإصدار':'2026','المقاس':'40 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي','الإطار':'سيراخروم أزرق وأسود'},
+  desc:'إطار بالأزرق والأسود على سوار جوبيلي، يعرفها الهواة باسم «باتغيرل». جديدة بالكامل مع العلبة والأوراق الأصلية.'},
+ {id:'a3',ev:'e1',lot:3,b:'ROLEX',n:'رولكس جي إم تي ماستر II «بروس واين»',m:'GMT-Master II · 126710GRNR · Jubilee',cat:'watch',f:'ساعات',start:85000,cur:88000,inc:500,st:'live',t0:T0-5.8*H,older:4,
+  img:RX('brucewayne',[1,2,3,4,5]),
+  cond:'جديدة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'126710GRNR','سنة الإصدار':'2026','المقاس':'40 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي','الإطار':'سيراخروم رمادي وأسود'},
+  desc:'أحدث ألوان جي إم تي ماستر بإطار رمادي وأسود، ويعرفها الهواة باسم «بروس واين». جديدة بالكامل مع العلبة والأوراق.'},
+ {id:'a4',b:'ROLEX',n:'رولكس صب مارينر «هالك»',m:'Submariner Date · 116610LV',cat:'watch',f:'ساعات',start:85000,cur:87500,inc:500,st:'live',t0:T0-6.9*H,t1:T0+6*MIN+40e3,older:6,
+  img:['auc-hulk-1.jpg','auc-hulk-2.jpg','auc-hulk-3.jpg'],
+  cond:'جديدة',incl:'العلبة والأوراق',specs:{'الرقم المرجعي':'116610LV','سنة الإصدار':'2021','المقاس':'40 مم','الخامة':'ستيل أويستر','القرص والإطار':'أخضر'},
+  desc:'القرص والإطار الأخضران في الإصدار الذي أوقفت رولكس إنتاجه، وأصبح من أكثر موديلات صب مارينر طلباً لدى الهواة.'},
+ {id:'a5',b:'AUDEMARS PIGUET',n:'أوديمار بيغه رويال أوك أوفشور كرونوغراف',m:'Royal Oak Offshore Chronograph · 26470ST «Navy»',cat:'watch',f:'ساعات',start:100000,cur:106000,inc:1000,st:'live',t0:T0-3.3*H,t1:T0+3*H+40*MIN,older:6,
+  img:['auc-roo-1.jpg','auc-roo-2.jpg','auc-roo-3.jpg'],
+  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',specs:{'الرقم المرجعي':'26470ST.OO.A027CA.01','سنة الإصدار':'2017','المقاس':'42 مم','الخامة':'ستيل','الحزام':'مطاط أزرق'},
+  desc:'قرص أزرق بنقشة «ميغا تابيسري» وعدادات بيضاء على حزام مطاطي أزرق، من أشهر إصدارات رويال أوك أوفشور. بحالة ممتازة.'},
+ {id:'a6',b:'ROLEX',n:'رولكس ديت جست 41 · قرص أزرق وألماس',m:'Datejust 41 · 126334 · Fluted · Diamonds',cat:'watch',f:'ساعات',start:63500,cur:66000,inc:500,st:'live',t0:T0-2*H,t1:T0+5*H+5*MIN,older:3,
+  img:RX('dj-diamond-blue',[1,2,3,5]),
+  cond:'جديدة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'126334','سنة الإصدار':'2026','المقاس':'41 مم','الخامة':'ستيل وذهب أبيض','الإطار':'محزّز من الذهب الأبيض','مؤشرات الساعات':'ألماس'},
+  desc:'قرص أزرق بمؤشرات من الألماس وإطار محزّز من الذهب الأبيض على سوار جوبيلي. جديدة بالكامل.'},
+ {id:'a7',b:'AUDEMARS PIGUET',n:'أوديمار بيغه كود 11.59 توربيون طائر مفرّغ',m:'Code 11.59 · Flying Tourbillon Openworked · 26601NR',cat:'watch',f:'ساعات',start:920000,cur:920000,inc:5000,st:'up',t0:T0+26*H+20*MIN,t1:T0+33*H+20*MIN,older:0,
+  img:['auc-apcode-1.jpg'],
+  cond:'جديدة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'26601NR.OO.D002KB.01','سنة الإصدار':'2026','المقاس':'41 مم','الخامة':'ذهب وردي وسيراميك أسود','الحركة':'أوتوماتيكية مفرّغة · كاليبر 2980','الحزام':'مطاط أسود'},
+  desc:'حركة مفرّغة بالكامل مع توربيون طائر، في علبة من الذهب الوردي والسيراميك الأسود. أغلى قطعة في مزادات هذا الأسبوع.'},
+ {id:'a8',b:'BOVET',n:'بوفيه 19Thirty فلورييه · إصدار قطر',m:'19Thirty Fleurier · Qatar Edition',cat:'watch',f:'ساعات',start:75000,cur:75000,inc:500,st:'up',t0:T0+28*H,t1:T0+35*H,older:0,
+  img:['auc-bovet-1.jpg','auc-bovet-2.jpg'],
+  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',specs:{'المجموعة':'19Thirty Fleurier','الإصدار':'إصدار قطر','سنة الإصدار':'2024','المقاس':'42 مم','الخامة':'ستيل','الحركة':'يدوية التعبئة'},
+  desc:'تاج على شكل قوس عند الساعة 12 بأسلوب ساعات الجيب الكلاسيكية من بوفيه، وقرص أسود بأرقام رومانية وعداد للثواني. إصدار خاص بقطر.'},
+ {id:'a9',b:'ROLEX',n:'رولكس سي دويلر',m:'Sea-Dweller · 126600',cat:'watch',f:'ساعات',start:45500,cur:45500,inc:500,st:'up',t0:T0+2*DAY+2*H,t1:T0+2*DAY+9*H,older:0,
+  img:RX('seadweller',[1,2,3,4,5]),
+  cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',specs:{'الرقم المرجعي':'126600','سنة الإصدار':'2023','المقاس':'43 مم','الخامة':'ستيل أويستر','مقاومة الماء':'1,220 م'},
+  desc:'ساعة الغوص الاحترافية حتى عمق 1,220 متراً، مع كتابة «Sea-Dweller» بالأحمر على القرص. بحالة ممتازة.'},
+ {id:'a10',b:'ROLEX',n:'رولكس ديت جست 41 · قرص أزرق',m:'Datejust 41 · 126300 · Jubilee',cat:'watch',f:'ساعات',start:45000,cur:49500,inc:500,st:'end',t0:T0-2*DAY-10*H,t1:T0-2*DAY-3*H,older:12,
+  img:RX('dj-blue',[1,2,3,4,5]),
+  cond:'جديدة',incl:'العلبة والأوراق الأصلية',specs:{'الرقم المرجعي':'126300','سنة الإصدار':'2026','المقاس':'41 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي'},
+  desc:'قرص أزرق لامع وإطار أملس على سوار جوبيلي.'},
+ {id:'a11',b:'ROLEX',n:'رولكس ديت جست 41 · إطار محزّز',m:'Datejust 41 · 126334 · Fluted · Jubilee',cat:'watch',f:'ساعات',start:53500,cur:58000,inc:500,st:'end',t0:T0-4*DAY-7*H,t1:T0-4*DAY,older:15,
+  img:RX('dj-fluted-black',[1,2,3,5]),
+  cond:'مستعملة · ممتازة',incl:'العلبة',specs:{'الرقم المرجعي':'126334','المقاس':'41 مم','الخامة':'ستيل وذهب أبيض','الإطار':'محزّز من الذهب الأبيض'},
+  desc:'قرص أسود بمؤشرات من الألماس وإطار محزّز من الذهب الأبيض.'},
 ];
 A.forEach(a=>{if(a.ev)a.t1=EV[a.ev].end+(a.lot-1)*5*MIN;a.dep=tier(a.start);a.rival=0;
  a.hist=a.st==='up'?[]:mkHist(a.cur,a.inc,a.st==='end'?10:12,a.st==='end'?a.t1-60e3:T0-25e3,a.st==='end'?5*H:a.lot===2?2.5*H:4*H);if(a.st==='end')a.final=a.cur});
 const lotsOf=ev=>A.filter(x=>x.ev===ev).sort((x,y)=>x.lot-y.lot);
 const PR=[
- {id:'s10',b:'ROLEX',n:'رولكس صب مارينر ديت',m:'Submariner Date · 126610LN',cat:'watch',c:'ساعات',price:62000,cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',
-  specs:{'الرقم المرجعي':'126610LN','سنة الإصدار':'2023','المقاس':'41 مم','الخامة':'ستيل أويستر','الضمان المتبقي':'حتى 2028'},desc:'ساعة الغوص الأيقونية بإطار سيراميك أسود، بحالة ممتازة مع العلبة والأوراق.'},
- {id:'s1',b:'OMEGA',n:'أوميغا سبيدماستر مون ووتش',m:'Speedmaster Moonwatch · 310.30.42.50.01.001',cat:'watch',c:'ساعات',price:27500,cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',
-  specs:{'الرقم المرجعي':'310.30.42.50.01.001','سنة الإصدار':'2022','المقاس':'42 مم','الخامة':'ستيل','الضمان المتبقي':'سنة و4 أشهر'},desc:'كرونوغراف يدوي التعبئة بحركة Master Chronometer، في حالة ممتازة مع العلبة والأوراق.'},
- {id:'s2',b:'MONTBLANC',n:'مون بلان مايسترستوك 149',m:'Meisterstück 149 · Fountain Pen',cat:'pen',c:'أقلام',price:3450,cond:'جديد',incl:'العلبة والضمان الدولي',
-  specs:{'الريشة':'ذهب 14 قيراط','الخامة':'راتنج أسود ثمين','التعبئة':'محبرة'},desc:'القطعة الأيقونية من مون بلان، قلم حبر سائل بريشة ذهبية. جديد بالعلبة والضمان.'},
- {id:'s3',b:'CARTIER',n:'أزرار أكمام ديكور C',m:'Décor C de Cartier · Cufflinks',cat:'cuff',c:'أزرار أكمام',price:4900,cond:'جديدة',incl:'العلبة والشهادة',
-  specs:{'الخامة':'فضة إسترلينية','اللون':'فضي'},desc:'أزرار أكمام بشعار C المزدوج الكلاسيكي. جديدة بالعلبة.'},
- {id:'s4',b:'LOUIS VUITTON',n:'لويس فيتون كيبول 50',m:'Keepall Bandoulière 50',cat:'duffle',c:'حقائب رجالية',price:9800,cond:'مستعملة · ممتازة',incl:'حزام الكتف والكيس',
-  specs:{'المقاس':'50 × 29 × 23 سم','الخامة':'قماش مونوغرام','اللون':'بني'},desc:'حقيبة السفر الكلاسيكية بقماش المونوغرام مع حزام للكتف، وعليها آثار استخدام خفيفة على المقابض.'},
- {id:'s5',b:'CHANEL',n:'شانيل كلاسيك فلاب متوسطة',m:'Classic Flap Medium · Caviar',cat:'bag',c:'حقائب نسائية',price:38000,cond:'مستعملة · جيدة جداً',incl:'العلبة، الكيس وبطاقة الأصالة',
-  specs:{'المقاس':'25 سم','الخامة':'جلد كافيار','اللون':'أسود · معدن ذهبي'},desc:'جلد كافيار أسود مع سلسلة ذهبية، من أكثر حقائب شانيل طلباً.'},
- {id:'s6',b:'LORO PIANA',n:'كاب لورو بيانا كشمير',m:'Cashmere Baseball Cap',cat:'cap',c:'كابات',price:1450,cond:'جديد',incl:'الكيس',sizes:['S','M','L'],out:['S'],g:'رجالي',
-  specs:{'الخامة':'كشمير','اللون':'كحلي'},desc:'كاب من الكشمير الناعم بلون كحلي.'},
- {id:'s7',b:'BERLUTI',n:'حذاء بيرلوتي أليساندرو',m:'Alessandro Démesure · Oxford',cat:'shoe',c:'أحذية',price:6200,cond:'جديد',incl:'العلبة والأكياس',sizes:['41','42','43','44'],out:['44'],g:'رجالي',
-  specs:{'الخامة':'جلد فينيتسيا','اللون':'بني تاباكو','المقاسات':'أوروبية'},desc:'أكسفورد من قطعة جلد واحدة بتدرّج باتينا يدوي.'},
- {id:'s8',b:'BRUNELLO CUCINELLI',n:'بولو برونيلو كوتشينيلي',m:'Cotton Piqué Polo',cat:'shirt',c:'ملابس',price:2900,cond:'جديد',incl:'—',sizes:['S','M','L','XL'],out:[],g:'رجالي',
-  specs:{'الخامة':'قطن بيكيه','اللون':'بيج'},desc:'بولو من قطن البيكيه الناعم بلون بيج.'},
- {id:'s9',b:'ROLEX',n:'رولكس ديت جست 41',m:'Datejust 41 · 126334',cat:'watch',c:'ساعات',price:46000,cond:'مستعملة · ممتازة',incl:'العلبة والأوراق',sold:true,
-  specs:{'الرقم المرجعي':'126334','المقاس':'41 مم'},desc:'تم بيع هذه القطعة.'},
+ {id:'s1',hero:1,b:'CARTIER',n:'كارتييه سانتوس دومون',m:'Santos-Dumont · Steel',cat:'watch',c:'ساعات',price:12000,cond:'مستعملة · كالجديدة',incl:'ضمان إلكتروني من كارتييه',img:['shop-cartier-santos-1.jpg','shop-cartier-santos-2.jpg'],
+  specs:{'المجموعة':'Santos-Dumont','الخامة':'ستيل','الحزام':'جلد'},desc:'الساعة المربعة الأيقونية التي صُممت أصلاً للطيار ألبرتو سانتوس دومون، بتصميم نحيف وأنيق. بحالة كالجديدة.'},
+ {id:'s2',b:'FREDERIQUE CONSTANT',n:'فريدريك كونستانت هايلايف للسيدات · ذهبي',m:'Highlife Ladies Automatic Heart Beat · FC-310MPWD2NHD5B',cat:'watch',c:'ساعات',price:15000,cond:'جديدة',incl:'العلبة والضمان',img:['shop-fc-highlife-gold-1.jpg','shop-fc-highlife-gold-2.jpg'],
+  specs:{'سنة الإصدار':'2024','الخامة':'ستيل مطلي بالذهب','القرص':'صدف أبيض ومؤشرات ألماس','الحركة':'أوتوماتيكية بنافذة «القلب النابض»'},desc:'سوار مدمج وقرص من الصدف تظهر من خلاله حركة الساعة عند الساعة 12. جديدة 2024.'},
+ {id:'s3',b:'FREDERIQUE CONSTANT',n:'فريدريك كونستانت هايلايف للسيدات · ذهبي وردي',m:'Highlife Ladies Automatic Heart Beat · FC-310MPWD2NH4B',cat:'watch',c:'ساعات',price:10000,cond:'جديدة',incl:'العلبة والضمان',img:['shop-fc-highlife-rose-1.jpg','shop-fc-highlife-rose-2.jpg'],
+  specs:{'الخامة':'ستيل مطلي بالذهب الوردي','القرص':'صدف أبيض ومؤشرات ألماس','الحركة':'أوتوماتيكية بنافذة «القلب النابض»'},desc:'النسخة الذهبية الوردية من هايلايف للسيدات، جديدة بالعلبة.'},
+ {id:'s4',b:'BREITLING',n:'بريتلينغ كرونومات 44',m:'Chronomat 44 · AB011012/B967',cat:'watch',c:'ساعات',price:11000,cond:'مستعملة · ممتازة',incl:'الساعة فقط',img:['shop-breitling-chronomat-1.jpg','shop-breitling-chronomat-2.jpg'],
+  specs:{'سنة الإصدار':'2020','المقاس':'44 مم','الخامة':'ستيل','القرص':'أسود بعدادات فضية','الحركة':'كرونوغراف أوتوماتيكي B01'},desc:'كرونوغراف بريتلينغ الكلاسيكي بقرص أسود وعدادات فضية على سوار «بايلوت» المعدني.'},
+ {id:'s5',b:'CONCORD',n:'كونكورد ساراتوغا للسيدات',m:'Saratoga · Steel · Mother-of-pearl',cat:'watch',c:'ساعات',price:8500,cond:'مستعملة · ممتازة',incl:'الساعة فقط',img:['shop-concord-1.jpg'],
+  specs:{'الخامة':'ستيل','القرص':'صدف أبيض','الإطار':'مرصّع بالألماس'},desc:'ساعة نسائية أنيقة بقرص صدفي وإطار مرصّع.'},
+ {id:'s6',b:'BREITLING',n:'بريتلينغ أفنجر II',m:'Avenger II · A13381111B1A1',cat:'watch',c:'ساعات',price:8000,cond:'مستعملة · ممتازة',incl:'الساعة فقط',img:['shop-breitling-black-1.jpg'],
+  specs:{'المقاس':'43 مم','الخامة':'ستيل','القرص':'أسود','الحركة':'كرونوغراف أوتوماتيكي'},desc:'كرونوغراف رياضي متين بقرص أسود وإطار دوّار.'},
+ {id:'s7',b:'LOUIS VUITTON',n:'لويس فيتون هورايزن 55',m:'Horizon 55 · Damier Graphite',cat:'duffle',c:'حقائب سفر',price:15500,cond:'مستعملة · ممتازة',incl:'الكيس',img:['shop-lv-horizon-1.jpg','shop-lv-horizon-2.jpg'],
+  specs:{'المقاس':'حقيبة مقصورة 55 سم','الخامة':'قماش داميه غرافيت','العجلات':'أربع عجلات دوّارة'},desc:'حقيبة السفر الكلاسيكية من لويس فيتون بقماش داميه غرافيت، بمقاس يناسب مقصورة الطائرة.'},
+ {id:'s8',b:'GUCCI',n:'غوتشي حقيبة سفر GG سوبريم',m:'GG Supreme Duffle · Interlocking G',cat:'duffle',c:'حقائب',price:8900,cond:'مستعملة · ممتازة',incl:'حزام الكتف',img:['shop-gucci-duffle-1.jpg','shop-gucci-duffle-2.jpg'],
+  specs:{'الخامة':'قماش GG سوبريم وجلد','اللون':'أسود ورمادي'},desc:'حقيبة سفر بقماش GG سوبريم وحواف جلدية سوداء، مع حزام للكتف.'},
+ {id:'s9',b:'GOYARD',n:'غويار سان لوي GM',m:'Saint Louis GM · Grey',cat:'bag',c:'حقائب',price:7900,cond:'مستعملة · ممتازة',incl:'الحقيبة الداخلية والكيس',img:['shop-goyard-1.jpg','shop-goyard-2.jpg'],
+  specs:{'المقاس':'GM','الخامة':'قماش غويارديه','اللون':'رمادي'},desc:'الحقيبة اليومية الأشهر من غويار، خفيفة وواسعة مع حقيبة داخلية صغيرة.'},
+ {id:'s10',b:'MONTBLANC',n:'مون بلان مايسترستوك 149',m:'Meisterstück 149 · Fountain Pen · MB132111',cat:'pen',c:'أقلام',price:3950,cond:'جديد',incl:'العلبة والضمان الدولي',img:['shop-mb149-1.jpg','shop-mb149-2.jpg'],
+  specs:{'النوع':'قلم حبر سائل','الريشة':'ذهب 14 قيراط','الخامة':'راتنج أسود ثمين بتشطيب ذهبي'},desc:'القطعة الأيقونية من مون بلان، قلم حبر سائل كبير بريشة ذهبية.'},
+ {id:'s11',b:'MONTBLANC',n:'مون بلان مايسترستوك كلاسيك',m:'Meisterstück Classique · Ballpoint · MB132446',cat:'pen',c:'أقلام',price:2150,cond:'جديد',incl:'العلبة والضمان الدولي',img:['shop-mb-classique-1.jpg'],
+  specs:{'النوع':'قلم حبر جاف','الخامة':'راتنج أسود بتشطيب بلاتيني'},desc:'قلم الحبر الجاف الكلاسيكي من مون بلان بتشطيب بلاتيني.'},
+ {id:'s12',b:'MONTBLANC',n:'أزرار أكمام مون بلان مايسترستوك',m:'Meisterstück Cufflinks · Onyx · MB112896',cat:'cuff',c:'أزرار أكمام',price:1850,cond:'جديدة',incl:'العلبة',img:['shop-cufflinks-1.jpg'],
+  specs:{'الخامة':'ستيل وحجر أونيكس أسود'},desc:'أزرار أكمام دائرية من الستيل بحجر الأونيكس الأسود وشعار مون بلان.'},
+ {id:'s13',b:'HERMÈS',n:'صندل هيرمس أوران',m:'Oran Sandal · Black',cat:'shoe',c:'أحذية',price:3100,cond:'جديد',incl:'العلبة والكيس',img:['shop-hermes-oran-1.jpg'],sizes:['36','37','38','39','40','41'],out:['36'],g:'نسائي',
+  specs:{'الخامة':'جلد','اللون':'أسود'},desc:'الصندل الأيقوني بقصّة حرف H، جديد بالعلبة.'},
 ];
-const CATS=[['ساعات','watch'],['أقلام','pen'],['أزرار أكمام','cuff'],['حقائب رجالية','duffle'],['حقائب نسائية','bag'],['ملابس','shirt'],['كابات','cap'],['أحذية','shoe']];
+const CATS=[['ساعات','watch'],['أقلام','pen'],['أزرار أكمام','cuff'],['حقائب','bag'],['حقائب سفر','duffle'],['أحذية','shoe']];
 const FEES={qa:{n:'توصيل داخل قطر',d:'1–2 يوم عمل من تأكيد الدفع',v:50,i:'truck'},gcc:{n:'توصيل لدول الخليج',d:'3–5 أيام عمل · أرامكس',v:150,i:'globe'},
  intl:{n:'توصيل خارج الخليج',d:'5–10 أيام عمل · أرامكس · الجمارك على المشتري',v:300,i:'globe'},pick:{n:'استلام من المحل',d:'جاهز خلال 24 ساعة من تأكيد الدفع',v:0,i:'store'}};
 const COUNTRIES=['قطر','السعودية','الإمارات','الكويت','البحرين','عُمان','دولة أخرى'];
@@ -866,22 +911,23 @@ const authCard=()=>`<div class="auc">${ic('shield')}<div><b>ضمان الأصا�
 const bigShipBadge=p=>p>300000?`<span class="bd">${ic('globe')}الشحن خارج قطر بعد موافقة المحل</span>`:'';
 
 /* ============ cards ============ */
-const aCardH=a=>`<button class="ac" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span><span class="soon">صورة قريباً</span></div>
+const aCardH=a=>`<button class="ac" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>${soon(a)}</div>
  <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div><div class="rwb"><div><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><div class="bc">${cnt(bids(a),W_BID)}</div></div>${myTag(a)?`<div style="margin-top:8px">${myTag(a)}</div>`:''}</div></button>`;
-const aCardV=a=>`<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span><span class="soon">صورة قريباً</span></div>
+const aCardV=a=>`<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>${soon(a)}</div>
  <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>${evLine(a)}<div class="rwb"><div><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><div class="bc">${cnt(bids(a),W_BID)} · تأمين ${fmt(a.dep)} ر.ق</div></div>${myTag(a)?`<div class="mt">${myTag(a)}</div>`:''}</div></button>`;
-const aUp=a=>`<button class="up1" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}</div><div class="b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
+const aUp=a=>`<button class="up1" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}</div><div class="b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
  <div class="k" style="margin-top:6px">سعر البداية</div><div class="pr" style="font-size:15px">${qar(a.start)}</div><div class="st">${ic('clock')}يبدأ ${dayLbl(a.t0)} ${clock(a.t0)}${S.rem[a.id]?' · سنذكّرك':''}</div></div></button>`;
-const aEnd=a=>{const won=S.me&&a.hist[0]&&a.hist[0].n===S.me.num;return `<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}<span class="live" style="color:var(--mute)">انتهى</span><span class="soon">صورة قريباً</span></div>
+const aEnd=a=>{const won=S.me&&a.hist[0]&&a.hist[0].n===S.me.num;return `<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live" style="color:var(--mute)">انتهى</span>${soon(a)}</div>
  <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div><div class="rwb"><div><div class="k">بيعت بـ</div><div class="pr">${qar(a.final)}</div></div><div class="bc">${cnt(bids(a),W_BID)} · ${pastLbl(a.t1)}</div></div>${won?`<div class="mt"><span class="tg ok">${ic('check')}فزت بهذه القطعة</span></div>`:''}</div></button>`};
 function pCard(p){const o=p.res&&OO(p.res),r=held(o)&&S.me;
- return `<button class="pc" onclick="go('item','${p.id}')"><div class="ph">${art(p.cat)}<span class="soon">صورة قريباً</span>${p.sold?'<div class="so"><span>تم البيع</span></div>':r?'<div class="so"><span>محجوزة لك</span></div>':''}</div>
+ return `<button class="pc" onclick="go('item','${p.id}')"><div class="ph">${pic(p)}${soon(p)}${p.sold?'<div class="so"><span>تم البيع</span></div>':r?'<div class="so"><span>محجوزة لك</span></div>':''}</div>
  <div class="pc-b"><div class="br">${p.b}</div><div class="nm">${p.n}</div><div class="pr">${qar(p.price)}</div></div></button>`}
-function gallery(cat,live){
+function gallery(o,live){const cat=o.cat,real=o.img&&o.img.length;
  const V4=cat==='watch'?['الواجهة','الظهر','على المعصم','العلبة والأوراق']:['الواجهة','الخلف','التفاصيل','العلبة والملحقات'];
- return `<div class="gal"><div class="gal-s" onscroll="galDots(this)">${V4.map((v,i)=>`<div class="gph">${art(cat,i)}<span class="vw">${v}</span></div>`).join('')}
-  <div class="gph vid" onclick="toast('تشغيل فيديو القطعة — بانتظار فيديو المحل')">${art(cat,4)}<span class="play">${ic('play')}</span><span class="vw">فيديو · 0:15</span></div></div>
-  <div class="gal-d">${[0,1,2,3,4].map(i=>`<i class="${i?'':'on'}"></i>`).join('')}</div><span class="soon">صور توضيحية — بانتظار صور المحل</span>${live?'<span class="live"><em></em>مباشر</span>':''}</div>`}
+ const slides=real?o.img.map((_,i)=>`<div class="gph">${pic(o,i)}<span class="vw"><bdi>${i+1} / ${o.img.length}</bdi></span></div>`):V4.map((v,i)=>`<div class="gph">${art(cat,i)}<span class="vw">${v}</span></div>`);
+ return `<div class="gal"><div class="gal-s" onscroll="galDots(this)">${slides.join('')}
+  <div class="gph vid" onclick="toast('تشغيل فيديو القطعة — بانتظار فيديو المحل')">${real?`<div style="position:absolute;inset:0;opacity:.35">${pic(o,0)}</div>`:art(cat,4)}<span class="play">${ic('play')}</span><span class="vw">فيديو · 0:15</span></div></div>
+  <div class="gal-d">${slides.concat(1).map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div><span class="soon">${real?'صور توضيحية للموديل':'صور توضيحية — بانتظار صور المحل'}</span>${live?'<span class="live"><em></em>مباشر</span>':''}</div>`}
 function galDots(el){const i=Math.round(Math.abs(el.scrollLeft)/el.clientWidth);el.parentNode.querySelectorAll('.gal-d i').forEach((d,j)=>d.classList.toggle('on',j===i))}
 const storeCard=()=>`<div class="store"><div class="ic2">${ic('store')}</div><div><b>محل مزاد الفاخر · الدوحة</b><p>العرض والاستلام في المحل · ساعات العمل تُضاف</p></div></div>${contact()}`;
 /* delivery choice: zone + fee follow the saved address; pickup is free */
@@ -919,7 +965,7 @@ V.name=()=>`<div class="auth"><div class="auth-h rv" style="margin-top:10px">${L
 V.home=()=>{const live=A.filter(a=>a.st==='live').sort((x,y)=>x.t1-y.t1),up=A.filter(a=>a.st==='up'),h=new Date().getHours(),av=PR.filter(p=>!p.sold).length;
  return `<div class="pg"><div class="hello rv"><p class="k">${h<12?'صباح الخير':'مساء الخير'}</p><h1 class="ds">${S.me?'أهلاً '+esc(S.me.first):'أهلاً بك'}</h1></div>
  <div class="duo rv" style="--d:1">
-  <button class="door lt" onclick="go('shop')"><div class="door-art">${art('watch')}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
+  <button class="door lt" onclick="go('shop')"><div class="door-art">${pic(PR.find(p=>p.hero)||{cat:'watch'})}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
   <button class="door dk" onclick="go('auc')"><div class="door-art">${hg('x',96)}</div><div class="door-tx"><b>المزاد</b><span><em class="ldot"></em>${live.length?cnt(live.length,W_LIVE):'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div>
  ${orn()}
  ${live.length?`<div class="sh2 rv" style="--d:2"><h3>ينتهي قريباً</h3><a onclick="go('auc')">كل المزادات</a></div><div class="hs rv" style="--d:2">${live.map(aCardH).join('')}</div>`:''}
@@ -932,7 +978,7 @@ function shopGrid(){const l=shopList();return l.length?l.map(pCard).join(''):'<p
 const avail=l=>`${cnt(l.filter(p=>!p.sold).length,W_PC)} متاحة`;
 V.shop=()=>`<div class="pg"><div class="ttl rv"><h1 class="ds">المتجر</h1><p>قطع أصلية مضمونة للشراء المباشر</p></div>
  <div class="srch rv">${ic('search')}<input id="q" placeholder="ابحث بالماركة أو الموديل" oninput="srch(this.value)" value="${esc(Q)}"></div>
- <div class="cats rv" style="--d:1">${CATS.map(([n,c])=>`<button class="cat" onclick="go('cat','${n}')"><span class="cat-a">${art(c)}</span><b>${n}</b><em>${cnt(PR.filter(p=>p.c===n&&!p.sold).length,W_PC)}</em></button>`).join('')}</div>
+ <div class="cats rv" style="--d:1">${CATS.map(([n,c])=>`<button class="cat" onclick="go('cat','${n}')"><span class="cat-a">${pic(PR.find(p=>p.c===n&&p.img&&p.img.length)||{cat:c})}</span><b>${n}</b><em>${cnt(PR.filter(p=>p.c===n&&!p.sold).length,W_PC)}</em></button>`).join('')}</div>
  <div class="sh2"><h3>كل القطع</h3><em id="sn">${avail(shopList())}</em></div><div class="grid" id="sg">${shopGrid()}</div></div>`;
 function srch(v){Q=v;const g=$('#sg');if(g){g.innerHTML=shopGrid();$('#sn').textContent=avail(shopList())}}
 V.cat=c=>{const all=PR.filter(p=>p.c===c),brands=[...new Set(all.map(p=>p.b))],b=CB[c]||'الكل',gn=CG[c]||'الكل',gend=(c==='ملابس'||c==='أحذية');
@@ -942,7 +988,7 @@ V.cat=c=>{const all=PR.filter(p=>p.c===c),brands=[...new Set(all.map(p=>p.b))],b
  ${gend?`<div class="chips">${['الكل','رجالي','نسائي'].map(x=>`<button class="chip ${x===gn?'on':''}" onclick="CG['${c}']='${x}';refresh()">${x}</button>`).join('')}</div>`:''}
  ${l.length?`<div class="grid rv" style="--d:1">${l.map(pCard).join('')}</div>`:`<div class="empty">${hg(null,64,.2)}<h3>لا توجد قطع حالياً</h3><p>نضيف قطعاً جديدة باستمرار.</p></div>`}</div>`};
 V.item=id=>{const p=PP(id),o=p.res&&OO(p.res),r=held(o)&&S.me;
- return `${gallery(p.cat,false)}<div class="pg pd"><div class="br rv">${p.b}</div><h1 class="ds nm2 rv">${p.n}</h1><div class="md rv">${p.m}</div>
+ return `${gallery(p,false)}<div class="pg pd"><div class="br rv">${p.b}</div><h1 class="ds nm2 rv">${p.n}</h1><div class="md rv">${p.m}</div>
  <div class="prw rv" style="--d:1"><div class="pr2">${qar(p.price)}</div>${p.sold?'<span class="tg nv">تم البيع</span>':r?`<span class="tg">${o.state==='review'?'محجوزة لك — قيد مراجعة التحويل':'محجوزة لك'}</span>`:''}</div>
  <div class="badges rv" style="--d:1"><span class="bd au">${ic('shield')}أصالة مضمونة</span><span class="bd">${p.cond}</span>${bigShipBadge(p.price)}</div>
  ${p.sizes?`<div class="szl">المقاس</div><div class="szs">${p.sizes.map(s=>`<button class="sz ${(p.out||[]).includes(s)?'x':''} ${SZ[id]===s?'on':''}" onclick="SZ['${id}']='${s}';refresh()">${s}</button>`).join('')}</div>`:''}
@@ -953,7 +999,7 @@ V.item=id=>{const p=PP(id),o=p.res&&OO(p.res),r=held(o)&&S.me;
  <p class="k" style="margin:8px 2px 0">رسوم الشحن مؤقتة — بانتظار تأكيد المحل</p>
  ${contact()}<a class="lnk" onclick="go('rules')">سياسة الاسترجاع والشحن</a></div>`};
 V.checkout=id=>{const p=PP(id),m=effM(CO.s),fv=feeV(m),tot=p.price+fv,card=tot<=10000;
- return `<div class="pg"><div class="row2" style="cursor:default"><div class="ph">${art(p.cat)}</div><div class="mid"><div class="br">${p.b}</div><div class="nm">${p.n}</div>${SZ[id]?`<div class="k" style="margin-top:3px">المقاس: ${SZ[id]}</div>`:''}<div class="pr" style="font-size:15px">${qar(p.price)}</div></div></div>
+ return `<div class="pg"><div class="row2" style="cursor:default"><div class="ph">${pic(p)}</div><div class="mid"><div class="br">${p.b}</div><div class="nm">${p.n}</div>${SZ[id]?`<div class="k" style="margin-top:3px">المقاس: ${SZ[id]}</div>`:''}<div class="pr" style="font-size:15px">${qar(p.price)}</div></div></div>
  <div class="sh2"><h3>طريقة الاستلام</h3></div>${shipOpts(CO.s,'setCO($)',p.price)}
  ${CO.s!=='pick'?`<div class="sh2"><h3>عنوان التوصيل</h3></div>${adrRow()}${shipNotes(m,p.price)}`:`<div class="nt">${ic('store')}<span>يُجهَّز طلبك خلال 24 ساعة من تأكيد الدفع ويُحفظ 14 يوماً. تستلمه بالبطاقة الشخصية ورمز الاستلام.</span></div>`}
  <div class="sh2"><h3>الدفع</h3></div>
@@ -964,14 +1010,14 @@ V.checkout=id=>{const p=PP(id),m=effM(CO.s),fv=feeV(m),tot=p.price+fv,card=tot<=
  <div class="sh2"><h3>الملخص</h3></div><div class="card"><div class="kv"><span>سعر القطعة</span><b>${fmt(p.price)} ر.ق</b></div><div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>الإجمالي</span><b>${fmt(tot)} ر.ق</b></div></div></div>`};
 function setCO(s){CO.s=s;refresh()}
 
-V.auc=()=>{const fl=['الكل','ساعات','أقلام','حقائب','أزرار أكمام'],l=A.filter(a=>a.st===AS&&(AF==='الكل'||a.f===AF)).sort((x,y)=>AS==='end'?y.t1-x.t1:x.t1-y.t1),c=s=>A.filter(a=>a.st===s).length;
+V.auc=()=>{const fl=['الكل',...new Set(A.map(a=>a.f))],l=A.filter(a=>a.st===AS&&(AF==='الكل'||a.f===AF)).sort((x,y)=>AS==='end'?y.t1-x.t1:x.t1-y.t1),c=s=>A.filter(a=>a.st===s).length;
  return `<div class="pg"><div class="ttl rv"><h1 class="ds">المزادات</h1><p>زايد مباشرة · رقمك يظهر بدلاً من اسمك</p></div>
  <div class="seg rv">${[['live','مباشر'],['up','قادم'],['end','منتهٍ']].map(([k,n])=>`<button class="${AS===k?'on':''}" onclick="AS='${k}';refresh()">${n} (${c(k)})</button>`).join('')}</div>
  <div class="chips rv">${fl.map(x=>`<button class="chip ${x===AF?'on':''}" onclick="AF='${x}';refresh()">${x}</button>`).join('')}</div>
  <div class="rv" style="--d:1">${l.length?l.map(AS==='live'?aCardV:AS==='up'?a=>aUp(a)+'<div style="height:10px"></div>':aEnd).join(''):`<div class="empty">${hg(null,64,.2)}<h3>لا توجد مزادات هنا الآن</h3><p>فعّل الإشعارات لتعرف عند فتح مزاد جديد.</p></div>`}</div></div>`};
 
 V.lot=id=>{const a=AA(id);
- return `${gallery(a.cat,a.st==='live')}<div class="pg pd"><div class="br rv">${a.b}</div><h1 class="ds nm2 rv">${a.n}</h1><div class="md rv">${a.m}</div>
+ return `${gallery(a,a.st==='live')}<div class="pg pd"><div class="br rv">${a.b}</div><h1 class="ds nm2 rv">${a.n}</h1><div class="md rv">${a.m}</div>
  <div class="rv" style="--d:1">${timePanel(a)}</div><div class="rv" style="--d:2">${a.st==='live'?livePanel(a):a.st==='up'?upPanel(a):endPanel(a)}</div>
  ${a.st!=='up'?histPanel(a):''}
  <div class="sh2"><h3>تفاصيل القطعة</h3></div><div class="badges"><span class="bd au">${ic('shield')}أصالة مضمونة</span><span class="bd">${a.cond}</span>${bigShipBadge(a.cur)}</div>
@@ -1019,9 +1065,9 @@ V.mine=()=>{if(!S.me)return `<div class="pg"><div class="empty rv">${hg('x',90)}
  return `<div class="pg"><div class="ttl rv"><h1 class="ds">مزايداتي</h1><p>رقم المزايد الخاص بك <bdi>${S.me.num}</bdi></p></div><div class="rv" style="--d:1">${body}</div></div>`};
 const awCard=o=>`<button class="awc" onclick="go('pay','${o.id}')">${hg('o:'+o.id,64)}<div style="flex:1;min-width:0"><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>
  <div class="t">${o.title} · ${fmt(o.price)} ر.ق</div>${o.state==='await'?`<div class="c num" data-cd="o:${o.id}"></div><span class="btn">ادفع الآن بالتحويل البنكي</span>`:`<div class="c" style="font-size:15px">قيد مراجعة التحويل</div>`}</div></button>`;
-const actRow=a=>`<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
+const actRow=a=>`<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
  <div class="ln"><div class="pr">${qar(a.cur)}</div>${a.st==='live'?`<span class="cd2">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>`:`<span class="cd2">يبدأ ${dayLbl(a.t0)}</span>`}</div><div style="margin-top:6px">${myTag(a)}</div></div></button>`;
-const endRow=a=>{const won=isLead(a);return `<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${art(a.cat)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
+const endRow=a=>{const won=isLead(a);return `<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
  <div class="ln"><div class="pr">${qar(a.final)}</div>${won?`<span class="tg ok">${ic('check')}فزت</span>`:'<span class="tg">لم تفز · أُعيد التأمين</span>'}</div></div></button>`};
 
 V.me=()=>{if(!S.me)return `<div class="pg"><div class="prof rv"><div class="av">${ic('user')}</div><h2>زائر</h2><p class="ph2">سجّل الدخول للمزايدة والشراء</p>
@@ -1043,7 +1089,7 @@ V.wallet=()=>{if(!S.me)return V.me();
  <div class="wbt rv" style="--d:1"><button class="btn" onclick="topSheet()">${ic('plus')}شحن المحفظة</button><button class="btn ghost" onclick="wdSheet()">${ic('bank')}سحب إلى البنك</button></div>
  <div class="nt rv" style="--d:1">${ic('info')}<span>يمكنك دفع تأمين المزادات من رصيد المحفظة، ويرجع إليها إذا لم تفز أو بعد تأكيد دفعك إذا فزت. ويمكنك سحب الرصيد المتاح إلى حسابك البنكي في أي وقت.</span></div>
  <div class="sh2"><h3>الحركات</h3></div>${S.tx.length?`<div class="txl">${S.tx.map(t=>`<div class="tx"><span class="ic">${ic(t.k==='p'?'down':t.k==='h'?'lock':'up2')}</span><div style="min-width:0"><div class="t">${t.l}</div><div class="d">${ago(t.t)}${t.d?' · '+t.d:''}</div></div><span class="v ${t.k==='p'?'p':t.k==='h'?'h':''}">${sgn(t)}</span></div>`).join('')}</div>`:`<p class="k" style="text-align:center;padding:16px">لا توجد حركات بعد</p>`}</div>`};
-V.orders=()=>`<div class="pg">${S.orders.length?S.orders.map(o=>`<button class="row2" onclick="go('${held(o)?'pay':'order'}','${o.id}')"><div class="ph">${art(o.cat)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div>
+V.orders=()=>`<div class="pg">${S.orders.length?S.orders.map(o=>`<button class="row2" onclick="go('${held(o)?'pay':'order'}','${o.id}')"><div class="ph">${opic(o)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div>
  <div class="ln"><div class="pr">${qar(o.total||o.price)}</div><span class="tg ${o.state==='await'?'bad':o.state==='done'?'ok':''}">${OST[o.state]}</span></div></div></button>`).join(''):`<div class="empty">${hg(null,70,.4)}<h3>لا توجد طلبات بعد</h3><p>تظهر هنا مشترياتك وما تفوز به في المزادات.</p><button class="btn" onclick="go('shop')">تصفّح المتجر</button></div>`}</div>`;
 const OST={await:'بانتظار التحويل',review:'قيد مراجعة التحويل',paid:'تم تأكيد الدفع',prep:'قيد التجهيز',ship:'تم الشحن',ready:'جاهز للاستلام',done:'تم التسليم'};
 const bankBlock=ref=>`<div class="bank"><div class="bk"><span class="k">البنك</span><b>يُضاف من المحل</b></div><div class="bk"><span class="k">اسم الحساب</span><b>مزاد الفاخر</b><button class="cp" aria-label="نسخ" onclick="copy('مزاد الفاخر')">${ic('copy')}</button></div>
@@ -1053,7 +1099,7 @@ const bankBlock=ref=>`<div class="bank"><div class="bk"><span class="k">البن
 V.pay=oid=>{const o=OO(oid);if(!o)return '';if(!held(o))return V.order(oid);
  const isA=o.kind==='auction';if(isA)o.method=effM(o.s);const m=o.method,fv=feeV(m),tot=o.price+fv;o.fee=fv;o.total=tot;
  const top=`<div class="tp" style="margin-top:4px">${hg('o:'+o.id,74)}<div><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>${o.state==='await'?`<div class="cd" data-cd="o:${o.id}"></div><div class="d">${isA?'إذا لم يتم الدفع خلال 48 ساعة أُلغي الفوز وصودر التأمين':'القطعة محجوزة لك حتى انتهاء المهلة'}</div>`:`<div class="cd" style="font-size:20px;margin-top:6px">قيد المراجعة</div><div class="d">نؤكد وصول المبلغ خلال يوم عمل</div>`}</div></div>`;
- const head=`<div class="row2" style="cursor:default;margin-top:12px"><div class="ph">${art(o.cat)}</div><div class="mid"><div class="br">${o.b}</div><div class="nm">${o.title}</div><div class="k" style="margin-top:3px">${isA?'فزت بالمزاد':'طلب شراء'} · <bdi>${o.id}</bdi></div></div></div>`;
+ const head=`<div class="row2" style="cursor:default;margin-top:12px"><div class="ph">${opic(o)}</div><div class="mid"><div class="br">${o.b}</div><div class="nm">${o.title}</div><div class="k" style="margin-top:3px">${isA?'فزت بالمزاد':'طلب شراء'} · <bdi>${o.id}</bdi></div></div></div>`;
  const sum=lbl=>`<div class="card"><div class="kv"><span>${isA?'سعر الفوز':'سعر القطعة'}</span><b>${fmt(o.price)} ر.ق</b></div><div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>${lbl}</span><b>${fmt(tot)} ر.ق</b></div></div>`;
  if(o.state==='review')return `<div class="pg">${top}${head}<div class="nt g">${ic('check')}<span>استلمنا إيصال التحويل. لا نُسلّم الطلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل، وسنُعلمك فور التأكيد. يجب أن يصل المبلغ خلال 5 أيام عمل من رفع الإيصال، وإلا يُعتبر الطلب غير مدفوع.</span></div>
   <div class="sh2"><h3>الملخص</h3></div>${sum('المبلغ المحوّل')}</div>`;
@@ -1070,7 +1116,7 @@ V.order=oid=>{const o=OO(oid);if(!o)return '';const pick=o.method==='pick';
  const steps=pick?[['تم الطلب',''],['تم تأكيد الدفع','وصل المبلغ إلى حساب المحل'],['قيد التجهيز','يُجهَّز خلال 24 ساعة'],['جاهز للاستلام','يُحفظ 14 يوماً'],['تم الاستلام','']]
   :[['تم الطلب',''],['تم تأكيد الدفع','وصل المبلغ إلى حساب المحل'],['قيد التجهيز','تغليف وتأمين الشحنة بكامل قيمتها'],['تم الشحن',o.awb?`أرامكس · <bdi>${o.awb}</bdi> · أُنشئت البوليصة تلقائياً`:'أرامكس'],['تم التسليم','بالتوقيع والهوية']];
  const idx={await:0,review:0,paid:1,prep:2,ship:3,ready:3,done:4}[o.state];
- return `<div class="pg"><div class="row2" style="cursor:default"><div class="ph">${art(o.cat)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div><div class="pr" style="font-size:15px">${qar(o.total||o.price)}</div></div></div>
+ return `<div class="pg"><div class="row2" style="cursor:default"><div class="ph">${opic(o)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div><div class="pr" style="font-size:15px">${qar(o.total||o.price)}</div></div></div>
  ${o.state==='ready'?`<div class="pcode rv"><div class="k">رمز الاستلام</div><div class="c">${o.code}</div><div class="qr">${qrSvg(7)}</div><div class="k">أبرز البطاقة الشخصية (أو الجواز للزوار) باسم صاحب الحساب مع هذا الرمز</div></div>
   <button class="adr" style="margin-top:10px" onclick="proxySheet('${o.id}')">${ic('user')}<div><b>${o.proxy?'سيستلم: '+esc(o.proxy.n):'شخص آخر سيستلم بدلاً مني'}</b><span>${o.proxy?'يُبرز بطاقته والرمز':'سجّل اسمه ورقم بطاقته مسبقاً'}</span></div><em>${o.proxy?'تعديل':'إضافة'}</em></button>`:''}
  ${o.state==='ship'?`<div class="nt g">${ic('truck')}<span>تم إنشاء بوليصة الشحن تلقائياً عبر أرامكس. رقم الشحنة <b style="white-space:nowrap"><bdi>${o.awb}</bdi></b></span></div>`:''}

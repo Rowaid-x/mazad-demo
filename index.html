@@ -4,9 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>مزاد الفاخر — نموذج تفاعلي</title>
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <style>
 /* Brand: navy #071B56 + champagne gold #BB9E7C (MZAD AL FAKHER guidelines).
    Fonts: Alexandria stands in for Doran (titles), IBM Plex Sans Arabic for DIN Next (text). Logo is temporary. */
@@ -296,7 +298,13 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 .gph.vid{cursor:pointer}
 .vw{position:absolute;bottom:16px;inset-inline-end:18px;font-size:11px;color:var(--mute);letter-spacing:.03em}
 .gal-d{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
-.gal-d i{width:5px;height:5px;border-radius:99px;background:#CFC6B8;transition:.25s}
+.gal-d i{width:5px;height:5px;border-radius:99px;background:#CFC6B8;transition:.25s;cursor:pointer}
+.g3d{background:radial-gradient(110% 85% at 50% 40%,#FFFFFF 0%,#F2ECE2 70%,#E7DDCE 100%)}
+.g3d-host{position:absolute;inset:0;touch-action:none;cursor:grab;display:grid;place-items:center;font-size:12px;color:var(--mute)}
+.g3d-host:active{cursor:grabbing}
+.b3d{position:absolute;bottom:14px;inset-inline-start:14px;display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#F6EFE4;font-size:11px;font-weight:600;padding:5px 11px;border-radius:99px;pointer-events:none;z-index:2}
+.b3d b{font-family:'Alexandria';color:var(--gold2);letter-spacing:.06em}
+.b3d.sm{bottom:8px;inset-inline-start:8px;padding:3px 9px;font-size:10px}
 .gal-d i.on{width:16px;background:var(--navy)}
 .gal .soon{bottom:auto;top:12px;inset-inline-start:auto;inset-inline-end:12px}
 .play{position:absolute;width:60px;height:60px;border-radius:50%;background:rgba(7,27,86,.9);display:grid;place-items:center;color:#fff}
@@ -697,7 +705,7 @@ const EV={e1:{n:'مزاد ساعات جي إم تي ماستر',end:T0+H+12*MIN+
 /* the store's own pieces and card prices (photos: illustrative shots of the same model) */
 const RX=(k,n)=>n.map(i=>`rlx-${k}-${i}.jpg`);
 const A=[
- {id:'a1',ev:'e1',lot:1,b:'ROLEX',n:'رولكس جي إم تي ماستر II «بيبسي»',m:'GMT-Master II · 126710BLRO · Jubilee',cat:'watch',f:'ساعات',start:95000,cur:99500,inc:500,st:'live',t0:T0-5.8*H,older:7,
+ {id:'a1',model3d:1,ev:'e1',lot:1,b:'ROLEX',n:'رولكس جي إم تي ماستر II «بيبسي»',m:'GMT-Master II · 126710BLRO · Jubilee',cat:'watch',f:'ساعات',start:95000,cur:99500,inc:500,st:'live',t0:T0-5.8*H,older:7,
   img:['auc-pepsi-1.jpg','auc-pepsi-2.jpg','auc-pepsi-3.jpg','auc-pepsi-4.jpg','auc-pepsi-5.jpg'],
   cond:'مستعملة · ممتازة',incl:'العلبة وبطاقة الضمان',specs:{'الرقم المرجعي':'126710BLRO','سنة الإصدار':'2023','المقاس':'40 مم','الخامة':'ستيل أويستر','السوار':'جوبيلي','الإطار':'سيراخروم أحمر وأزرق'},
   desc:'الإطار الأحمر والأزرق الأشهر في عالم الساعات، على سوار جوبيلي بخمس حلقات. بحالة ممتازة مع العلبة وبطاقة الضمان. فحصها فريق المحل وتأكد من أصالتها.'},
@@ -817,9 +825,12 @@ function render(anim){
   const g=sc.querySelector('.gal-s');if(g)galDots(g);
   if(fid){const n=document.getElementById(fid);if(n){n.focus({preventScroll:true});if(sel)try{n.setSelectionRange(sel[0],sel[1])}catch(e){}}}}
  sc.querySelectorAll('.hist').forEach(histFade);
+ const g3=sc.querySelector('[data-g3d]');if(g3)mount3d(g3);
  tick();
 }
 function refresh(){if(NOREF[cur.k]){navUpd();return}render(false)}
+/* live 3D model (watch3d.js, three.js) — loaded only when a lot with model3d is opened */
+let W3D=null;function mount3d(h){if(W3D)return W3D.mount(h);import('./watch3d.js').then(m=>{W3D=m;const x=document.querySelector('[data-g3d]');if(x)m.mount(x)}).catch(()=>{h.textContent='تعذّر تحميل النموذج ثلاثي الأبعاد'})}
 /* background events (other bidders, store confirmations) only redraw screens that show live data */
 function bgRefresh(){if(NOREF[cur.k]||!LIVE[cur.k]){navUpd();return}render(false)}
 const TITLES={cat:p=>p,item:()=>'تفاصيل القطعة',lot:id=>{const a=AA(id);return a.st==='live'?'مزاد مباشر':a.st==='up'?'مزاد قادم':'مزاد منتهٍ'},
@@ -911,9 +922,9 @@ const authCard=()=>`<div class="auc">${ic('shield')}<div><b>ضمان الأصا�
 const bigShipBadge=p=>p>300000?`<span class="bd">${ic('globe')}الشحن خارج قطر بعد موافقة المحل</span>`:'';
 
 /* ============ cards ============ */
-const aCardH=a=>`<button class="ac" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>${soon(a)}</div>
+const aCardH=a=>`<button class="ac" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>${soon(a)}${a.model3d?'<span class="b3d sm"><b>3D</b></span>':''}</div>
  <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div><div class="rwb"><div><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><div class="bc">${cnt(bids(a),W_BID)}</div></div>${myTag(a)?`<div style="margin-top:8px">${myTag(a)}</div>`:''}</div></button>`;
-const aCardV=a=>`<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>${soon(a)}</div>
+const aCardV=a=>`<button class="ac acv" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}<span class="live"><em></em>مباشر</span><span class="cdp">${ic('clock')}<b class="num" data-cd="a:${a.id}"></b></span>${soon(a)}${a.model3d?'<span class="b3d sm"><b>3D</b></span>':''}</div>
  <div class="ac-b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>${evLine(a)}<div class="rwb"><div><div class="k">المزايدة الحالية</div><div class="pr">${qar(a.cur)}</div></div><div class="bc">${cnt(bids(a),W_BID)} · تأمين ${fmt(a.dep)} ر.ق</div></div>${myTag(a)?`<div class="mt">${myTag(a)}</div>`:''}</div></button>`;
 const aUp=a=>`<button class="up1" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}</div><div class="b"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
  <div class="k" style="margin-top:6px">سعر البداية</div><div class="pr" style="font-size:15px">${qar(a.start)}</div><div class="st">${ic('clock')}يبدأ ${dayLbl(a.t0)} ${clock(a.t0)}${S.rem[a.id]?' · سنذكّرك':''}</div></div></button>`;
@@ -924,10 +935,12 @@ function pCard(p){const o=p.res&&OO(p.res),r=held(o)&&S.me;
  <div class="pc-b"><div class="br">${p.b}</div><div class="nm">${p.n}</div><div class="pr">${qar(p.price)}</div></div></button>`}
 function gallery(o,live){const cat=o.cat,real=o.img&&o.img.length;
  const V4=cat==='watch'?['الواجهة','الظهر','على المعصم','العلبة والأوراق']:['الواجهة','الخلف','التفاصيل','العلبة والملحقات'];
- const slides=real?o.img.map((_,i)=>`<div class="gph">${pic(o,i)}<span class="vw"><bdi>${i+1} / ${o.img.length}</bdi></span></div>`):V4.map((v,i)=>`<div class="gph">${art(cat,i)}<span class="vw">${v}</span></div>`);
+ const n3=o.model3d?1:0,ph=real?o.img.slice(n3):[],tot=ph.length+n3;
+ const slides=real?(n3?[`<div class="gph g3d"><div class="g3d-host" data-g3d>جارٍ تحميل النموذج…</div><span class="b3d"><b>3D</b>اسحب للتدوير</span><span class="vw"><bdi>1 / ${tot}</bdi></span></div>`]:[]).concat(ph.map((_,i)=>`<div class="gph">${pic({img:ph},i)}<span class="vw"><bdi>${i+1+n3} / ${tot}</bdi></span></div>`)):V4.map((v,i)=>`<div class="gph">${art(cat,i)}<span class="vw">${v}</span></div>`);
  return `<div class="gal"><div class="gal-s" onscroll="galDots(this)">${slides.join('')}
   <div class="gph vid" onclick="toast('تشغيل فيديو القطعة — بانتظار فيديو المحل')">${real?`<div style="position:absolute;inset:0;opacity:.35">${pic(o,0)}</div>`:art(cat,4)}<span class="play">${ic('play')}</span><span class="vw">فيديو · 0:15</span></div></div>
-  <div class="gal-d">${slides.concat(1).map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div><span class="soon">${real?'صور توضيحية للموديل':'صور توضيحية — بانتظار صور المحل'}</span>${live?'<span class="live"><em></em>مباشر</span>':''}</div>`}
+  <div class="gal-d">${slides.concat(1).map((_,i)=>`<i class="${i?'':'on'}" onclick="galGo(this,${i})"></i>`).join('')}</div><span class="soon">${real?'صور توضيحية للموديل':'صور توضيحية — بانتظار صور المحل'}</span>${live?'<span class="live"><em></em>مباشر</span>':''}</div>`}
+function galGo(d,i){const s=d.closest('.gal').querySelector('.gal-s');s.scrollLeft=(getComputedStyle(s).direction==='rtl'?-1:1)*i*s.clientWidth;galDots(s)}
 function galDots(el){const i=Math.round(Math.abs(el.scrollLeft)/el.clientWidth);el.parentNode.querySelectorAll('.gal-d i').forEach((d,j)=>d.classList.toggle('on',j===i))}
 const storeCard=()=>`<div class="store"><div class="ic2">${ic('store')}</div><div><b>محل مزاد الفاخر · الدوحة</b><p>العرض والاستلام في المحل · ساعات العمل تُضاف</p></div></div>${contact()}`;
 /* delivery choice: zone + fee follow the saved address; pickup is free */

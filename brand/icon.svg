@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="835.55 0 157.7 157.7" style="isolation:isolate">
+  <!-- MZAD AL FAKHER app mark, taken from the client's original logo SVG (2026-10-23) -->
+  <defs>
+    <radialGradient id="bg" cx="853.78" cy="30.92" r="210.18" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#154688"/><stop offset=".91" stop-color="#071955"/></radialGradient>
+    <linearGradient id="g1" x1="918.59" y1="126.22" x2="914.01" y2="34.61" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d3b997"/><stop offset=".29" stop-color="#d5bb9a"/><stop offset=".58" stop-color="#dbc2a7"/><stop offset=".87" stop-color="#e6cdba"/><stop offset="1" stop-color="#ecd4c6"/></linearGradient>
+    <linearGradient id="g2" href="#g1" x1="914.93" y1="126.4" x2="910.35" y2="34.79"/>
+    <linearGradient id="g3" href="#g1" x1="916.55" y1="126.32" x2="911.97" y2="34.71"/>
+    <linearGradient id="s1" x1="921.33" y1="71.63" x2="918.49" y2="74.47" gradientUnits="userSpaceOnUse"><stop offset=".09" stop-color="#fff"/><stop offset="1" stop-color="#a7a9ac"/></linearGradient>
+    <linearGradient id="s2" href="#s1" x1="907.73" y1="84.96" x2="909.59" y2="83.1"/>
+  </defs>
+  <rect x="835.55" width="157.7" height="157.7" rx="34.87" fill="url(#bg)"/>
+  <path fill="url(#g1)" d="M888.6,36.43v9.9c0,8.27,3.25,16.2,9.040,22.09l9.88,10.04h13.69l9.88-10.04c5.8-5.89,9.04-13.83,9.04-22.09v-9.9h-51.54ZM923.68,62.39l-9.32,9.74-.31-.32-9.01-9.42c-4.2-4.4-6.55-10.24-6.55-16.33h31.73c0,6.080-2.35,11.93-6.55,16.33Z"/>
+  <path fill="url(#g2)" d="M931.09,88.5l-9.88-10.04h-13.69l-9.88,10.04c-5.8,5.89-9.04,13.83-9.04,22.09v9.9h51.54v-9.9c0-8.27-3.25-16.2-9.04-22.09ZM898.5,110.87c0-6.08,2.35-11.93,6.55-16.33l9.01-9.42.25-.24.24.26,9.13,9.4c4.2,4.4,6.55,10.24,6.55,16.33h-31.73Z"/>
+  <polygon fill="url(#g3)" points="912.17 69.83 914.37 72.13 921.21 78.47 923.13 80.41 916.31 86.94 914.31 84.88 907.52 78.46 905.17 76.08 912.17 69.83"/>
+  <polygon fill="url(#s1)" style="mix-blend-mode:multiply" points="927.45 72.13 919.72 66.53 914.37 72.13 921.21 78.46"/>
+  <polygon fill="url(#s2)" style="mix-blend-mode:multiply" points="907.52 78.46 914.31 84.88 909.18 90.22 902.62 83.45"/>
+</svg>

@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>مزاد الفاخر — نموذج تفاعلي</title>
-<link rel="icon" href="data:,">
+<link rel="icon" href="brand/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <style>
 /* Brand: navy #071B56 + champagne gold #BB9E7C (MZAD AL FAKHER guidelines).
-   Fonts: Alexandria stands in for Doran (titles), IBM Plex Sans Arabic for DIN Next (text). Logo is temporary. */
+   Fonts: Alexandria stands in for Doran (titles), IBM Plex Sans Arabic for DIN Next (text). Logo: the client's original (brand/, 2026-10-23). */
 :root{
   --paper:#F7F4EE; --card:#FFFFFF; --navy:#071B56; --navy2:#12307C; --ink:#0D1633; --ink2:#4B5068;
   --mute:#736D60; --line:#EAE3D7; --line2:#F2EDE4;
@@ -52,8 +52,7 @@ bdi,.num{unicode-bidi:isolate;direction:ltr}
 /* ---------- app chrome ---------- */
 .hd{flex:none;height:56px;display:flex;align-items:center;gap:10px;padding:0 18px;position:relative;z-index:5}
 .bnd{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
-.bnd .t1{font-family:'Alexandria';font-weight:600;font-size:17px;color:var(--navy);line-height:1.1}
-.bnd .t2{font-family:'Alexandria';font-size:7.5px;letter-spacing:.34em;color:var(--goldt);margin-top:4px;direction:ltr;text-align:right}
+.bnd .wmk{height:32px;width:auto;display:block}
 .hb{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;position:relative;flex:none;color:var(--navy)}
 .hb .i{width:19px;height:19px}
 .hb .dt{position:absolute;top:5px;inset-inline-end:6px;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #fff}
@@ -177,8 +176,7 @@ div.num{text-align:right}
 .sp-pat.r{inset-inline-start:auto;inset-inline-end:0}
 .sp-in{text-align:center;margin-top:110px;position:relative}
 .sp-in .mk{margin:0 auto}
-.wm{font-family:'Alexandria';font-weight:700;font-size:40px;color:var(--navy);margin:24px 0 0;letter-spacing:-.01em}
-.wl{font-family:'Alexandria';font-size:10.5px;letter-spacing:.52em;color:var(--goldt);margin-top:8px;direction:ltr;padding-left:.52em}
+.wmi{display:block;width:200px;height:auto;margin:26px auto 0}
 .sp-t{font-size:14.5px;line-height:1.95;color:var(--ink2);margin:30px 0 0}
 .sp-b{position:relative}
 .fine{font-size:11.5px;color:var(--mute);text-align:center;line-height:1.75;margin:14px 0 0}
@@ -597,7 +595,7 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs"></defs></svg>
 <div class="stage">
-  <p class="note"><b>مزاد الفاخر</b> · نموذج تفاعلي لتطبيق العملاء · الشعار والصور مؤقتة</p>
+  <p class="note"><b>مزاد الفاخر</b> · نموذج تفاعلي لتطبيق العملاء · الصور مؤقتة</p>
   <div class="wrap" id="wrap">
     <div class="dev" id="dev"><div class="bez"><div class="scr" id="scr">
       <div class="sb"><span>9:41</span><span class="ics">
@@ -706,8 +704,20 @@ $('#defs').innerHTML=`
  <linearGradient id="gNavy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16367F"/><stop offset="1" stop-color="#071B56"/></linearGradient>
  <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8C3A3"/><stop offset=".5" stop-color="#BB9E7C"/><stop offset="1" stop-color="#9E805E"/></linearGradient>
  <clipPath id="cTop" clipPathUnits="userSpaceOnUse"><path transform="${TF}" d="${IN_TOP}"/></clipPath>
- <clipPath id="cBot" clipPathUnits="userSpaceOnUse"><path transform="${TF}" d="${IN_BOT}"/></clipPath>`;
-function LOGO(s){return `<svg class="mk" width="${s}" height="${s}" viewBox="0 0 81.352 81.352"><rect width="81.352" height="81.352" rx="17.987" fill="url(#gNavy)"/><g fill="url(#gGold)" fill-rule="evenodd" transform="${TF}">${GLASS}</g></svg>`}
+ <clipPath id="cBot" clipPathUnits="userSpaceOnUse"><path transform="${TF}" d="${IN_BOT}"/></clipPath>
+ <radialGradient id="mBg" cx="853.78" cy="30.92" r="210.18" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#154688"/><stop offset=".91" stop-color="#071955"/></radialGradient>
+ <linearGradient id="mG1" x1="918.59" y1="126.22" x2="914.01" y2="34.61" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d3b997"/><stop offset=".29" stop-color="#d5bb9a"/><stop offset=".58" stop-color="#dbc2a7"/><stop offset=".87" stop-color="#e6cdba"/><stop offset="1" stop-color="#ecd4c6"/></linearGradient>
+ <linearGradient id="mG2" href="#mG1" x1="914.93" y1="126.4" x2="910.35" y2="34.79"/><linearGradient id="mG3" href="#mG1" x1="916.55" y1="126.32" x2="911.97" y2="34.71"/>
+ <linearGradient id="mS1" x1="921.33" y1="71.63" x2="918.49" y2="74.47" gradientUnits="userSpaceOnUse"><stop offset=".09" stop-color="#fff"/><stop offset="1" stop-color="#a7a9ac"/></linearGradient>
+ <linearGradient id="mS2" href="#mS1" x1="907.73" y1="84.96" x2="909.59" y2="83.1"/>`;
+/* the client's original app mark (brand/icon.svg), in its own coordinates */
+const MARK=`<rect x="835.55" width="157.7" height="157.7" rx="34.87" fill="url(#mBg)"/>
+ <path fill="url(#mG1)" d="M888.6,36.43v9.9c0,8.27,3.25,16.2,9.04,22.09l9.88,10.04h13.69l9.88-10.04c5.8-5.89,9.04-13.83,9.04-22.09v-9.9h-51.54ZM923.68,62.39l-9.32,9.74-.31-.32-9.01-9.42c-4.2-4.4-6.55-10.24-6.55-16.33h31.73c0,6.08-2.35,11.93-6.55,16.33Z"/>
+ <path fill="url(#mG2)" d="M931.09,88.5l-9.88-10.04h-13.69l-9.88,10.04c-5.8,5.89-9.04,13.83-9.04,22.09v9.9h51.54v-9.9c0-8.27-3.25-16.2-9.04-22.09ZM898.5,110.87c0-6.08,2.35-11.93,6.55-16.33l9.01-9.42.25-.24.24.26,9.13,9.4c4.2,4.4,6.55,10.24,6.55,16.33h-31.73Z"/>
+ <polygon fill="url(#mG3)" points="912.17 69.83 914.37 72.13 921.21 78.47 923.13 80.41 916.31 86.94 914.31 84.88 907.52 78.46 905.17 76.08"/>
+ <polygon fill="url(#mS1)" style="mix-blend-mode:multiply" points="927.45 72.13 919.72 66.53 914.37 72.13 921.21 78.46"/>
+ <polygon fill="url(#mS2)" style="mix-blend-mode:multiply" points="907.52 78.46 914.31 84.88 909.18 90.22 902.62 83.45"/>`;
+function LOGO(s){return `<svg class="mk" width="${s}" height="${s}" viewBox="835.55 0 157.7 157.7" style="isolation:isolate">${MARK}</svg>`}
 /* Hourglass timer: the brand mark's own glass, with sand that drains as the auction runs. */
 function hg(key,h,f){if(f==null)f=.55;const A1=13.3,A2=13.45;
  return `<svg class="hg${key?'':' still'}" ${key?`data-hg="${key}"`:''} viewBox="26.4 17.8 28.8 45.6" height="${h}" width="${(h*28.8/45.6).toFixed(1)}"><g fill="url(#gGold)" fill-rule="evenodd" transform="${TF}">${GLASS}</g><g clip-path="url(#cTop)"><rect class="st sand" x="27" width="27" y="${(37.05-f*A1).toFixed(2)}" height="${(f*A1).toFixed(2)}"/></g><g clip-path="url(#cBot)"><rect class="sb2 sand" x="27" width="27" y="${(57.2-(1-f)*A2).toFixed(2)}" height="${((1-f)*A2).toFixed(2)}"/></g><line class="strm" x1="40.47" y1="37.3" x2="40.47" y2="57"/></svg>`}
@@ -887,7 +897,7 @@ const TITLES={cat:p=>p,item:()=>'تفاصيل القطعة',lot:id=>{const a=AA(
  rules:()=>'القواعد والسياسات',addr:()=>'عنوان التوصيل',settings:()=>'الإشعارات والعروض',inbox:()=>'الإشعارات'};
 function hdr(){
  if(ROOT[cur.k]){const un=S.me&&S.inbox.some(n=>n.un);
-  return `<div class="bnd">${LOGO(34)}<div><div class="t1">مزاد الفاخر</div><div class="t2">MZAD AL FAKHER</div></div></div>
+  return `<div class="bnd">${LOGO(34)}<img class="wmk" src="brand/wordmark-ar.png" alt="مزاد الفاخر"></div>
    ${S.me?'':`<button class="lgn" onclick="needLogin({k:'${cur.k}'})">دخول</button>`}
    <button class="hb" aria-label="الإشعارات" onclick="go('inbox')">${ic('bell')}${un?'<span class="dt"></span>':''}</button>`}
  return `<button class="hb" aria-label="رجوع" onclick="back()">${ic('back')}</button><div class="ttlx">${TITLES[cur.k]?TITLES[cur.k](cur.p):''}</div><span class="sp40"></span>`}
@@ -1022,7 +1032,7 @@ function adrRow(){const a=S.me&&S.me.addr;return a?`<button class="adr" onclick=
 /* ============ screens ============ */
 const V={};
 V.splash=()=>`<div class="splash"><div class="sp-pat"></div><div class="sp-pat r"></div>
- <div class="sp-in"><div class="rv">${LOGO(88)}</div><h1 class="wm rv" style="--d:1">مزاد الفاخر</h1><div class="wl rv" style="--d:2">MZAD AL FAKHER</div>
+ <div class="sp-in"><div class="rv">${LOGO(88)}</div><h1 class="rv" style="--d:1;margin:0"><img class="wmi" src="brand/wordmark.png" alt="مزاد الفاخر · MZAD AL FAKHER"></h1>
  <p class="sp-t rv" style="--d:3">ساعات، أقلام، حقائب وقطع فاخرة<br>للشراء المباشر وفي مزادات مباشرة</p></div>
  <div class="sp-b rv" style="--d:4"><button class="btn" onclick="needLogin({k:'home'})">تسجيل الدخول</button><button class="btn ghost" onclick="go('home')">تصفّح كضيف</button>
  <p class="fine">بالمتابعة توافق على <a onclick="go('rules')">الشروط وسياسة الخصوصية</a></p></div></div>`;
@@ -1074,7 +1084,6 @@ V.item=id=>{const p=PP(id),o=p.res&&OO(p.res),r=held(o)&&S.me;
  ${p.sizes?`<div class="szl">المقاس</div><div class="szs">${p.sizes.map(s=>`<button class="sz ${(p.out||[]).includes(s)?'x':''} ${SZ[id]===s?'on':''}" onclick="SZ['${id}']='${s}';refresh()">${s}</button>`).join('')}</div>`:''}
  <div class="card rv" style="--d:2"><div class="kv"><span>الحالة</span><b>${p.cond}</b></div><div class="kv"><span>المرفقات</span><b>${p.incl}</b></div>${Object.entries(p.specs).map(([k,v])=>`<div class="kv"><span>${k}</span><b>${v}</b></div>`).join('')}</div>
  <p class="desc">${p.desc}</p>${authCard()}
- ${p.price>=50000?`<div class="nt">${ic('id')}<span>طلبات المتجر من 50,000 ر.ق فأكثر تتطلب التحقق من الهوية مرة واحدة.</span></div>`:''}
  <div class="sh2"><h3>التوصيل والاستلام</h3></div><div class="card">${Object.values(FEES).map(f=>`<div class="kv"><span>${f.n}</span><b>${feeTx(f.v)}</b></div>`).join('')}</div>
  ${contact()}<a class="lnk" onclick="go('rules')">سياسة الاسترجاع والشحن</a></div>`};
 V.checkout=id=>{const p=PP(id),m=effM(CO.s),fv=feeV(m),tot=p.price+fv,card=tot<=10000;
@@ -1085,7 +1094,6 @@ V.checkout=id=>{const p=PP(id),m=effM(CO.s),fv=feeV(m),tot=p.price+fv,card=tot<=
  ${card?`<div class="opt on" style="cursor:default"><span class="oi">${ic('card')}</span><div><div class="t">بطاقة ائتمانية أو بطاقة خصم</div><div class="d">دفع آمن ومباشر</div></div></div>`
  :`<div class="opt on" style="cursor:default"><span class="oi">${ic('bank')}</span><div><div class="t">تحويل بنكي</div><div class="d">للطلبات فوق 10,000 ر.ق — بدون رسوم بطاقات</div></div></div>
   <div class="nt">${ic('clock')}<span>نحجز القطعة لك <b>24 ساعة</b> بعد الطلب (بحد أقصى حجزان غير مدفوعين). حوّل المبلغ وارفع الإيصال، ونؤكد خلال يوم عمل.</span></div>`}
- ${tot>=50000&&!S.me.verified?`<div class="nt">${ic('id')}<span>طلبات المتجر من 50,000 ر.ق فأكثر تتطلب التحقق من الهوية مرة واحدة قبل إتمام الطلب.</span></div>`:''}
  <div class="sh2"><h3>الملخص</h3></div><div class="card"><div class="kv"><span>سعر القطعة</span><b>${fmt(p.price)} ر.ق</b></div><div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>الإجمالي</span><b>${fmt(tot)} ر.ق</b></div></div></div>`};
 function setCO(s){CO.s=s;refresh()}
 
@@ -1157,9 +1165,9 @@ const endRow=a=>{const won=isLead(a);return `<button class="row2" onclick="go('l
 V.me=()=>{if(!S.me)return `<div class="pg"><div class="prof rv"><div class="av">${ic('user')}</div><h2>زائر</h2><p class="ph2">سجّل الدخول للمزايدة والشراء</p>
  <button class="btn" style="margin-top:16px" onclick="needLogin({k:'me'})">تسجيل الدخول</button></div>
  <div class="menu rv" style="--d:1">${mi('doc','القواعد والسياسات',"go('rules')")}${mi('wa','تواصل معنا',"wa()")}${mi('globe','اللغة',"lang()",'العربية')}</div></div>`;
- const m=S.me,oc=S.orders.length,idl=m.idState==='ok'?`<span class="vf">${ic('shield')}تم التحقق من الهوية</span>`:m.verified?`<span class="vf no">${ic('id')}الهوية مرفوعة — قيد المراجعة</span>`:`<span class="vf no">${ic('id')}التحقق من الهوية قبل أول استلام</span>`;
+ const m=S.me,oc=S.orders.length;
  return `<div class="pg"><div class="prof rv"><div class="av">${esc(m.first[0])}</div><h2>${esc(m.first)} ${esc(m.last)}</h2><p class="ph2"><bdi>${esc(m.phone)}</bdi></p>
- <div class="bn"><span>رقم المزايد</span><b><bdi>${m.num}</bdi></b></div><br>${idl}</div>
+ <div class="bn"><span>رقم المزايد</span><b><bdi>${m.num}</bdi></b></div></div>
  <button class="wc mini rv" style="--d:1" onclick="go('wallet')"><span class="chip2">WALLET</span><div class="k">رصيد المحفظة المتاح</div><div class="bal">${fmt(S.wallet.avail)}<small>ر.ق</small></div>
  <div class="row"><div>تأمينات محجوزة<b>${fmt(S.wallet.held)} ر.ق</b></div><div style="text-align:end">${ic('chev')}</div></div></button>
  <div class="menu rv" style="--d:2">${mi('shop','طلباتي',"go('orders')",oc?cnt(oc,W_ORD):'')}${mi('pin','عنوان التوصيل',"go('addr')",m.addr?esc(m.addr.country):'أضف')}${mi('doc','كشف حسابي (PDF)',"go('stmt')")}${mi('bell','الإشعارات والعروض',"go('settings')")}</div>
@@ -1186,10 +1194,9 @@ V.pay=oid=>{const o=OO(oid);if(!o)return '';if(!held(o))return V.order(oid);
  const top=`<div class="tp" style="margin-top:4px">${hg('o:'+o.id,74)}<div><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>${o.state==='await'?`<div class="cd" data-cd="o:${o.id}"></div><div class="d">ادفع قبل ${dohaT(o.deadline)}${isA?' · بعدها يُلغى الفوز ويُصادَر التأمين':''}</div>`:`<div class="cd" style="font-size:20px;margin-top:6px">قيد المراجعة</div><div class="d">نؤكد وصول المبلغ خلال يوم عمل</div>`}</div></div>`;
  const head=`<div class="row2" style="cursor:default;margin-top:12px"><div class="ph">${opic(o)}</div><div class="mid"><div class="br">${o.b}</div><div class="nm">${o.title}</div><div class="k" style="margin-top:3px">${isA?'فزت بالمزاد':'طلب شراء'} · <bdi>${o.id}</bdi></div></div></div>`;
  const sum=lbl=>`<div class="card"><div class="kv"><span>${isA?'سعر الفوز':'سعر القطعة'}</span><b>${fmt(o.price)} ر.ق</b></div>${cr?`<div class="kv"><span>التأمين المدفوع</span><b><bdi>−${fmt(cr)}</bdi> ر.ق</b></div>`:''}<div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>${lbl}</span><b>${fmt(tot)} ر.ق</b></div></div>`;
- const idCard=isA&&!S.me.verified?`<div class="gate" style="margin-top:12px">${ic('id')}<div><b>تحقق من هويتك قبل التسليم</b><span>مرة واحدة فقط: صورة البطاقة الشخصية أو الجواز والعنوان.</span></div><button class="rebid" onclick="idSheet(refresh)">ابدأ</button></div>`:'';
  if(o.state==='review')return `<div class="pg">${top}${head}<div class="nt g">${ic('check')}<span>استلمنا إيصال التحويل. لا نُسلّم الطلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل، وسنُعلمك فور التأكيد. يجب أن يصل المبلغ خلال 5 أيام عمل من رفع الإيصال، وإلا يُعتبر الطلب غير مدفوع.</span></div>
   <div class="sh2"><h3>الملخص</h3></div>${sum('المبلغ المحوّل')}</div>`;
- return `<div class="pg">${top}${head}${idCard}
+ return `<div class="pg">${top}${head}
  ${isA?`<div class="sh2"><h3>طريقة الاستلام</h3></div>${shipOpts(o.s,`setOS('${o.id}',$)`,o.price)}${o.s!=='pick'?`<div style="margin-top:10px">${adrRow()}</div>`:''}`:''}
  ${shipNotes(m,o.price)}
  <div class="sh2"><h3>المبلغ المطلوب تحويله</h3></div>${sum('الإجمالي')}
@@ -1224,9 +1231,9 @@ V.rules=()=>`<div class="pg"><div class="nt rv" style="margin:4px 0 12px">${ic('
  <li>أقل زيادة يحددها المحل لكل مزاد (عادةً 100 ر.ق)، والمزايدة نهائية ولا يمكن سحبها.</li><li>يظهر رقم المزايد الخاص بك بدلاً من اسمك، وهو ثابت في كل المزادات.</li>
  <li>${RULE_EXT}</li><li>${RULE_SEQ}</li>
  <li>يدفع الفائز بتحويل بنكي ويرفع الإيصال خلال 48 ساعة، ويجب أن يصل المبلغ خلال 5 أيام عمل؛ وإلا أُلغي الفوز وصودر التأمين.</li>
- <li>يرجع التأمين إلى المحفظة إذا لم تفز، أو بعد تأكيد دفع الفائز.</li><li>التسجيل والمزايدة لمن عمره 18 سنة فأكثر ومن أي دولة، مع التحقق من الهوية مرة واحدة قبل أول تأمين.</li></ul></div>
+ <li>يرجع التأمين إلى المحفظة إذا لم تفز، ويُخصم من المبلغ المطلوب إذا فزت.</li><li>التسجيل والمزايدة لمن عمره 18 سنة فأكثر ومن أي دولة.</li></ul></div>
  <div class="rsec rv" style="--d:1"><h4>الدفع والمحفظة</h4><ul><li>طلبات المتجر حتى 10,000 ر.ق بالبطاقة، وما فوقها بالتحويل البنكي مع حجز القطعة 24 ساعة، وبحد أقصى حجزين غير مدفوعين لكل عميل.</li>
- <li>طلبات المتجر من 50,000 ر.ق فأكثر تتطلب التحقق من الهوية مرة واحدة.</li><li>لا نُسلّم أي طلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل.</li>
+<li>لا نُسلّم أي طلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل.</li>
  <li>السحب من المحفظة خلال 3 أيام عمل بدون رسوم: ما دُفع بالبطاقة يعود إلى البطاقة نفسها، والباقي إلى حساب بنكي باسمك.</li></ul></div>
  <div class="rsec rv" style="--d:2"><h4>الشحن والاستلام</h4><ul><li>داخل قطر 1–2 يوم عمل، الخليج 3–5، خارج الخليج 5–10 عبر أرامكس.</li><li>كل شحنة مؤمّنة بكامل قيمتها وتُسلَّم بالتوقيع والهوية. الجمارك في بلد الاستلام على المشتري.</li>
  <li>القطع التي تزيد على 300,000 ر.ق تُشحن خارج قطر بعد موافقة المحل.</li><li>الاستلام من المحل بالبطاقة الشخصية ورمز الاستلام، ويُحفظ الطلب 14 يوماً.</li></ul></div>
@@ -1273,7 +1280,7 @@ function createAcct(){if(S.me)return resume();
  const fe=$('#fn'),le=$('#ln'),fn=fe.value.trim(),ln=le.value.trim();fe.classList.toggle('err',!fn);le.classList.toggle('err',!ln);
  if(!fn||!ln)return toast('أدخل اسمك الأول واسم العائلة');
  if(S.acct){S.acct=null;S.wallet={avail:0,held:0,card:0};S.dep={};S.orders=[];S.tx=[];S.inbox=[];NUMSEQ++} // a different person on this device
- S.me={first:fn,last:ln,num:NUMSEQ?`#${5136+NUMSEQ}`:'#4821',phone:`${S.cc} ${S.phone||'5512 3456'}`,verified:false,terms:false,offers:$('#offers').checked,addr:null};
+ S.me={first:fn,last:ln,num:NUMSEQ?`#${5136+NUMSEQ}`:'#4821',phone:`${S.cc} ${S.phone||'5512 3456'}`,terms:false,offers:$('#offers').checked,addr:null};
  S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:`رقم المزايد الخاص بك <bdi>${S.me.num}</bdi> — يظهر بدلاً من اسمك في كل المزادات.`,icn:'user',un:1});
  openSheet(()=>`<div class="succ"><div class="shh"><div class="step">تم إنشاء حسابك</div><h3>رقم المزايد الخاص بك</h3></div><div class="bnum"><bdi>${S.me.num}</bdi></div>
  <p>يظهر هذا الرقم بدلاً من اسمك في كل المزادات، وهو ثابت لحسابك.<br>لا يعرف هويتك إلا فريق المحل.</p><button class="btn" onclick="closeSheet();resume()">متابعة</button></div>`,{onClose:resume})}
@@ -1343,15 +1350,6 @@ function bfGo(){const a=AA(BF.id),id=BF.id,bf=BF,w=S.wallet,me=S.me;
   if(BF.pm==='wallet'){d.cardAmt=Math.min(S.wallet.card,a.dep);S.wallet.card-=d.cardAmt;S.wallet.avail-=a.dep;txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','من المحفظة')}else txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','بطاقة');
   S.dep[id]=d;SHX=null;if(!BF.depOnly)placeMine(a,BF.amt);BF.step='done';upSheet();refresh()},1300)}
 
-/* identity: checked once, after winning (or for shop orders of 50,000+), before the piece is handed over */
-function idSheet(cb){DF={idt:'qid',f:0,b:0,adr:Object.assign({country:'قطر'},S.me.addr||{}),cb};openSheet(depSheet)}
-function depSheet(){if(!DF)return '';const pp=DF.idt==='pp',ready=pp?DF.f:DF.f&&DF.b;
- return `<div class="shh"><h3>التحقق من الهوية — مرة واحدة</h3><p>قبل تسليم القطعة نحتاج صورة بطاقتك الشخصية (أو جواز السفر لغير المقيمين في قطر) وعنوانك. يراجعها فريق المحل خلال يوم عمل.</p></div>
-  <div class="seg2"><button class="${pp?'':'on'}" onclick="saveAdr();DF.idt='qid';DF.f=DF.b=0;upSheet()">البطاقة الشخصية</button><button class="${pp?'on':''}" onclick="saveAdr();DF.idt='pp';DF.f=DF.b=0;upSheet()">جواز السفر</button></div>
-  <div class="ups">${pp?`<button class="up ${DF.f?'done':''}" style="grid-column:1/-1" onclick="upTile('f')">${ic(DF.f?'check':'passport')}${DF.f?'تم رفع صفحة البيانات':'صفحة البيانات'}</button>`
-  :`<button class="up ${DF.f?'done':''}" onclick="upTile('f')">${ic(DF.f?'check':'id')}${DF.f?'تم رفع الوجه الأمامي':'الوجه الأمامي'}</button><button class="up ${DF.b?'done':''}" onclick="upTile('b')">${ic(DF.b?'check':'id')}${DF.b?'تم رفع الوجه الخلفي':'الوجه الخلفي'}</button>`}</div>
-  ${adrFields(DF.adr)}<p class="k" style="margin:-4px 0 14px;line-height:1.7">يجب أن يطابق الاسم في الهوية اسم المستلم. يمكن الدفع من حساب شركتك أو عائلتك بعد موافقة المحل.</p>
-  <button class="btn" ${ready?'':'disabled'} onclick="idDone()">إرسال للمراجعة</button>`}
 /* Qatar National Address (zone / street / building) instead of a free-text line; nothing is prefilled */
 const adrLine=a=>a.line||[a.bldg&&`مبنى ${a.bldg}`,a.street&&`شارع ${a.street}`,a.zone&&`منطقة ${a.zone}`].filter(Boolean).join('، ');
 const adrOk=a=>!!(a&&a.country&&a.city&&(a.country==='قطر'?a.zone&&a.street&&a.bldg:a.line));
@@ -1362,10 +1360,6 @@ const adrFields=a=>`<label class="fl">الدولة<select class="in" id="ac" onc
 function saveAdr(){if(!DF)return;const v=s=>{const e=$(s);return e?e.value.trim():''},c=$('#ac');if(!c)return;
  DF.adr={country:c.value,city:v('#aci'),zone:v('#az'),street:v('#as'),bldg:v('#ab'),line:v('#al')}}
 function locate(){saveAdr();toast('جارٍ تحديد موقعك…');setTimeout(()=>{if(!DF)return;Object.assign(DF.adr,{country:'قطر',city:'لوسيل',zone:'69',street:'300',bldg:'12'});upSheet();toast('تم تحديد موقعك')},900)}
-function upTile(k){saveAdr();DF[k]=1;upSheet()}
-function idDone(){saveAdr();if(!adrOk(DF.adr))return toast('أكمل العنوان: المدينة والمنطقة والشارع والمبنى');const me=S.me;me.verified=true;me.idState='review';me.addr=Object.assign({},DF.adr);
- setTimeout(()=>{if(me.idState!=='review')return;me.idState='ok';if(S.me===me){push('تم التحقق من هويتك','راجع فريق المحل هويتك، وأصبحت جاهزاً لاستلام القطع.',['me'],'shield');bgRefresh()}},25000);
- const cb=DF.cb;closeSheet();toast('أُرسلت هويتك للمراجعة');if(cb)cb();else refresh()}
 
 /* shop purchase */
 function buy(id){const p=PP(id);if(p.sizes&&!SZ[id])return toast('اختر المقاس أولاً');if(!S.me)return needLogin({k:'item',p:id,then:'buy'});CO={s:'del'};go('checkout',id)}
@@ -1374,7 +1368,6 @@ function addrSheet(){DF={adr:Object.assign({country:'قطر'},(S.me&&S.me.addr)|
 function place(id){const p=PP(id),m=effM(CO.s),tot=p.price+feeV(m);
  if(p.sold)return toast('تم بيع هذه القطعة');
  if(CO.s!=='pick'&&!m)return addrSheet();
- if(tot>=50000&&!S.me.verified)return idSheet(()=>place(id));
  if(tot>10000&&S.orders.filter(o=>o.kind==='shop'&&o.state==='await').length>=2)return toast('لديك حجزان بانتظار التحويل — أكمل أحدهما أولاً');
  const data={kind:'shop',itemId:id,title:p.n+(SZ[id]?` · ${SZ[id]}`:''),b:p.b,cat:p.cat,price:p.price,method:m,fee:feeV(m),total:tot};
  if(tot<=10000){const w=S.wallet;openSheet(()=>`<div class="spin"></div><p class="bigs">جارٍ الدفع بالبطاقة…</p>`,{modal:true});
@@ -1384,7 +1377,7 @@ function place(id){const p=PP(id),m=effM(CO.s),tot=p.price+feeV(m);
 
 /* bank transfer receipt -> store confirms (simulated) -> shipment auto-created */
 function upReceipt(oid){const o=OO(oid);if(!o||o.state!=='await'||o.up)return;
- if(o.kind==='auction'){o.method=effM(o.s);if(!o.method)return addrSheet();if(!S.me.verified)return idSheet(()=>{refresh();upReceipt(oid)})}
+ if(o.kind==='auction'){o.method=effM(o.s);if(!o.method)return addrSheet()}
  o.up=1;const w=S.wallet;openSheet(()=>`<div class="spin"></div><p class="bigs">جارٍ رفع الإيصال…</p>`,{modal:true});
  setTimeout(()=>{o.state='review';closeSheet();refresh();toast('تم رفع الإيصال — قيد المراجعة');
   setTimeout(()=>{o.state='paid';markSold(o);if(o.kind==='auction'&&S.wallet===w)applyDep(o.itemId);
@@ -1423,7 +1416,7 @@ function doWd(cp,bp){let v='';if(bp){v=($('#iban').value||'').replace(/\s/g,'').
 function demoWin(){
  const a=A.filter(x=>x.st==='live').sort((x,y)=>x.t1-y.t1)[0];if(!a)return toast('لا توجد مزادات مباشرة الآن');
  closeSheet();
- if(!S.me){if(S.acct){S.me=S.acct;S.acct=null}else{S.me={first:'فيصل',last:'عبدالعزيز',num:'#4821',phone:'+974 5512 3456',verified:false,terms:true,offers:false,addr:null};
+ if(!S.me){if(S.acct){S.me=S.acct;S.acct=null}else{S.me={first:'فيصل',last:'عبدالعزيز',num:'#4821',phone:'+974 5512 3456',terms:true,offers:false,addr:null};
   S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:'رقم المزايد الخاص بك <bdi>#4821</bdi>',icn:'user',un:1})}}
  const d=S.dep[a.id];if(!d||d.state!=='held'){S.dep[a.id]={amt:a.dep,state:'held',src:'card'};S.wallet.held+=a.dep;txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','بطاقة')}
  a.rival=9;a.cur+=a.inc;a.hist.unshift({n:S.me.num,a:a.cur,t:Date.now(),fresh:1});a.t1=Date.now();

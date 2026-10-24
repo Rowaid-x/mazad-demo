@@ -71,16 +71,13 @@ bdi,.num{unicode-bidi:isolate;direction:ltr}
 .dki .pr{font-size:18px;margin-top:1px}
 .nv{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) max-content;align-items:center;background:rgba(255,255,255,.97);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 8px 30px 14px}
-.nv.s{grid-template-columns:max-content repeat(3,minmax(0,1fr));padding:8px 14px 30px 8px}
+.nv.pf{grid-template-columns:max-content repeat(3,minmax(0,1fr));padding:8px 14px 30px 8px}
 .nv.two{grid-template-columns:1fr 1fr;padding:10px 18px 30px}
 .nv .pick{flex-direction:row;justify-content:center;gap:9px;height:46px;font-family:'Alexandria';font-size:14px;font-weight:500;color:var(--navy);letter-spacing:.01em}
 .nv .pick .i{color:var(--gold);width:21px;height:21px}
 .nv .pick+.pick{border-inline-start:1px solid var(--line)}
-.nv .xw{flex-direction:row;gap:6px;height:34px;padding:0 13px;border-radius:99px;font-size:11.5px;font-weight:600;white-space:nowrap}
-.nv .xw .i{width:16px;height:16px;stroke-width:1.6}
-.nv .xw.to-shop{background:var(--goldl);color:var(--goldt);box-shadow:inset 0 0 0 1px var(--gold2)}
-.nv .xw.to-auc{background:var(--navy);color:#F6EFE4}
-.nv .xw.to-auc .i{color:var(--gold2)}
+.nv .xw{flex-direction:row;gap:6px;height:34px;padding:0 13px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap;background:var(--blue);color:#fff}
+.nv .xw .i{width:16px;height:16px;stroke-width:1.7}
 .nv button{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;font-weight:500;color:#857F72;position:relative;padding:4px 0;text-align:center}
 .nv .i{width:23px;height:23px;stroke-width:1.45}
 .nv button.on{color:var(--navy);font-weight:600}
@@ -591,7 +588,7 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
   .bez{border-radius:0;padding:0;background:none}
   .scr{width:100%;height:100dvh;border-radius:0;padding-top:env(safe-area-inset-top,0px)}
   .sb,.island,.hi{display:none}
-  .nv,.nv.s,.nv.two{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .nv,.nv.pf,.nv.two{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
   .pb{top:calc(10px + env(safe-area-inset-top,0px))}
   .ts{top:calc(14px + env(safe-area-inset-top,0px))}
 }
@@ -894,8 +891,9 @@ function bgRefresh(){if(NOREF[cur.k]||!LIVE[cur.k]){navUpd();return}render(false
 const TITLES={cat:p=>p,item:()=>'تفاصيل القطعة',lot:id=>{const a=AA(id);return a.st==='live'?'مزاد مباشر':a.st==='up'?'مزاد قادم':'مزاد منتهٍ'},
  checkout:()=>'إتمام الشراء',pay:id=>held(OO(id))?'إتمام الدفع':'تفاصيل الطلب',order:()=>'تفاصيل الطلب',wallet:()=>'المحفظة',orders:()=>'طلباتي',stmt:()=>'كشف حسابي',
  rules:()=>'القواعد والسياسات',addr:()=>'عنوان التوصيل',settings:()=>'الإشعارات والعروض',inbox:()=>'الإشعارات'};
-/* two worlds, one bar. Home: المزاد on the right, الشراء on the left. Pressing one opens its sections,
-   and the other slides into its own corner as a small pill in its own colour (Mazad right, Buy left). */
+/* two worlds, one bar, in the same order as the home doors: الشراء on the right, المزاد on the left.
+   Pressing one opens its sections, and the other slides into its own corner as a small brand-blue pill
+   (Buy to the right corner, Mazad to the left). */
 const WMAP={auc:'auc',afav:'auc',mine:'auc',lot:'auc',shop:'shop',sfav:'shop',orders:'shop',cat:'shop',item:'shop',checkout:'shop'};
 let WLD=null,NW;
 function nav(){const r=stack[0].k,w=r==='home'&&cur.k==='home'?null:(WMAP[r]||WMAP[cur.k]||WLD);if(w)WLD=w;
@@ -904,10 +902,10 @@ function nav(){const r=stack[0].k,w=r==='home'&&cur.k==='home'?null:(WMAP[r]||WM
  const moved=NW!==undefined&&NW!==key,from={};
  if(moved)nv.querySelectorAll('[data-w]').forEach(e=>{const b=e.getBoundingClientRect(),f=from[e.dataset.w];
   from[e.dataset.w]=f?{left:Math.min(f.left,b.left),right:Math.max(f.right,b.right),top:Math.min(f.top,b.top),bottom:Math.max(f.bottom,b.bottom)}:b});
- nv.classList.toggle('two',!w);nv.classList.toggle('s',w==='shop');
- nv.innerHTML=!w?`<button class="pick" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button><button class="pick" data-w="shop" onclick="go('shop')">${ic('shop')}الشراء المباشر</button>`
-  :w==='auc'?t('auc','glass','المزادات')+t('afav','heart','المفضلة')+t('mine','paddle','مزايداتي','<span class="bdg hide" id="bm"></span>')+`<button class="xw to-shop" data-w="shop" onclick="go('shop')">${ic('shop')}شراء مباشر</button>`
-  :`<button class="xw to-auc" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`+t('shop','shop','المتجر')+t('sfav','heart','المفضلة')+t('orders','box','طلباتي');
+ nv.classList.toggle('two',!w);nv.classList.toggle('pf',w==='auc');
+ nv.innerHTML=!w?`<button class="pick" data-w="shop" onclick="go('shop')">${ic('shop')}الشراء المباشر</button><button class="pick" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`
+  :w==='auc'?`<button class="xw" data-w="shop" onclick="go('shop')">${ic('shop')}شراء مباشر</button>`+t('auc','glass','المزادات')+t('afav','heart','المفضلة')+t('mine','paddle','مزايداتي','<span class="bdg hide" id="bm"></span>')
+  :t('shop','shop','المتجر')+t('sfav','heart','المفضلة')+t('orders','box','طلباتي')+`<button class="xw" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`;
  NW=key;if(!moved||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
  const ease='cubic-bezier(.22,.8,.24,1)',pill=nv.querySelector('.xw'),r0=pill&&from[pill.dataset.w];
  if(pill&&r0){const r1=pill.getBoundingClientRect(),cs=getComputedStyle(pill);

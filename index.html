@@ -55,8 +55,9 @@ bdi,.num{unicode-bidi:isolate;direction:ltr}
 .bnd .wmk{height:32px;width:auto;display:block}
 .hb{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;position:relative;flex:none;color:var(--navy)}
 .hb .i{width:19px;height:19px}
+.av3{font-family:'Alexandria';font-size:15px;font-weight:600}
+.av3.on{background:var(--navy);border-color:var(--navy);color:var(--gold2)}
 .hb .dt{position:absolute;top:5px;inset-inline-end:6px;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px #fff}
-.lgn{height:36px;padding:0 15px;border-radius:99px;background:var(--navy);color:#F7F1E7;font-size:13px;font-weight:600;flex:none}
 .ttlx{flex:1;text-align:center;font-family:'Alexandria';font-weight:500;font-size:15.5px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sp40{width:40px;flex:none}
 .sc{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;position:relative}
@@ -68,8 +69,18 @@ bdi,.num{unicode-bidi:isolate;direction:ltr}
 .dock .btn{flex:1}
 .dki .k{font-size:11px;color:var(--mute)}
 .dki .pr{font-size:18px;margin-top:1px}
-.nv{flex:none;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.97);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 4px 30px}
+.nv{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) max-content;align-items:center;background:rgba(255,255,255,.97);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 8px 30px 14px}
+.nv.s{grid-template-columns:max-content repeat(3,minmax(0,1fr));padding:8px 14px 30px 8px}
+.nv.two{grid-template-columns:1fr 1fr;padding:10px 18px 30px}
+.nv .pick{flex-direction:row;justify-content:center;gap:9px;height:46px;font-family:'Alexandria';font-size:14px;font-weight:500;color:var(--navy);letter-spacing:.01em}
+.nv .pick .i{color:var(--gold);width:21px;height:21px}
+.nv .pick+.pick{border-inline-start:1px solid var(--line)}
+.nv .xw{flex-direction:row;gap:6px;height:34px;padding:0 13px;border-radius:99px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.nv .xw .i{width:16px;height:16px;stroke-width:1.6}
+.nv .xw.to-shop{background:var(--goldl);color:var(--goldt);box-shadow:inset 0 0 0 1px var(--gold2)}
+.nv .xw.to-auc{background:var(--navy);color:#F6EFE4}
+.nv .xw.to-auc .i{color:var(--gold2)}
 .nv button{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;font-weight:500;color:#857F72;position:relative;padding:4px 0;text-align:center}
 .nv .i{width:23px;height:23px;stroke-width:1.45}
 .nv button.on{color:var(--navy);font-weight:600}
@@ -580,7 +591,7 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
   .bez{border-radius:0;padding:0;background:none}
   .scr{width:100%;height:100dvh;border-radius:0;padding-top:env(safe-area-inset-top,0px)}
   .sb,.island,.hi{display:none}
-  .nv{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  .nv,.nv.s,.nv.two{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
   .pb{top:calc(10px + env(safe-area-inset-top,0px))}
   .ts{top:calc(14px + env(safe-area-inset-top,0px))}
 }
@@ -601,13 +612,7 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
       <header class="hd" id="hd"></header>
       <main class="sc" id="sc"></main>
       <div class="dock" id="dock"></div>
-      <nav class="nv" id="nv">
-        <button data-t="home" onclick="go('home')"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 10.5 12 4l8.5 6.5V20a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1z"/></svg>الرئيسية</button>
-        <button data-t="shop" onclick="go('shop')"><svg class="i" viewBox="0 0 24 24"><path d="M5 8h14l-1.1 12.1a1 1 0 0 1-1 .9H7.1a1 1 0 0 1-1-.9z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>المتجر</button>
-        <button data-t="auc" onclick="go('auc')"><svg class="i" viewBox="0 0 24 24"><path d="M6.5 3h11M6.5 21h11"/><path d="M8 3v3a4 4 0 0 0 1.6 3.2L12 12l2.4-2.8A4 4 0 0 0 16 6V3M8 21v-3a4 4 0 0 1 1.6-3.2L12 12l2.4 2.8A4 4 0 0 1 16 18v3"/></svg>المزادات</button>
-        <button data-t="mine" onclick="go('mine')"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7M9.5 21h5M10 7.5h4M10 10h2.5"/></svg>مزايداتي<span class="bdg hide" id="bm"></span></button>
-        <button data-t="me" onclick="go('me')"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.8-4 4-6 7.5-6s6.7 2 7.5 6"/></svg>حسابي</button>
-      </nav>
+      <nav class="nv" id="nv"></nav>
       <div class="pb" id="pb"></div>
       <div class="ts" id="ts"></div>
       <div class="win" id="win"></div>
@@ -680,6 +685,8 @@ const IC={
  up2:'<path d="M12 19V5M6 11l6-6 6 6"/>',
  down:'<path d="M12 5v14M6 13l6 6 6-6"/>',
  passport:'<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16.5h6"/>',
+ paddle:'<circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7M9.5 21h5M10 7.5h4M10 10h2.5"/>',
+ box:'<path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/>',
  heart:'<path d="M12 20.5s-7.5-4.6-9.2-9.6C1.6 7.3 3.9 4 7.3 4c2 0 3.6 1.1 4.7 2.7C13.1 5.1 14.7 4 16.7 4c3.4 0 5.7 3.3 4.5 6.9-1.7 5-9.2 9.6-9.2 9.6z"/>',
  loc:'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/><circle cx="12" cy="12" r="7"/>',
  minus:'<path d="M5 12h14"/>',
@@ -859,8 +866,8 @@ const feeTx=v=>v?fmt(v)+' ر.ق':'مجاناً';
 
 /* ============ navigation ============ */
 let stack=[{k:'splash'}],cur=stack[0];
-const ROOT={home:1,shop:1,auc:1,mine:1,me:1},BARE={splash:1,login:1,otp:1,name:1},NOREF={splash:1,login:1,otp:1,name:1};
-const LIVE={home:1,auc:1,lot:1,mine:1,me:1,wallet:1,pay:1,order:1,orders:1,inbox:1,stmt:1};
+const ROOT={home:1,auc:1,afav:1,mine:1,shop:1,sfav:1,orders:1,me:1},BARE={splash:1,login:1,otp:1,name:1},NOREF={splash:1,login:1,otp:1,name:1};
+const LIVE={home:1,auc:1,afav:1,lot:1,mine:1,me:1,wallet:1,pay:1,order:1,orders:1,inbox:1,stmt:1};
 function go(k,p){if(ROOT[k])stack=[{k,p}];else stack.push({k,p});cur=stack[stack.length-1];render(true)}
 function replace(k,p){stack[stack.length-1]={k,p};cur=stack[stack.length-1];render(true)}
 function back(){if(stack.length>1)stack.pop();else stack=[{k:'home'}];cur=stack[stack.length-1];render(true)}
@@ -869,6 +876,7 @@ function render(anim){
  const sc=$('#sc'),top=sc.scrollTop,keep=[...sc.querySelectorAll(KEEP)].map(e=>[e.scrollLeft,e.scrollTop]);
  const ae=document.activeElement,fid=ae&&sc.contains(ae)&&ae.id?ae.id:'',sel=fid&&ae.selectionStart!=null?[ae.selectionStart,ae.selectionEnd]:null;
  $('#nv').classList.toggle('hide',!!BARE[cur.k]);$('#hd').classList.toggle('hide',!!BARE[cur.k]);
+ if(!BARE[cur.k])nav();
  if(!BARE[cur.k])$('#hd').innerHTML=hdr();
  sc.innerHTML=V[cur.k](cur.p);
  const d=DOCK[cur.k]?DOCK[cur.k](cur.p):'',dk=$('#dock');dk.innerHTML=d;dk.classList.toggle('on',!!d);
@@ -886,16 +894,36 @@ function bgRefresh(){if(NOREF[cur.k]||!LIVE[cur.k]){navUpd();return}render(false
 const TITLES={cat:p=>p,item:()=>'تفاصيل القطعة',lot:id=>{const a=AA(id);return a.st==='live'?'مزاد مباشر':a.st==='up'?'مزاد قادم':'مزاد منتهٍ'},
  checkout:()=>'إتمام الشراء',pay:id=>held(OO(id))?'إتمام الدفع':'تفاصيل الطلب',order:()=>'تفاصيل الطلب',wallet:()=>'المحفظة',orders:()=>'طلباتي',stmt:()=>'كشف حسابي',
  rules:()=>'القواعد والسياسات',addr:()=>'عنوان التوصيل',settings:()=>'الإشعارات والعروض',inbox:()=>'الإشعارات'};
+/* two worlds, one bar. Home: المزاد on the right, الشراء on the left. Pressing one opens its sections,
+   and the other slides into its own corner as a small pill in its own colour (Mazad right, Buy left). */
+const WMAP={auc:'auc',afav:'auc',mine:'auc',lot:'auc',shop:'shop',sfav:'shop',orders:'shop',cat:'shop',item:'shop',checkout:'shop'};
+let WLD=null,NW;
+function nav(){const r=stack[0].k,w=r==='home'&&cur.k==='home'?null:(WMAP[r]||WMAP[cur.k]||WLD);if(w)WLD=w;
+ const t=(k,i,l,x='')=>`<button data-t="${k}" data-w="${WMAP[k]}" onclick="go('${k}')">${ic(i)}${l}${x}</button>`,nv=$('#nv'),key=w||'';
+ // where each world sat before the change, so the pill can travel from there
+ const moved=NW!==undefined&&NW!==key,from={};
+ if(moved)nv.querySelectorAll('[data-w]').forEach(e=>{const b=e.getBoundingClientRect(),f=from[e.dataset.w];
+  from[e.dataset.w]=f?{left:Math.min(f.left,b.left),right:Math.max(f.right,b.right),top:Math.min(f.top,b.top),bottom:Math.max(f.bottom,b.bottom)}:b});
+ nv.classList.toggle('two',!w);nv.classList.toggle('s',w==='shop');
+ nv.innerHTML=!w?`<button class="pick" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button><button class="pick" data-w="shop" onclick="go('shop')">${ic('shop')}الشراء المباشر</button>`
+  :w==='auc'?t('auc','glass','المزادات')+t('afav','heart','المفضلة')+t('mine','paddle','مزايداتي','<span class="bdg hide" id="bm"></span>')+`<button class="xw to-shop" data-w="shop" onclick="go('shop')">${ic('shop')}شراء مباشر</button>`
+  :`<button class="xw to-auc" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`+t('shop','shop','المتجر')+t('sfav','heart','المفضلة')+t('orders','box','طلباتي');
+ NW=key;if(!moved||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const ease='cubic-bezier(.22,.8,.24,1)',pill=nv.querySelector('.xw'),r0=pill&&from[pill.dataset.w];
+ if(pill&&r0){const r1=pill.getBoundingClientRect(),cs=getComputedStyle(pill);
+  pill.animate([{transform:`translate(${(r0.left+r0.right-r1.left-r1.right)/2}px,${(r0.top+r0.bottom-r1.top-r1.bottom)/2}px) scale(1.25)`,backgroundColor:'rgba(255,255,255,0)',color:'#071B56',boxShadow:'none'},
+   {transform:'none',backgroundColor:cs.backgroundColor,color:cs.color,boxShadow:cs.boxShadow}],{duration:460,easing:ease})}
+ nv.querySelectorAll(w?'[data-t]':'.pick').forEach((b,i)=>b.animate([{opacity:0,transform:`translateY(4px)`},{opacity:1,transform:'none'}],{duration:320,delay:90+i*45,easing:ease,fill:'backwards'}))}
 function hdr(){
  if(ROOT[cur.k]){const un=S.me&&S.inbox.some(n=>n.un);
-  return `<div class="bnd">${LOGO(34)}<img class="wmk" src="brand/wordmark-ar.png" alt="مزاد الفاخر"></div>
-   ${S.me?'':`<button class="lgn" onclick="needLogin({k:'${cur.k}'})">دخول</button>`}
-   <button class="hb" aria-label="الإشعارات" onclick="go('inbox')">${ic('bell')}${un?'<span class="dt"></span>':''}</button>`}
+  return `<button class="bnd" aria-label="الرئيسية" onclick="go('home')">${LOGO(34)}<img class="wmk" src="brand/wordmark-ar.png" alt="مزاد الفاخر"></button>
+   <button class="hb" aria-label="الإشعارات" onclick="go('inbox')">${ic('bell')}${un?'<span class="dt"></span>':''}</button>
+   <button class="hb av3 ${S.me?'on':''}" aria-label="حسابي" onclick="go('me')">${S.me?esc(S.me.first[0]):ic('user')}</button>`}
  return `<button class="hb" aria-label="رجوع" onclick="back()">${ic('back')}</button><div class="ttlx">${TITLES[cur.k]?TITLES[cur.k](cur.p):''}</div><span class="sp40"></span>`}
 function navUpd(){
  document.querySelectorAll('.nv button').forEach(b=>b.classList.toggle('on',b.dataset.t===stack[0].k));
  const n=S.me?S.orders.filter(o=>o.kind==='auction'&&o.state==='await').length+A.filter(a=>a.st==='live'&&myMax(a)&&!isLead(a)).length:0;
- const bm=$('#bm');bm.textContent=n;bm.classList.toggle('hide',!n);
+ const bm=$('#bm');if(bm){bm.textContent=n;bm.classList.toggle('hide',!n)}
  if(ROOT[cur.k]&&!BARE[cur.k]){const hb=$('#hd .hb .dt'),un=!!(S.me&&S.inbox.some(x=>x.un));if(!!hb!==un)$('#hd').innerHTML=hdr()}
 }
 function histFade(el){el.classList.toggle('fade',el.scrollHeight>el.clientHeight+2&&el.scrollTop+el.clientHeight<el.scrollHeight-2)}
@@ -1138,14 +1166,20 @@ V.mine=()=>{if(!S.me)return `<div class="pg"><div class="empty rv">${hg('x',90)}
  const aw=S.orders.filter(o=>o.kind==='auction'&&held(o)),act=A.filter(a=>a.st!=='end'&&(hasDep(a.id)||myMax(a))),
   deps=Object.entries(S.dep).filter(([,d])=>d.state==='held'||d.state==='pending'||d.state==='refund'),ended=A.filter(a=>a.st==='end'&&myMax(a));
  const dl={held:'',pending:' · قيد التأكيد',refund:' · يُعاد عند وصول التحويل'};
- const wl=A.filter(a=>S.watch[a.id]&&a.st!=='end'&&!act.includes(a)),wp=PR.filter(p=>S.watch[p.id]&&!p.sold);
- const body=!aw.length&&!act.length&&!ended.length&&!wl.length&&!wp.length?`<div class="empty">${hg(null,80,.85)}<h3>لم تشارك في أي مزاد بعد</h3><p>اضغط ♡ على أي قطعة لمتابعتها، أو زايد مباشرة على ما يعجبك.</p><button class="btn" onclick="go('auc')">تصفّح المزادات</button></div>`:
+ const body=!aw.length&&!act.length&&!ended.length?`<div class="empty">${hg(null,80,.85)}<h3>لم تشارك في أي مزاد بعد</h3><p>اضغط ♡ على أي قطعة لمتابعتها، أو زايد مباشرة على ما يعجبك.</p><button class="btn" onclick="go('auc')">تصفّح المزادات</button></div>`:
  `${aw.length?`<div class="sh2"><h3>بانتظار الدفع</h3></div>${aw.map(awCard).join('')}`:''}
  ${act.length?`<div class="sh2"><h3>مزاداتي الحالية</h3></div>${act.map(actRow).join('')}`:''}
- ${wl.length||wp.length?`<div class="sh2"><h3>المفضلة</h3><em>${cnt(wl.length+wp.length,W_PC)}</em></div>${wl.map(actRow).join('')}${wp.map(p=>`<button class="row2" onclick="go('item','${p.id}')"><div class="ph">${pic(p)}</div><div class="mid"><div class="br">${p.b}</div><div class="nm">${p.n}</div><div class="ln"><div class="pr">${qar(p.price)}</div><span class="tg">المتجر</span></div></div></button>`).join('')}`:''}
  ${deps.length?`<div class="sh2"><h3>التأمينات المحجوزة</h3><a onclick="go('wallet')">المحفظة</a></div><div class="card">${deps.map(([id,d])=>`<div class="kv"><span>${AA(id).n}</span><b>${fmt(d.amt)} ر.ق${dl[d.state]}</b></div>`).join('')}</div>`:''}
  ${ended.length?`<div class="sh2"><h3>منتهية</h3></div>${ended.map(endRow).join('')}`:''}`;
  return `<div class="pg"><div class="ttl rv"><h1 class="ds">مزايداتي</h1><p>رقم المزايد الخاص بك <bdi>${S.me.num}</bdi></p></div><div class="rv" style="--d:1">${body}</div></div>`};
+/* favourites, one list per world */
+const favEmpty=(art,h,p,k,btn,to)=>`<div class="empty">${art}<h3>${h}</h3><p>${p}</p>${S.me?`<button class="btn" onclick="go('${to}')">${btn}</button>`:`<button class="btn" onclick="needLogin({k:'${k}'})">تسجيل الدخول</button>`}</div>`;
+V.afav=()=>{const l=S.me?A.filter(a=>S.watch[a.id]&&a.st!=='end').sort((x,y)=>x.t1-y.t1):[];
+ return `<div class="pg"><div class="ttl rv"><h1 class="ds">المفضلة</h1><p>مزادات تتابعها — ننبّهك قبل انتهائها بخمس دقائق</p></div><div class="rv" style="--d:1">
+ ${l.length?l.map(actRow).join(''):favEmpty(hg(null,80,.85),'لا توجد مزادات في المفضلة','اضغط ♡ على أي مزاد لمتابعته.','afav','تصفّح المزادات','auc')}</div></div>`};
+V.sfav=()=>{const l=S.me?PR.filter(p=>S.watch[p.id]):[];
+ return `<div class="pg"><div class="ttl rv"><h1 class="ds">المفضلة</h1><p>قطع حفظتها من المتجر</p></div><div class="rv" style="--d:1">
+ ${l.length?`<div class="grid">${l.map(pCard).join('')}</div>`:favEmpty(`<div style="color:var(--gold);display:grid;place-items:center">${ic('heart')}</div>`,'لا توجد قطع في المفضلة','اضغط ♡ على أي قطعة لحفظها هنا.','sfav','تصفّح المتجر','shop')}</div></div>`};
 const awCard=o=>`<button class="awc" onclick="go('pay','${o.id}')">${hg('o:'+o.id,64)}<div style="flex:1;min-width:0"><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>
  <div class="t">${o.title} · ${fmt(o.price)} ر.ق</div>${o.state==='await'?`<div class="c num" data-cd="o:${o.id}"></div><div class="k" style="margin-top:2px">ادفع قبل ${dohaT(o.deadline)}</div><span class="btn">إتمام الدفع</span>`:`<div class="c" style="font-size:15px">قيد مراجعة التحويل</div>`}</div></button>`;
 const actRow=a=>`<button class="row2" onclick="go('lot','${a.id}')"><div class="ph">${pic(a)}</div><div class="mid"><div class="br">${a.b}</div><div class="nm">${a.n}</div>
@@ -1172,7 +1206,7 @@ V.wallet=()=>{if(!S.me)return V.me();
  <div class="wbt rv" style="--d:1"><button class="btn" onclick="topSheet()">${ic('plus')}شحن المحفظة</button><button class="btn ghost" onclick="wdSheet()">${ic('bank')}سحب إلى البنك</button></div>
  <div class="nt rv" style="--d:1">${ic('info')}<span>يمكنك دفع تأمين المزادات من رصيد المحفظة، ويرجع إليها إذا لم تفز أو بعد تأكيد دفعك إذا فزت. ويمكنك سحب الرصيد المتاح إلى حسابك البنكي في أي وقت.</span></div>
  <div class="sh2"><h3>الحركات</h3></div>${S.tx.length?`<div class="txl">${S.tx.map(t=>`<div class="tx"><span class="ic">${ic(t.k==='p'?'down':t.k==='h'?'lock':'up2')}</span><div style="min-width:0"><div class="t">${t.l}</div><div class="d">${ago(t.t)}${t.d?' · '+t.d:''}</div></div><span class="v ${t.k==='p'?'p':t.k==='h'?'h':''}">${sgn(t)}</span></div>`).join('')}</div>`:`<p class="k" style="text-align:center;padding:16px">لا توجد حركات بعد</p>`}</div>`};
-V.orders=()=>`<div class="pg">${S.orders.length?S.orders.map(o=>`<button class="row2" onclick="go('${held(o)?'pay':'order'}','${o.id}')"><div class="ph">${opic(o)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div>
+V.orders=()=>`<div class="pg"><div class="ttl rv"><h1 class="ds">طلباتي</h1><p>مشترياتك وما فزت به في المزادات</p></div>${S.orders.length?S.orders.map(o=>`<button class="row2" onclick="go('${held(o)?'pay':'order'}','${o.id}')"><div class="ph">${opic(o)}</div><div class="mid"><div class="br"><bdi>${o.id}</bdi></div><div class="nm">${o.title}</div>
  <div class="ln"><div class="pr">${qar(o.total||o.price)}</div><span class="tg ${o.state==='await'?'bad':o.state==='done'?'ok':''}">${OST[o.state]}</span></div></div></button>`).join(''):`<div class="empty">${hg(null,70,.4)}<h3>لا توجد طلبات بعد</h3><p>تظهر هنا مشترياتك وما تفوز به في المزادات.</p><button class="btn" onclick="go('shop')">تصفّح المتجر</button></div>`}</div>`;
 const OST={await:'بانتظار التحويل',review:'قيد مراجعة التحويل',paid:'تم تأكيد الدفع',prep:'قيد التجهيز',ship:'تم الشحن',ready:'جاهز للاستلام',done:'تم التسليم'};
 const bankBlock=ref=>`<div class="bank"><div class="bk"><span class="k">البنك</span><b>يُضاف من المحل</b></div><div class="bk"><span class="k">اسم الحساب</span><b>مزاد الفاخر</b><button class="cp" aria-label="نسخ" onclick="copy('مزاد الفاخر')">${ic('copy')}</button></div>
@@ -1363,7 +1397,7 @@ function place(id){const p=PP(id),m=effM(CO.s),tot=p.price+feeV(m);
  const data={kind:'shop',itemId:id,title:p.n+(SZ[id]?` · ${SZ[id]}`:''),b:p.b,cat:p.cat,price:p.price,method:m,fee:feeV(m),total:tot};
  if(tot<=10000){const w=S.wallet;openSheet(()=>`<div class="spin"></div><p class="bigs">جارٍ الدفع بالبطاقة…</p>`,{modal:true});
   setTimeout(()=>{if(!mine(w))return closeSheet();const o=newOrder(Object.assign(data,{state:'paid'}));markSold(o);closeSheet();
-   stack=[{k:'me'},{k:'orders'},{k:'order',p:o.id}];cur=stack[2];render(true);push('تم الدفع بنجاح',`طلبك <bdi>${o.id}</bdi> قيد التجهيز`,['order',o.id],'check');progress(o)},1400)}
+   stack=[{k:'orders'},{k:'order',p:o.id}];cur=stack[1];render(true);push('تم الدفع بنجاح',`طلبك <bdi>${o.id}</bdi> قيد التجهيز`,['order',o.id],'check');progress(o)},1400)}
  else{const o=newOrder(Object.assign(data,{state:'await',deadline:Date.now()+24*H,span:24*H}));p.res=o.id;replace('pay',o.id);toast('القطعة محجوزة لك 24 ساعة')}}
 
 /* bank transfer receipt -> store confirms (simulated) -> shipment auto-created */

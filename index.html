@@ -698,6 +698,9 @@ const P_MID='M692.631 303.028L693.844 301.797L697.349 298.49L698.376 297.422L701
 const IN_TOP='M697.217 305.23L692.57 310.09C690.401 312.358 689.19 315.374 689.19 318.513L705.56 318.513C705.56 315.374 704.35 312.358 702.181 310.09L697.375 305.066Z';
 const IN_BOT='M692.57 293.504L697.217 298.363L697.349 298.49L697.471 298.354L702.181 293.504C704.35 291.236 705.56 288.22 705.56 285.081L689.19 285.081C689.19 288.22 690.401 291.236 692.57 293.504Z';
 const GLASS=`<path d="${P_TOP}"/><path d="${P_BOT}"/><path d="${P_MID}"/>`;
+const G_TOP='M888.6,36.43v9.9c0,8.27,3.25,16.2,9.04,22.09l9.88,10.04h13.69l9.88-10.04c5.8-5.89,9.04-13.83,9.04-22.09v-9.9h-51.54ZM923.68,62.39l-9.32,9.74-.31-.32-9.01-9.42c-4.2-4.4-6.55-10.24-6.55-16.33h31.73c0,6.08-2.35,11.93-6.55,16.33Z',
+ G_BOT='M931.09,88.5l-9.88-10.04h-13.69l-9.88,10.04c-5.8,5.89-9.04,13.83-9.04,22.09v9.9h51.54v-9.9c0-8.27-3.25-16.2-9.04-22.09ZM898.5,110.87c0-6.08,2.35-11.930,6.55-16.33l9.01-9.42.25-.24.24.26,9.13,9.4c4.2,4.4,6.55,10.24,6.55,16.33h-31.73Z',
+ G_MID='912.17 69.83 914.37 72.13 921.21 78.47 923.13 80.41 916.31 86.94 914.31 84.88 907.52 78.46 905.17 76.08';
 $('#defs').innerHTML=`
  <linearGradient id="gNavy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16367F"/><stop offset="1" stop-color="#071B56"/></linearGradient>
  <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8C3A3"/><stop offset=".5" stop-color="#BB9E7C"/><stop offset="1" stop-color="#9E805E"/></linearGradient>
@@ -707,15 +710,23 @@ $('#defs').innerHTML=`
  <linearGradient id="mG1" x1="918.59" y1="126.22" x2="914.01" y2="34.61" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d3b997"/><stop offset=".29" stop-color="#d5bb9a"/><stop offset=".58" stop-color="#dbc2a7"/><stop offset=".87" stop-color="#e6cdba"/><stop offset="1" stop-color="#ecd4c6"/></linearGradient>
  <linearGradient id="mG2" href="#mG1" x1="914.93" y1="126.4" x2="910.35" y2="34.79"/><linearGradient id="mG3" href="#mG1" x1="916.55" y1="126.32" x2="911.97" y2="34.71"/>
  <linearGradient id="mS1" x1="921.33" y1="71.63" x2="918.49" y2="74.47" gradientUnits="userSpaceOnUse"><stop offset=".09" stop-color="#fff"/><stop offset="1" stop-color="#a7a9ac"/></linearGradient>
- <linearGradient id="mS2" href="#mS1" x1="907.73" y1="84.96" x2="909.59" y2="83.1"/>`;
+ <linearGradient id="mS2" href="#mS1" x1="907.73" y1="84.96" x2="909.59" y2="83.1"/>
+ <clipPath id="mClip" clipPathUnits="userSpaceOnUse"><path d="${G_TOP}"/><path d="${G_BOT}"/><polygon points="${G_MID}"/></clipPath>
+ <linearGradient id="mN" x1="916.55" y1="126.32" x2="911.97" y2="34.71" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#071B56"/><stop offset="1" stop-color="#1C3F8C"/></linearGradient>`;
+/* the hourglass alone (gold strands + the soft shadow where they cross, kept inside the strands) */
+const MGLASS=`<path fill="url(#mG1)" d="${G_TOP}"/><path fill="url(#mG2)" d="${G_BOT}"/><polygon fill="url(#mG3)" points="${G_MID}"/>
+ <g clip-path="url(#mClip)" style="mix-blend-mode:multiply"><polygon fill="url(#mS1)" points="927.45 72.13 919.72 66.53 914.37 72.13 921.21 78.46"/>
+ <polygon fill="url(#mS2)" points="907.52 78.46 914.31 84.88 909.18 90.22 902.62 83.45"/></g>`;
 /* the client's original app mark (brand/icon.svg), in its own coordinates */
-const MARK=`<rect x="835.55" width="157.7" height="157.7" rx="34.87" fill="url(#mBg)"/>
- <path fill="url(#mG1)" d="M888.6,36.43v9.9c0,8.27,3.25,16.2,9.04,22.09l9.88,10.04h13.69l9.88-10.04c5.8-5.89,9.04-13.83,9.04-22.09v-9.9h-51.54ZM923.68,62.39l-9.32,9.74-.31-.32-9.01-9.42c-4.2-4.4-6.55-10.24-6.55-16.33h31.73c0,6.08-2.35,11.93-6.55,16.33Z"/>
- <path fill="url(#mG2)" d="M931.09,88.5l-9.88-10.04h-13.69l-9.88,10.04c-5.8,5.89-9.04,13.83-9.04,22.09v9.9h51.54v-9.9c0-8.27-3.25-16.2-9.04-22.09ZM898.5,110.87c0-6.08,2.35-11.93,6.55-16.33l9.01-9.42.25-.24.24.26,9.13,9.4c4.2,4.4,6.55,10.24,6.55,16.33h-31.73Z"/>
- <polygon fill="url(#mG3)" points="912.17 69.83 914.37 72.13 921.21 78.47 923.13 80.41 916.31 86.94 914.31 84.88 907.52 78.46 905.17 76.08"/>
- <polygon fill="url(#mS1)" style="mix-blend-mode:multiply" points="927.45 72.13 919.72 66.53 914.37 72.13 921.21 78.46"/>
- <polygon fill="url(#mS2)" style="mix-blend-mode:multiply" points="907.52 78.46 914.31 84.88 909.18 90.22 902.62 83.45"/>`;
+const MARK=`<rect x="835.55" width="157.7" height="157.7" rx="34.87" fill="url(#mBg)"/>${MGLASS}`;
 function LOGO(s){return `<svg class="mk" width="${s}" height="${s}" viewBox="835.55 0 157.7 157.7" style="isolation:isolate">${MARK}</svg>`}
+const GVB='886.6 34.4 55.5 88.1';
+function MARKG(h){return `<svg class="mkg" height="${h}" width="${(h*55.5/88.1).toFixed(1)}" viewBox="${GVB}" style="isolation:isolate">${MGLASS}</svg>`}
+/* شراء مباشر: the same hourglass in navy, lying on its side. A resting hourglass doesn't run, so there's
+   no countdown (buy now), and sideways it reads as ∞ (yours for good). Other options: Mazad/design/buy-door-options.html */
+function REST(h){return `<svg class="rest" height="${h}" width="${(h*120/132).toFixed(1)}" viewBox="0 0 120 132" aria-hidden="true">
+ <ellipse cx="60" cy="104" rx="44" ry="4" fill="rgba(7,27,86,.13)"/><path d="M18 100H102" stroke="#BB9E7C" stroke-opacity=".55" stroke-width=".7"/>
+ <g transform="translate(60 71) rotate(90) scale(${(94/84.06).toFixed(4)}) translate(-914.37 -78.46)" style="isolation:isolate">${MGLASS.replace(/url\(#mG[123]\)/g,'url(#mN)')}</g></svg>`}
 /* Hourglass timer: the brand mark's own glass, with sand that drains as the auction runs. */
 function hg(key,h,f){if(f==null)f=.55;const A1=13.3,A2=13.45;
  return `<svg class="hg${key?'':' still'}" ${key?`data-hg="${key}"`:''} viewBox="26.4 17.8 28.8 45.6" height="${h}" width="${(h*28.8/45.6).toFixed(1)}"><g fill="url(#gGold)" fill-rule="evenodd" transform="${TF}">${GLASS}</g><g clip-path="url(#cTop)"><rect class="st sand" x="27" width="27" y="${(37.05-f*A1).toFixed(2)}" height="${(f*A1).toFixed(2)}"/></g><g clip-path="url(#cBot)"><rect class="sb2 sand" x="27" width="27" y="${(57.2-(1-f)*A2).toFixed(2)}" height="${((1-f)*A2).toFixed(2)}"/></g><line class="strm" x1="40.47" y1="37.3" x2="40.47" y2="57"/></svg>`}
@@ -1072,8 +1083,8 @@ V.name=()=>`<div class="auth"><div class="auth-h rv" style="margin-top:10px">${L
 V.home=()=>{const live=A.filter(a=>a.st==='live').sort((x,y)=>x.t1-y.t1),up=A.filter(a=>a.st==='up'),h=new Date().getHours(),av=PR.filter(p=>!p.sold).length;
  return `<div class="pg"><div class="hello rv"><p class="k">${h<12?'صباح الخير':'مساء الخير'}</p><h1 class="ds">${S.me?'أهلاً '+esc(S.me.first):'أهلاً بك'}</h1></div>
  <div class="duo rv" style="--d:1">
-  <button class="door lt" onclick="go('shop')"><div class="door-art">${pic(PR.find(p=>p.hero)||{cat:'watch'})}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
-  <button class="door dk" onclick="go('auc')"><div class="door-art">${hg('x',96)}</div><div class="door-tx"><b>المزاد</b><span>${live.length?`<em class="ldot"></em>${cnt(live.length,W_LIVE)}`:'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div>
+  <button class="door lt" onclick="go('shop')"><div class="door-art">${REST(124)}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
+  <button class="door dk" onclick="go('auc')"><div class="door-art">${MARKG(104)}</div><div class="door-tx"><b>المزاد</b><span>${live.length?`<em class="ldot"></em>${cnt(live.length,W_LIVE)}`:'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div>
  ${orn()}
  ${live.length?`<div class="sh2 rv" style="--d:2"><h3>ينتهي قريباً</h3><a onclick="go('auc')">كل المزادات</a></div><div class="hs rv" style="--d:2">${live.map(aCardH).join('')}</div>`:''}
  <div class="sh2 rv" style="--d:3"><h3>وصل حديثاً</h3><a onclick="go('shop')">المتجر</a></div><div class="grid rv" style="--d:3">${PR.filter(p=>!p.sold).slice(0,4).map(pCard).join('')}</div>

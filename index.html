@@ -40,7 +40,11 @@ bdi,.num{unicode-bidi:isolate;direction:ltr}
   box-shadow:0 1px 0 #fff inset,0 50px 90px -30px rgba(0,0,0,.55),0 18px 30px -18px rgba(0,0,0,.4)}
 .bez{width:100%;height:100%;border-radius:63px;background:#0A0A0C;padding:9px}
 .scr{position:relative;width:393px;height:852px;border-radius:54px;overflow:hidden;overflow:clip;background:var(--paper);
-  display:flex;flex-direction:column;padding-top:50px;isolation:isolate}
+  display:flex;flex-direction:column;padding-top:50px;isolation:isolate;transition:background-color .45s}
+/* the auction world sits on a cool brand-blue tint, the shop and home stay on warm ivory (decided 2026-10-31) */
+.scr[data-w="auc"]{--paper:#EDF1F8;--line2:#E3E9F3;--line:#DCE3EF}
+.scr[data-w="auc"] .seg{background:#DFE6F1}
+.scr[data-w="auc"] .inc,.scr[data-w="auc"] .mxb{background:#F7F9FC}
 .sb{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:center;justify-content:space-between;
   padding:4px 34px 0 30px;font-weight:600;font-size:15.5px;z-index:30;color:var(--ink);pointer-events:none}
 .sb .ics{display:flex;gap:6px;align-items:center}
@@ -257,10 +261,6 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 .hello .k{margin:0;font-size:12.5px}
 .hello h1{margin:4px 0 0;font-size:27px;font-weight:600;color:var(--navy);letter-spacing:-.01em}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.home .duo .door{height:440px;border-radius:26px;padding:18px}
-.home .duo .door-art{inset:24px 10px 84px}
-.home .door-tx b{font-size:22px}
-.home .door-tx span{font-size:12.5px}
 .door{position:relative;height:222px;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;text-align:start}
 .door.lt{background:radial-gradient(120% 80% at 50% 25%,#fff 0%,#F3ECE1 72%);border:1px solid var(--line)}
 .door.dk{background:linear-gradient(160deg,#16367F 0%,#071B56 70%);color:#F6EFE4}
@@ -965,7 +965,7 @@ function nav(){const r=stack[0].k,w=r==='home'&&cur.k==='home'?null:(WMAP[r]||WM
  if(moved)nv.querySelectorAll('[data-w]').forEach(e=>{const b=e.getBoundingClientRect(),f=from[e.dataset.w];
   from[e.dataset.w]=f?{left:Math.min(f.left,b.left),right:Math.max(f.right,b.right),top:Math.min(f.top,b.top),bottom:Math.max(f.bottom,b.bottom)}:b});
  // home has no bar at all: its two doors are the choice
- nv.classList.toggle('two',!w);nv.classList.toggle('pf',w==='auc');nv.classList.toggle('gone',!w);
+ nv.classList.toggle('two',!w);nv.classList.toggle('pf',w==='auc');nv.classList.toggle('gone',!w);$('#scr').dataset.w=w||'';
  nv.innerHTML=!w?`<button class="pick" data-w="shop" onclick="go('shop')">${ic('shop')}الشراء المباشر</button><button class="pick" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`
   :w==='auc'?`<button class="xw" data-w="shop" onclick="go('shop')">${ic('shop')}شراء مباشر</button>`+t('auc','glass','المزادات')+t('afav','heart','المفضلة')+t('mine','paddle','مزايداتي','<span class="bdg hide" id="bm"></span>')
   :t('shop','shop','المتجر')+t('sfav','heart','المفضلة')+t('orders','box','طلباتي')+`<button class="xw" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`;
@@ -1132,8 +1132,8 @@ V.name=()=>`<div class="auth"><div class="auth-h rv" style="margin-top:10px">${L
 V.home=()=>{const live=A.filter(a=>a.st==='live'),h=new Date().getHours(),av=PR.filter(p=>!p.sold).length;
  return `<div class="pg home"><div class="hello rv"><p class="k">${h<12?'صباح الخير':'مساء الخير'}</p><h1 class="ds">${S.me?'أهلاً '+esc(S.me.first):'أهلاً بك'}</h1></div>
  <div class="duo rv" style="--d:1">
-  <button class="door lt" onclick="go('shop')"><div class="door-art">${REST(170)}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
-  <button class="door dk" onclick="go('auc')"><div class="door-art">${hg('x',150,null,1)}</div><div class="door-tx"><b>المزاد</b><span>${live.length?`<em class="ldot"></em>${cnt(live.length,W_LIVE)}`:'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div></div>`};
+  <button class="door lt" onclick="go('shop')"><div class="door-art">${REST(124)}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
+  <button class="door dk" onclick="go('auc')"><div class="door-art">${hg('x',104,null,1)}</div><div class="door-tx"><b>المزاد</b><span>${live.length?`<em class="ldot"></em>${cnt(live.length,W_LIVE)}`:'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div></div>`};
 
 function shopList(){const q=Q.trim().toLowerCase();return PR.filter(p=>!q||(p.b+' '+p.n+' '+p.m).toLowerCase().includes(q))}
 function shopGrid(){const l=shopList();return l.length?l.map(pCard).join(''):'<p class="k" style="grid-column:1/-1;text-align:center;padding:20px">لا توجد نتائج</p>'}

@@ -73,6 +73,8 @@ bdi,.num{unicode-bidi:isolate;direction:ltr}
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 8px 30px 14px}
 .nv.pf{grid-template-columns:max-content repeat(3,minmax(0,1fr));padding:8px 14px 30px 8px}
 .nv.two{grid-template-columns:1fr 1fr;padding:10px 18px 30px}
+.nv.gone{display:none}
+.opt2{font-style:normal;color:var(--mute);font-size:11px;font-weight:400}
 .nv .pick{flex-direction:row;justify-content:center;gap:9px;height:46px;font-family:'Alexandria';font-size:14px;font-weight:500;color:var(--navy);letter-spacing:.01em}
 .nv .pick .i{color:var(--gold);width:21px;height:21px}
 .nv .pick+.pick{border-inline-start:1px solid var(--line)}
@@ -173,6 +175,16 @@ div.num{text-align:right}
   font-family:'Alexandria';font-weight:600;font-size:12.5px;letter-spacing:.03em;padding:6px 0;box-shadow:0 4px 12px rgba(7,27,86,.28);border-block:1px solid rgba(214,194,165,.5)}
 .gal .soldr span{top:34px;inset-inline-start:-36px;width:190px;font-size:15px;padding:8px 0}
 .btn.apl{background:#000;color:#fff}
+.mdl{position:absolute;inset:0;z-index:95;display:grid;place-items:center;padding:28px;background:rgba(3,13,46,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+.mdl.on{opacity:1;visibility:visible;transition:opacity .3s}
+.mdl-c{position:relative;width:100%;max-width:330px;background:#fff;border-radius:26px;padding:30px 22px 20px;text-align:center;box-shadow:0 30px 60px -20px rgba(3,13,46,.5);
+  transform:scale(.92) translateY(8px);transition:transform .35s cubic-bezier(.22,.8,.24,1)}
+.mdl.on .mdl-c{transform:none}
+.mdl-c h3{font-family:'Alexandria';font-weight:600;font-size:21px;color:var(--navy);margin:16px 0 8px}
+.mdl-c p{font-size:13.5px;line-height:1.85;color:var(--ink2);margin:0 0 20px}
+.mdl-x{position:absolute;top:12px;inset-inline-end:12px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--mute);background:var(--line2)}
+.mdl-x .i{width:16px;height:16px}
 .inv-h{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 .inv-h b{display:block;font-family:'Alexandria';font-size:20px;color:var(--navy)}
 .inv-h span{font-size:12px;color:var(--mute)}
@@ -245,6 +257,10 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
 .hello .k{margin:0;font-size:12.5px}
 .hello h1{margin:4px 0 0;font-size:27px;font-weight:600;color:var(--navy);letter-spacing:-.01em}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.home .duo .door{height:440px;border-radius:26px;padding:18px}
+.home .duo .door-art{inset:24px 10px 84px}
+.home .door-tx b{font-size:22px}
+.home .door-tx span{font-size:12.5px}
 .door{position:relative;height:222px;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;text-align:start}
 .door.lt{background:radial-gradient(120% 80% at 50% 25%,#fff 0%,#F3ECE1 72%);border:1px solid var(--line)}
 .door.dk{background:linear-gradient(160deg,#16367F 0%,#071B56 70%);color:#F6EFE4}
@@ -632,6 +648,7 @@ select.in{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.or
       <div class="pb" id="pb"></div>
       <div class="ts" id="ts"></div>
       <div class="win" id="win"></div>
+      <div class="mdl" id="mdl" onclick="if(event.target===this)closeModal()"></div>
       <div class="ov" id="ov" onclick="ovTap()"></div>
       <div class="sh" id="sh"></div>
       <div class="hi"></div>
@@ -731,7 +748,9 @@ $('#defs').innerHTML=`
  <linearGradient id="mS1" x1="921.33" y1="71.63" x2="918.49" y2="74.47" gradientUnits="userSpaceOnUse"><stop offset=".09" stop-color="#fff"/><stop offset="1" stop-color="#a7a9ac"/></linearGradient>
  <linearGradient id="mS2" href="#mS1" x1="907.73" y1="84.96" x2="909.59" y2="83.1"/>
  <clipPath id="mClip" clipPathUnits="userSpaceOnUse"><path d="${G_TOP}"/><path d="${G_BOT}"/><polygon points="${G_MID}"/></clipPath>
- <linearGradient id="mN" x1="916.55" y1="126.32" x2="911.97" y2="34.71" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#071B56"/><stop offset="1" stop-color="#1C3F8C"/></linearGradient>`;
+ <linearGradient id="mN" x1="916.55" y1="126.32" x2="911.97" y2="34.71" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#071B56"/><stop offset="1" stop-color="#1C3F8C"/></linearGradient>
+ <clipPath id="mInT" clipPathUnits="userSpaceOnUse"><path d="M923.68,62.39l-9.32,9.74-.31-.32-9.01-9.42c-4.2-4.4-6.55-10.24-6.55-16.33h31.73c0,6.08-2.35,11.93-6.55,16.33Z"/></clipPath>
+ <clipPath id="mInB" clipPathUnits="userSpaceOnUse"><path d="M898.5,110.87c0-6.08,2.35-11.93,6.55-16.33l9.01-9.42.25-.24.24.26,9.13,9.4c4.2,4.4,6.55,10.24,6.55,16.33h-31.73Z"/></clipPath>`;
 /* the hourglass alone (gold strands + the soft shadow where they cross, kept inside the strands) */
 const MGLASS=`<path fill="url(#mG1)" d="${G_TOP}"/><path fill="url(#mG2)" d="${G_BOT}"/><polygon fill="url(#mG3)" points="${G_MID}"/>
  <g clip-path="url(#mClip)" style="mix-blend-mode:multiply"><polygon fill="url(#mS1)" points="927.45 72.13 919.72 66.53 914.37 72.13 921.21 78.46"/>
@@ -747,9 +766,19 @@ function REST(h){return `<svg class="rest" height="${h}" width="${(h*120/132).to
  <ellipse cx="60" cy="104" rx="44" ry="4" fill="rgba(7,27,86,.13)"/><path d="M18 100H102" stroke="#BB9E7C" stroke-opacity=".55" stroke-width=".7"/>
  <g transform="translate(60 71) rotate(90) scale(${(94/84.06).toFixed(4)}) translate(-914.37 -78.46)" style="isolation:isolate">${MGLASS.replace(/url\(#mG[123]\)/g,'url(#mN)')}</g></svg>`}
 /* Hourglass timer: the brand mark's own glass, with sand that drains as the auction runs. */
-function hg(key,h,f){if(f==null)f=.55;const A1=13.3,A2=13.45;
+/* the logo's own hourglass with sand inside its two hollows (top: y 46.06–72.13, bottom: y 84.88–110.87) */
+const LG={t0:46.06,t1:72.13,b0:84.88,b1:110.87};
+function hgL(key,h,f){
+ return `<svg class="hg lg" ${key?`data-hg="${key}"`:''} viewBox="${GVB}" height="${h}" width="${(h*55.5/88.1).toFixed(1)}" style="isolation:isolate">${MGLASS}
+ <g clip-path="url(#mInT)"><rect class="st sand" x="895" width="40" y="${(LG.t1-f*(LG.t1-LG.t0)).toFixed(2)}" height="${(f*(LG.t1-LG.t0)).toFixed(2)}"/></g>
+ <g clip-path="url(#mInB)"><rect class="sb2 sand" x="895" width="40" y="${(LG.b1-(1-f)*(LG.b1-LG.b0)).toFixed(2)}" height="${((1-f)*(LG.b1-LG.b0)).toFixed(2)}"/></g>
+ <line class="strm" x1="914.37" y1="72" x2="914.37" y2="110.8" stroke-width=".9"/></svg>`}
+function hg(key,h,f,logo){if(f==null)f=.55;if(logo)return hgL(key,h,f);const A1=13.3,A2=13.45;
  return `<svg class="hg${key?'':' still'}" ${key?`data-hg="${key}"`:''} viewBox="26.4 17.8 28.8 45.6" height="${h}" width="${(h*28.8/45.6).toFixed(1)}"><g fill="url(#gGold)" fill-rule="evenodd" transform="${TF}">${GLASS}</g><g clip-path="url(#cTop)"><rect class="st sand" x="27" width="27" y="${(37.05-f*A1).toFixed(2)}" height="${(f*A1).toFixed(2)}"/></g><g clip-path="url(#cBot)"><rect class="sb2 sand" x="27" width="27" y="${(57.2-(1-f)*A2).toFixed(2)}" height="${((1-f)*A2).toFixed(2)}"/></g><line class="strm" x1="40.47" y1="37.3" x2="40.47" y2="57"/></svg>`}
 function setSand(svg,f){f=Math.max(0,Math.min(1,f));const t=svg.querySelector('.st'),b=svg.querySelector('.sb2'),s=svg.querySelector('.strm');
+ if(svg.classList.contains('lg')){const T=LG.t1-LG.t0,B=LG.b1-LG.b0;
+  t.setAttribute('y',(LG.t1-f*T).toFixed(2));t.setAttribute('height',(f*T).toFixed(2));
+  b.setAttribute('y',(LG.b1-(1-f)*B).toFixed(2));b.setAttribute('height',((1-f)*B).toFixed(2));s.style.display=f<=0?'none':'';return}
  t.setAttribute('y',(37.05-f*13.3).toFixed(2));t.setAttribute('height',(f*13.3).toFixed(2));
  b.setAttribute('y',(57.2-(1-f)*13.45).toFixed(2));b.setAttribute('height',((1-f)*13.45).toFixed(2));
  s.style.display=f<=0?'none':''}
@@ -880,7 +909,7 @@ const held=o=>!!o&&(o.state==='await'||o.state==='review');
 const depHeld=id=>!!(S.me&&S.dep[id]&&S.dep[id].state==='held');
 /* the first bid is the starting price itself (40,000 opens at 40,000); every bid after that adds the increment */
 const nextBid=(a,k)=>a.hist.length?a.cur+a.inc*(k||1):a.start+a.inc*((k||1)-1);
-const EXT=10*MIN; // a bid in the last 10 minutes adds 10 minutes, as often as it takes
+const EXT=10*MIN; // a bid in the last 10 minutes puts the clock back to 10 minutes, as often as it takes (never more than 10 left)
 /* absolute deadline in Doha time, e.g. «الخميس 24 أكتوبر، 1:52 م بتوقيت الدوحة» */
 function dohaT(t){try{const f=new Intl.DateTimeFormat('ar-QA-u-nu-latn',{timeZone:'Asia/Qatar',weekday:'long',day:'numeric',month:'long',hour:'numeric',minute:'2-digit'});return f.format(new Date(t))+' بتوقيت الدوحة'}catch(e){return dayLbl(t)+' '+clock(t)}}
 /* watchlist heart (needs an account, like every action that follows the customer) */
@@ -935,7 +964,8 @@ function nav(){const r=stack[0].k,w=r==='home'&&cur.k==='home'?null:(WMAP[r]||WM
  const moved=NW!==undefined&&NW!==key,from={};
  if(moved)nv.querySelectorAll('[data-w]').forEach(e=>{const b=e.getBoundingClientRect(),f=from[e.dataset.w];
   from[e.dataset.w]=f?{left:Math.min(f.left,b.left),right:Math.max(f.right,b.right),top:Math.min(f.top,b.top),bottom:Math.max(f.bottom,b.bottom)}:b});
- nv.classList.toggle('two',!w);nv.classList.toggle('pf',w==='auc');
+ // home has no bar at all: its two doors are the choice
+ nv.classList.toggle('two',!w);nv.classList.toggle('pf',w==='auc');nv.classList.toggle('gone',!w);
  nv.innerHTML=!w?`<button class="pick" data-w="shop" onclick="go('shop')">${ic('shop')}الشراء المباشر</button><button class="pick" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`
   :w==='auc'?`<button class="xw" data-w="shop" onclick="go('shop')">${ic('shop')}شراء مباشر</button>`+t('auc','glass','المزادات')+t('afav','heart','المفضلة')+t('mine','paddle','مزايداتي','<span class="bdg hide" id="bm"></span>')
   :t('shop','shop','المتجر')+t('sfav','heart','المفضلة')+t('orders','box','طلباتي')+`<button class="xw" data-w="auc" onclick="go('auc')">${ic('glass')}المزاد</button>`;
@@ -964,7 +994,7 @@ function cdT(s){const [t,id]=s.split(':');if(t==='a'){const a=AA(id);return a?a.
 /* the hourglass drains over the final hour, so the sand moves when it matters (full until then);
    after a last-minute bid it flips and drains over the 2-minute extension */
 function hgF(s){const now=Date.now(),[t,id]=s.split(':');
- if(t==='a'){const a=AA(id);if(a.st==='up')return 1;if(a.st==='end')return 0;return Math.min(1,(a.t1-now)/(a.ext?2*EXT:H))}
+ if(t==='a'){const a=AA(id);if(a.st==='up')return 1;if(a.st==='end')return 0;return Math.min(1,(a.t1-now)/(a.ext?EXT:H))}
  if(t==='o'){const o=OO(id);return o?(o.deadline-now)/o.span:0}
  return 1-((now/1000)%90)/90}
 function tick(){
@@ -980,7 +1010,7 @@ function tick(){
 setInterval(tick,1000);
 function placeBid(a,n,amt){
  a.hist.unshift({n,a:amt,t:Date.now(),fresh:1});a.cur=amt;
- if(a.t1-Date.now()<EXT){a.t1+=EXT;a.ext=1;a.flip=Date.now();if(cur.k==='lot'&&cur.p===a.id)toast('مزايدة في آخر 10 دقائق — مُدّد المزاد 10 دقائق')}
+ if(a.t1-Date.now()<EXT){a.t1=Date.now()+EXT;a.ext=1;a.flip=Date.now();if(cur.k==='lot'&&cur.p===a.id)toast('مزايدة في آخر 10 دقائق — عاد العداد إلى 10 دقائق')}
 }
 function finish(a){
  a.st='end';a.final=a.cur;const w=a.hist[0]&&a.hist[0].n,acct=S.me||S.acct;
@@ -996,12 +1026,10 @@ function finish(a){
 }
 function releaseDep(id,why){const d=S.dep[id],a=AA(id);if(!d||d.state==='returned')return;
  if(d.state==='held'){S.wallet.held-=d.amt;S.wallet.avail+=d.amt;S.wallet.card+=d.src==='card'?d.amt:d.src==='wallet'?(d.cardAmt||0):0;txAdd(`إرجاع تأمين — ${a.n}`,d.amt,'p',why)}d.state='returned'}
-/* the winner's deposit is part of the payment, so it leaves the wallet instead of coming back */
-function applyDep(id){const d=S.dep[id],a=AA(id);if(!d||d.state!=='held')return;S.wallet.held-=d.amt;txAdd(`تأمين مخصوم من قيمة الفوز — ${a.n}`,-d.amt,'m','');d.state='applied'}
 /* the win moment: full screen, then straight to payment */
 function winMoment(a,o){const w=$('#win');
  w.innerHTML=`${hg('',78,0)}<div class="k" style="margin-top:20px">انتهى المزاد</div><h2>مبروك، فزت</h2><div class="nm">${a.n}</div><div class="pr3">${fmt(o.price)}<small>ر.ق</small></div>
-  <p>تأمينك ${fmt(o.dep)} ر.ق مخصوم من المبلغ.<br>ادفع قبل ${dohaT(o.deadline)}</p>
+  <p>ادفع قبل ${dohaT(o.deadline)}<br>ويرجع تأمينك ${fmt(o.dep)} ر.ق إلى محفظتك بعد تأكيد الدفع.</p>
   <button class="btn" onclick="winGo('${o.id}')">إتمام الدفع</button><button class="btn ghost" onclick="winOff()">لاحقاً</button>`;
  w.classList.add('on')}
 function winOff(){$('#win').classList.remove('on')}
@@ -1097,20 +1125,15 @@ V.otp=()=>`<div class="auth"><button class="x" aria-label="رجوع" onclick="ba
 V.name=()=>`<div class="auth"><div class="auth-h rv" style="margin-top:10px">${LOGO(56)}<h2 class="ds">أهلاً بك</h2><p>أكمل بياناتك لإنشاء حسابك</p></div>
  <div class="rv" style="--d:1"><label class="fl">الاسم الأول<input class="in" id="fn" value="فيصل" placeholder="كما في الهوية" autocomplete="given-name"></label>
  <label class="fl">اسم العائلة<input class="in" id="ln" value="عبدالعزيز" placeholder="كما في الهوية" autocomplete="family-name"></label>
- <div class="cons">${ic('bell')} الإشعارات مفعّلة تلقائياً: تجاوز مزايدتك، قرب انتهاء المزاد، الفوز، طلباتك والعروض الجديدة. يمكنك إيقافها من الإعدادات في أي وقت.</div>
  <label class="ck"><input type="checkbox" id="terms"><i></i><span>قرأت وأوافق على <a onclick="event.preventDefault();rulesSheet()" style="color:var(--goldt);font-weight:600">الشروط والأحكام وقواعد المزاد</a> وسياسة الخصوصية.</span></label></div>
  <div class="grow"></div><p class="fine" style="margin-bottom:10px">التسجيل لمن عمره 18 سنة فأكثر.</p><button class="btn rv" style="--d:2" onclick="createAcct()">إنشاء الحساب</button></div>`;
 
-V.home=()=>{const live=A.filter(a=>a.st==='live').sort((x,y)=>x.t1-y.t1),up=A.filter(a=>a.st==='up'),h=new Date().getHours(),av=PR.filter(p=>!p.sold).length;
- return `<div class="pg"><div class="hello rv"><p class="k">${h<12?'صباح الخير':'مساء الخير'}</p><h1 class="ds">${S.me?'أهلاً '+esc(S.me.first):'أهلاً بك'}</h1></div>
+/* home is only the choice: a greeting and the two doors, nothing else */
+V.home=()=>{const live=A.filter(a=>a.st==='live'),h=new Date().getHours(),av=PR.filter(p=>!p.sold).length;
+ return `<div class="pg home"><div class="hello rv"><p class="k">${h<12?'صباح الخير':'مساء الخير'}</p><h1 class="ds">${S.me?'أهلاً '+esc(S.me.first):'أهلاً بك'}</h1></div>
  <div class="duo rv" style="--d:1">
-  <button class="door lt" onclick="go('shop')"><div class="door-art">${REST(124)}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
-  <button class="door dk" onclick="go('auc')"><div class="door-art">${MARKG(104)}</div><div class="door-tx"><b>المزاد</b><span>${live.length?`<em class="ldot"></em>${cnt(live.length,W_LIVE)}`:'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div>
- ${orn()}
- ${live.length?`<div class="sh2 rv" style="--d:2"><h3>ينتهي قريباً</h3><a onclick="go('auc')">كل المزادات</a></div><div class="hs rv" style="--d:2">${live.map(aCardH).join('')}</div>`:''}
- <div class="sh2 rv" style="--d:3"><h3>وصل حديثاً</h3><a onclick="go('shop')">المتجر</a></div><div class="grid rv" style="--d:3">${PR.filter(p=>!p.sold).slice(0,4).map(pCard).join('')}</div>
- ${up.length?`<div class="sh2"><h3>مزاد قادم</h3></div>${up.map(aUp).join('')}`:''}
- ${storeCard()}</div>`};
+  <button class="door lt" onclick="go('shop')"><div class="door-art">${REST(170)}</div><div class="door-tx"><b>شراء مباشر</b><span>${cnt(av,W_PC)} للشراء الآن</span></div><i class="arr">${ic('chev')}</i></button>
+  <button class="door dk" onclick="go('auc')"><div class="door-art">${hg('x',150,null,1)}</div><div class="door-tx"><b>المزاد</b><span>${live.length?`<em class="ldot"></em>${cnt(live.length,W_LIVE)}`:'لا توجد مزادات الآن'}</span></div><i class="arr">${ic('chev')}</i></button></div></div>`};
 
 function shopList(){const q=Q.trim().toLowerCase();return PR.filter(p=>!q||(p.b+' '+p.n+' '+p.m).toLowerCase().includes(q))}
 function shopGrid(){const l=shopList();return l.length?l.map(pCard).join(''):'<p class="k" style="grid-column:1/-1;text-align:center;padding:20px">لا توجد نتائج</p>'}
@@ -1165,7 +1188,7 @@ function specCard(o){const s=o.specs||{},x=Object.keys(s).find(k=>!SPEC_FIX.incl
 /* the description is optional: no text, no section */
 const descP=o=>o.desc?`<div class="sh2"><h3>الوصف</h3></div><p class="desc" style="margin-top:0">${o.desc}</p>`:'';
 function timePanel(a){
- if(a.st==='live')return `<div class="tp">${hg('a:'+a.id,74)}<div><div class="k">ينتهي المزاد بعد</div><div class="cd" data-cd="a:${a.id}"></div><div class="d">ينتهي ${dayLbl(a.t1)} ${clock(a.t1)} · أي مزايدة في آخر 10 دقائق تمدّد المزاد 10 دقائق</div>${a.ext?`<span class="ext">${ic('clock')}مُدّد المزاد 10 دقائق</span>`:''}</div></div>`;
+ if(a.st==='live')return `<div class="tp">${hg('a:'+a.id,74)}<div><div class="k">ينتهي المزاد بعد</div><div class="cd" data-cd="a:${a.id}"></div><div class="d">ينتهي ${dayLbl(a.t1)} ${clock(a.t1)} · أي مزايدة في آخر 10 دقائق تعيد العداد إلى 10 دقائق</div>${a.ext?`<span class="ext">${ic('clock')}عاد العداد إلى 10 دقائق</span>`:''}</div></div>`;
  if(a.st==='up')return `<div class="tp">${hg('a:'+a.id,74)}<div><div class="k">يبدأ المزاد بعد</div><div class="cd" data-cd="s:${a.id}" style="font-size:24px"></div><div class="d">${dayLbl(a.t0)} ${clock(a.t0)} — ينتهي ${dayLbl(a.t1)} ${clock(a.t1)}</div></div></div>`;
  return `<div class="tp end">${hg(null,74,0)}<div><div class="k">انتهى المزاد</div><div class="cd" style="font-size:22px">${dateLbl(a.t1)}</div><div class="d">${dayLbl(a.t1)} ${clock(a.t1)}</div></div></div>`}
 function livePanel(a){const lead=isLead(a),mine=myMax(a),dep=S.me&&S.dep[a.id],sel=BSEL[a.id]||1,mx=S.max[a.id];
@@ -1175,7 +1198,7 @@ function livePanel(a){const lead=isLead(a),mine=myMax(a),dep=S.me&&S.dep[a.id],s
  /* the ladder is visible to everyone; the deposit is taken with the first bid */
  const first=!a.hist.length,ladder=lead?'':`<div class="ik">${first?'أول مزايدة بسعر البداية نفسه':'اختر مبلغ مزايدتك'} · أقل زيادة ${fmt(a.inc)} ر.ق</div><div class="incs">${[1,2,5].map(m=>`<button class="inc ${sel===m?'on':''}" onclick="BSEL['${a.id}']=${m};refresh()"><span>${first&&m===1?'سعر البداية':`<bdi>+${fmt(nextBid(a,m)-(first?a.start:a.cur))}</bdi>`}</span><b>${fmt(nextBid(a,m))}</b></button>`).join('')}</div>`;
  let note;
- if(dep&&dep.state==='held')note=`<div class="depok">${ic('check')}تأمينك ${fmt(dep.amt)} ر.ق محجوز — يُخصم من المبلغ إذا فزت، ويرجع كاملاً إذا لم تفز</div>`;
+ if(dep&&dep.state==='held')note=`<div class="depok">${ic('check')}تأمينك ${fmt(dep.amt)} ر.ق محجوز — </div>`;
  else if(dep&&dep.state==='pending')note=`<div class="gate">${ic('clock')}<div><b>تحويل التأمين قيد التأكيد</b><span>نؤكد وصوله خلال يوم عمل، ثم نسجّل مزايدتك.</span></div></div>`;
  else note=`<div class="depok" style="color:var(--goldt)">${ic('lock')}تأمين ${fmt(a.dep)} ر.ق يُدفع مع أول مزايدة، ويرجع كاملاً إذا لم تفز</div>`;
  return `<div class="pp"><div class="pp-top"><div><div class="k">${first?'سعر البداية · لا مزايدات بعد':'المزايدة الحالية'}</div><div class="pr3 ${a.flash?'flash':''}">${qar(a.cur)}</div></div><div class="stats"><div><b>${fmt(bids(a))}</b><span>مزايدة</span></div><div><b>${fmt(bidders(a))}</b><span>مزايد</span></div></div></div>${st}${ladder}${note}</div>`}
@@ -1191,9 +1214,9 @@ function histPanel(a){const n=a.st==='end'&&!HALL[a.id]?4:99,rows=a.hist.slice(0
  return `<div class="sh2"><h3>سجل المزايدات</h3><em>${cnt(bids(a),W_BID)}</em></div><div class="hist" onscroll="histFade(this)">${rows.map((h,i)=>{const me=S.me&&h.n===S.me.num,fr=h.fresh;h.fresh=0;
   return `<div class="hr ${i===0?'top':''} ${fr?'new':''}"><span class="hn"><em></em>${me?'<i>أنت</i>':'مزايد'}</span><span class="ha">${fmt(h.a)}</span><span class="ht" data-ago="${h.t}">${ago(h.t)}</span></div>`}).join('')}
   ${a.hist.length>n?`<button class="morebtn" onclick="HALL['${a.id}']=1;refresh()">عرض كل المزايدات</button>`:''}${a.older?`<div class="k" style="text-align:center;padding:8px 0">+ ${cnt(a.older,W_BID)} أقدم</div>`:''}</div>`}
-const RULE_EXT='أي مزايدة في آخر 10 دقائق تمدّد المزاد 10 دقائق، ويتكرر ذلك حتى يتوقف المزايدون.';
+const RULE_EXT='أي مزايدة في آخر 10 دقائق تعيد العداد إلى 10 دقائق، ويتكرر ذلك حتى تمر 10 دقائق بدون مزايدة.';
 const rulesBox=a=>`<div class="rules"><h4>قواعد هذا المزاد</h4><ul>
- <li>تأمين ${fmt(a.dep)} ر.ق مع أول مزايدة، يُخصم من المبلغ إذا فزت ويرجع كاملاً إلى محفظتك إذا لم تفز.</li><li>أول مزايدة بسعر البداية ${fmt(a.start)} ر.ق، وبعدها بزيادة لا تقل عن ${fmt(a.inc)} ر.ق. المزايدة نهائية ولا يمكن سحبها.</li>
+ <li>تأمين ${fmt(a.dep)} ر.ق مع أول مزايدة، <li>أول مزايدة بسعر البداية ${fmt(a.start)} ر.ق، وبعدها بزيادة لا تقل عن ${fmt(a.inc)} ر.ق. المزايدة نهائية ولا يمكن سحبها.</li>
  <li>المزايدة بدون أسماء أو أرقام: لا يعرف أي مزايد من زايد غيره.</li>
  <li>${RULE_EXT}</li><li>يدفع الفائز بتحويل بنكي خلال 48 ساعة ويرفع الإيصال، وإلا أُلغي الفوز وصودر التأمين.</li></ul>
  <a class="lnk" onclick="go('rules')">كل القواعد والسياسات</a></div>`;
@@ -1252,7 +1275,7 @@ const bankBlock=ref=>`<div class="bank"><div class="bk"><span class="k">البن
 V.pay=oid=>{const o=OO(oid);if(!o)return '';if(!held(o))return V.order(oid);
  /* a won lot's deposit is credited against the price: amount due = winning bid − deposit + delivery */
  // delivery and total stay editable only until the receipt is uploaded; after that they are what was paid
- const isA=o.kind==='auction',open=o.state==='await';if(isA&&open)o.method=effM(o.s);const m=o.method,fv=open?feeV(m):(o.fee||0),cr=isA?o.dep:0,tot=open?o.price-cr+fv:o.total;if(open){o.fee=fv;o.total=tot}
+ const isA=o.kind==='auction',open=o.state==='await';if(isA&&open)o.method=effM(o.s);const m=o.method,fv=open?feeV(m):(o.fee||0),cr=0,tot=open?o.price+fv:o.total;if(open){o.fee=fv;o.total=tot}
  const top=`<div class="tp" style="margin-top:4px">${hg('o:'+o.id,74)}<div><div class="k">${o.state==='await'?'الوقت المتبقي لإتمام الدفع':'تم رفع الإيصال'}</div>${o.state==='await'?`<div class="cd" data-cd="o:${o.id}"></div><div class="d">ادفع قبل ${dohaT(o.deadline)}${isA?' · بعدها يُلغى الفوز ويُصادَر التأمين':''}</div>`:`<div class="cd" style="font-size:20px;margin-top:6px">قيد المراجعة</div><div class="d">نؤكد وصول المبلغ خلال يوم عمل</div>`}</div></div>`;
  const head=`<div class="row2" style="cursor:default;margin-top:12px"><div class="ph">${opic(o)}</div><div class="mid"><div class="br">${o.b}</div><div class="nm">${o.title}</div><div class="k" style="margin-top:3px">${isA?'فزت بالمزاد':'طلب شراء'} · <bdi>${o.id}</bdi></div></div></div>`;
  const sum=lbl=>`<div class="card"><div class="kv"><span>${isA?'سعر الفوز':'سعر القطعة'}</span><b>${fmt(o.price)} ر.ق</b></div>${cr?`<div class="kv"><span>التأمين المدفوع</span><b><bdi>−${fmt(cr)}</bdi> ر.ق</b></div>`:''}<div class="kv"><span>${m?FEES[m].n:'التوصيل'}</span><b>${m?feeTx(fv):'حسب الدولة'}</b></div><div class="kv tot"><span>${lbl}</span><b>${fmt(tot)} ر.ق</b></div></div>`;
@@ -1264,7 +1287,7 @@ V.pay=oid=>{const o=OO(oid);if(!o)return '';if(!held(o))return V.order(oid);
  <div class="sh2"><h3>المبلغ المطلوب تحويله</h3></div>${sum('الإجمالي')}
  <div class="sh2"><h3>بيانات التحويل</h3><span class="sample">حساب تجريبي</span></div>${bankBlock(o.id)}
  <div class="nt">${ic('info')}<span>اكتب الرقم المرجعي في ملاحظة التحويل. يجب أن يكون التحويل من حساب باسمك، ورسوم البنك على المحوِّل؛ إذا وصل مبلغ أقل يُستكمل الفرق قبل التسليم.</span></div>
- ${isA?`<div class="nt g">${ic('wallet')}<span>خصمنا تأمينك ${fmt(o.dep)} ر.ق من المبلغ، فحوّل ${fmt(tot)} ر.ق فقط.</span></div>`:''}
+ ${isA?`<div class="nt g">${ic('wallet')}<span>تأمينك ${fmt(o.dep)} ر.ق يرجع إلى محفظتك فور تأكيد التحويل، ويمكنك سحبه إلى حسابك البنكي.</span></div>`:''}
  <button class="upl" onclick="upReceipt('${o.id}')">${ic('up')}ارفع إيصال التحويل<span>صورة أو ملف PDF</span></button></div>`};
 function setOS(id,s){const o=OO(id);if(o){o.s=s;refresh()}}
 V.order=oid=>{const o=OO(oid);if(!o)return '';const pick=o.method==='pick',paidS=o.pay?`تم الدفع بـ ${PAYN[o.pay]}`:'وصل المبلغ إلى حساب المحل';
@@ -1282,7 +1305,7 @@ V.order=oid=>{const o=OO(oid);if(!o)return '';const pick=o.method==='pick',paidS
 const PAYN={apple:'Apple Pay',card:'البطاقة',bank:'تحويل بنكي'};
 const invNo=o=>'INV-'+o.id.slice(3);
 /* a clean invoice for every paid order (auction or shop) */
-function invoice(oid){const o=OO(oid),m=S.me||S.acct,isA=o.kind==='auction',fv=o.fee||0,dep=isA?(o.dep||0):0;
+function invoice(oid){const o=OO(oid),m=S.me||S.acct,isA=o.kind==='auction',fv=o.fee||0,dep=0; // the deposit is refunded to the wallet, not part of the invoice
  const row=(k,v,c='')=>`<tr class="${c}"><td>${k}</td><td><bdi>${v}</bdi></td></tr>`;
  openSheet(()=>`<div class="inv"><div class="inv-h">${LOGO(40)}<div><b>فاتورة</b><span>مزاد الفاخر · الدوحة، قطر</span></div></div>
   <div class="inv-m"><div><span>رقم الفاتورة</span><b><bdi>${invNo(o)}</bdi></b></div><div><span>التاريخ</span><b>${dateLbl(o.created)}</b></div><div><span>رقم الطلب</span><b><bdi>${o.id}</bdi></b></div><div><span>العميل</span><b>${esc(m.first)} ${esc(m.last)}</b></div></div>
@@ -1295,7 +1318,7 @@ function invoice(oid){const o=OO(oid),m=S.me||S.acct,isA=o.kind==='auction',fv=o
 V.stmt=()=>{if(!S.me)return V.me();const m=S.me,deps=Object.entries(S.dep),mb=A.flatMap(a=>a.hist.filter(h=>h.n===m.num).map(h=>[a,h])),q=v=>`<bdi>${fmt(v)}</bdi> ر.ق`;
  return `<div class="pg"><div class="doc rv"><div class="doc-h"><div><b>كشف حساب</b><span class="k">${dateLbl(Date.now())}</span></div>${LOGO(40)}</div>
  <table style="margin-top:10px"><tr><td>الاسم</td><td style="font-family:inherit">${esc(m.first)} ${esc(m.last)}</td></tr><tr><td>رصيد المحفظة</td><td>${q(S.wallet.avail)}</td></tr><tr><td>تأمينات محجوزة</td><td>${q(S.wallet.held)}</td></tr></table>
- <h5>التأمينات</h5>${deps.length?`<table>${deps.map(([id,d])=>`<tr><td>${AA(id).n} · ${d.state==='returned'?'أُعيد':d.state==='applied'?'خُصم من قيمة الفوز':'محجوز'}</td><td>${q(d.amt)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
+ <h5>التأمينات</h5>${deps.length?`<table>${deps.map(([id,d])=>`<tr><td>${AA(id).n} · ${d.state==='returned'?'أُعيد':'محجوز'}</td><td>${q(d.amt)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
  <h5>المزايدات</h5>${mb.length?`<table>${mb.map(([a,h])=>`<tr><td>${a.n}</td><td>${q(h.a)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
  <h5>الطلبات</h5>${S.orders.length?`<table>${S.orders.map(o=>`<tr><td>${o.title} · ${OST[o.state]}</td><td>${q(o.total||o.price)}</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
  <h5>حركة المحفظة</h5>${S.tx.length?`<table>${S.tx.map(t=>`<tr><td>${t.l}</td><td>${sgn(t)} ر.ق</td></tr>`).join('')}</table>`:'<div class="none">لا يوجد</div>'}
@@ -1307,8 +1330,8 @@ V.rules=()=>`<div class="pg"><div class="nt rv" style="margin:4px 0 12px">${ic('
  <li>أول مزايدة تكون بسعر البداية نفسه، وبعدها بالزيادة التي يحددها المحل لكل قطعة. المزايدة نهائية ولا يمكن سحبها.</li><li>المزايدة بدون أسماء أو أرقام: لا يعرف أي مزايد هوية غيره، ويعرفها فريق المحل فقط.</li>
  <li>${RULE_EXT}</li>
  <li>يدفع الفائز بتحويل بنكي ويرفع الإيصال خلال 48 ساعة، ويجب أن يصل المبلغ خلال 5 أيام عمل؛ وإلا أُلغي الفوز وصودر التأمين.</li>
- <li>يرجع التأمين إلى المحفظة إذا لم تفز، ويُخصم من المبلغ المطلوب إذا فزت.</li><li>التسجيل والمزايدة لمن عمره 18 سنة فأكثر ومن أي دولة.</li></ul></div>
- <div class="rsec rv" style="--d:1"><h4>الدفع والمحفظة</h4><ul><li>طلبات المتجر تُدفع مباشرة بـ Apple Pay أو البطاقة، بدون حجز، وتصبح القطعة لك فور الدفع.</li><li>الفائز في المزاد يدفع بتحويل بنكي، ويُخصم التأمين من المبلغ.</li>
+ <li>يرجع التأمين إلى المحفظة إذا لم تفز، أو بعد تأكيد الدفع إذا فزت، ويمكن سحبه إلى حسابك البنكي.</li><li>التسجيل والمزايدة لمن عمره 18 سنة فأكثر ومن أي دولة.</li></ul></div>
+ <div class="rsec rv" style="--d:1"><h4>الدفع والمحفظة</h4><ul><li>طلبات المتجر تُدفع مباشرة بـ Apple Pay أو البطاقة، بدون حجز، وتصبح القطعة لك فور الدفع.</li><li>الفائز في المزاد يدفع سعر الفوز كاملاً بتحويل بنكي، ويرجع تأمينه إلى المحفظة بعد تأكيد التحويل.</li>
 <li>لا نُسلّم أي طلب إلا بعد وصول المبلغ فعلياً إلى حساب المحل.</li>
  <li>السحب من المحفظة خلال 3 أيام عمل بدون رسوم: ما دُفع بالبطاقة يعود إلى البطاقة نفسها، والباقي إلى حساب بنكي باسمك.</li></ul></div>
  <div class="rsec rv" style="--d:2"><h4>الشحن والاستلام</h4><ul><li>داخل قطر 1–2 يوم عمل، الخليج 3–5، خارج الخليج 5–10 عبر سمسا.</li><li>كل شحنة مؤمّنة بكامل قيمتها وتُسلَّم بالتوقيع والهوية. الجمارك في بلد الاستلام على المشتري.</li>
@@ -1351,8 +1374,11 @@ const AFTER={otp(){const code='482107';let i=0;const run=()=>{if(cur.k!=='otp')r
  if(i<6)setTimeout(run,110);else{$('#otpS').innerHTML=`${ic('check')}تم إدخال الرمز تلقائياً من الرسائل`;setTimeout(()=>{if(cur.k!=='otp')return;
   const k=`${S.cc} ${S.phone}`;if(S.acct&&S.acct.phone===k){S.me=S.acct;S.acct=null;toast(`أهلاً بعودتك، ${S.me.first}`);resume()}else replace('name')},700)}};setTimeout(run,1100)}};
 /* once, at the start of the journey: everything here is genuine (replaces every «أصالة مضمونة» badge) */
-AFTER.home=()=>{if(S.authSeen)return;S.authSeen=1;setTimeout(()=>openSheet(()=>`<div class="succ"><div style="display:grid;place-items:center;margin-bottom:6px">${LOGO(64)}</div>
- <h3>كل القطع أصلية 100%</h3><p>كل ما تراه في مزاد الفاخر أصلي، يفحصه فريق المحل قبل عرضه.<br>لا نعرض أي قطعة غير أصلية.</p><button class="btn" onclick="closeSheet()">ابدأ التصفح</button></div>`),650)};
+AFTER.home=()=>{if(S.authSeen)return;S.authSeen=1;setTimeout(()=>modal(`<div style="display:grid;place-items:center">${LOGO(72)}</div>
+ <h3>كل القطع أصلية 100%</h3><p>كل ما تراه في مزاد الفاخر أصلي، يفحصه فريق المحل قبل عرضه.<br>لا نعرض أي قطعة غير أصلية.</p><button class="btn" onclick="closeModal()">ابدأ التصفح</button>`),650)};
+/* centred pop-up (announcement style), separate from the bottom sheets */
+function modal(html){const m=$('#mdl');m.innerHTML=`<div class="mdl-c" role="dialog" aria-modal="true"><button class="mdl-x" aria-label="إغلاق" onclick="closeModal()">${ic('x')}</button>${html}</div>`;m.classList.add('on')}
+function closeModal(){$('#mdl').classList.remove('on')}
 function needLogin(after){after.root=stack[0].k;S.after=after;go('login')}
 const CCS=['+974','+966','+971','+965','+973','+968','+44'];
 function cc(b){S.cc=CCS[(CCS.indexOf(S.cc)+1)%CCS.length];b.textContent=S.cc}
@@ -1365,8 +1391,8 @@ function createAcct(){if(S.me)return resume();
  // num is the account's internal id only: no bidder ever sees another's name or number (the store's dashboard does)
  S.me={first:fn,last:ln,num:NUMSEQ?`#${5136+NUMSEQ}`:'#4821',phone:`${S.cc} ${S.phone||'5512 3456'}`,terms:true,offers:true,svc:true,addr:null};
  S.inbox.unshift({t:Date.now(),title:'أهلاً بك في مزاد الفاخر',body:'حسابك جاهز. الإشعارات مفعّلة، ويمكنك إيقافها من الإعدادات.',icn:'user',un:1});
- openSheet(()=>`<div class="succ"><div class="ring">${ic('check')}</div><h3>أهلاً ${esc(fn)}، حسابك جاهز</h3>
- <p>مزايداتك بدون اسم أو رقم: لا يعرف أي مزايد آخر من أنت.<br>ترى «أنت» بجانب مزايداتك فقط.</p><button class="btn" onclick="closeSheet();resume()">متابعة</button></div>`,{onClose:resume})}
+ // no welcome screen: straight back to where they were, carrying on with what they tapped
+ toast(`أهلاً ${fn}، حسابك جاهز`);resume()}
 /* after login, land back where the customer was (same tab, same page) and carry on with what they tapped */
 function resume(){const a=S.after||{k:'home'};S.after=null;const root=a.root&&ROOT[a.root]?a.root:'home';
  stack=ROOT[a.k]?[{k:a.k,p:a.p}]:[{k:root},{k:a.k,p:a.p}];cur=stack[stack.length-1];render(true);
@@ -1393,7 +1419,7 @@ function bidSheet(){if(!BF)return '';const a=AA(BF.id),needDep=!depHeld(a.id),le
  if(BF.step==='proc')return `<div class="spin"></div><p class="bigs">جارٍ الدفع…</p>`;
  if(BF.step==='bank')return `<div class="succ" style="padding-bottom:0"><div class="ring">${ic('clock')}</div><h3>بانتظار وصول تحويلك</h3><p>حوّل ${fmt(a.dep)} ر.ق إلى الحساب أدناه واذكر الرقم المرجعي. نؤكد وصوله خلال يوم عمل${BF.depOnly?'':`، ثم نسجّل مزايدتك بـ ${fmt(BF.amt)} ر.ق إن بقيت صالحة`}.</p></div>
   ${bankBlock(`DEP-${S.me.num.slice(1)}-${a.id.toUpperCase()}`)}<button class="btn" style="margin-top:14px" onclick="closeSheet()">حسناً</button>`;
- if(BF.step==='done')return `<div class="succ"><div class="ring">${ic('check')}</div><h3>${BF.depOnly?'تم حجز التأمين':'أنت صاحب أعلى مزايدة'}</h3><p>${BF.depOnly?`تأمين ${fmt(a.dep)} ر.ق محجوز على ${a.n}.<br>يمكنك المزايدة فور بدء المزاد.`:`مزايدتك ${fmt(a.cur)} ر.ق على ${a.n}${S.max[a.id]?`<br>نرفعها تلقائياً حتى ${fmt(S.max[a.id])} ر.ق`:''}.<br>التأمين ${fmt(a.dep)} ر.ق يُخصم من المبلغ إذا فزت.`}</p><button class="btn" onclick="closeSheet()">تم</button></div>`;
+ if(BF.step==='done')return `<div class="succ"><div class="ring">${ic('check')}</div><h3>${BF.depOnly?'تم حجز التأمين':'أنت صاحب أعلى مزايدة'}</h3><p>${BF.depOnly?`تأمين ${fmt(a.dep)} ر.ق محجوز على ${a.n}.<br>يمكنك المزايدة فور بدء المزاد.`:`مزايدتك ${fmt(a.cur)} ر.ق على ${a.n}${S.max[a.id]?`<br>نرفعها تلقائياً حتى ${fmt(S.max[a.id])} ر.ق`:''}.<br>التأمين ${fmt(a.dep)} ر.ق `}</p><button class="btn" onclick="closeSheet()">تم</button></div>`;
  const cd=a.st==='live'?`<div class="shcd">${ic('clock')}ينتهي المزاد بعد <b class="num" data-cd="a:${a.id}"></b></div>`:'';
  const amtUI=BF.depOnly||lead?'':`<div class="step2"><button aria-label="أقل" onclick="bfStep(-1)">−</button><div class="v">${fmt(BF.amt)}<small>ر.ق</small></div><button aria-label="أكثر" onclick="bfStep(1)">+</button></div><div class="bigs">أقل مبلغ ${fmt(nextBid(a))} ر.ق · الزيادة ${fmt(a.inc)} ر.ق</div>`;
  const maxUI=BF.depOnly?'':`<div class="mxb">${lead?`<div class="k" style="margin-bottom:4px">نرفع مزايدتك بأقل زيادة كلما زايد غيرك، حتى هذا المبلغ فقط.</div>`:`<label class="ck" style="margin:0"><input type="checkbox" ${BF.useMax?'checked':''} onchange="BF.useMax=this.checked;upSheet()"><i></i><span><b>مزايدة تلقائية حتى حدّ أقصى</b><br>نرفع مزايدتك بأقل زيادة كلما زايد غيرك، حتى هذا المبلغ فقط.</span></label>`}
@@ -1401,9 +1427,7 @@ function bidSheet(){if(!BF)return '';const a=AA(BF.id),needDep=!depHeld(a.id),le
  const depUI=needDep?`<div class="sh2" style="margin:18px 2px 8px"><h3>تأمين القطعة · ${fmt(a.dep)} ر.ق</h3></div>
   ${S.wallet.avail>=a.dep?bfOpt('wallet','wallet','من رصيد المحفظة',`المتاح ${fmt(S.wallet.avail)} ر.ق`):''}
   ${bfOpt('card','card','Apple Pay أو بطاقة','فوري — تُسجَّل مزايدتك في الحال')}
-  ${bfOpt('bank','bank','تحويل بنكي','يُؤكَّد خلال يوم عمل')}
-  ${soonEnd&&BF.pm==='bank'?`<div class="nt w">${ic('clock')}<span>ينتهي المزاد قبل تأكيد التحويل — ادفع بالبطاقة لتلحق.</span></div>`:''}
-  <div class="k" style="margin:4px 2px 0;line-height:1.7">يُخصم التأمين من المبلغ إذا فزت، ويرجع كاملاً إلى محفظتك إذا لم تفز.</div>
+  <div class="k" style="margin:4px 2px 0;line-height:1.7">التأمين 
   ${S.me.terms?'':`<label class="ck"><input type="checkbox" ${BF.terms?'checked':''} onchange="BF.terms=this.checked;upSheet()"><i></i><span>أوافق على <a onclick="event.preventDefault();rulesSheet()" style="color:var(--goldt);font-weight:600">قواعد المزاد</a>: المزايدة نهائية، ويُصادَر التأمين إذا لم أدفع خلال 48 ساعة من الفوز.</span></label>`}`:'';
  const label=BF.depOnly?(BF.pm==='bank'?'عرض بيانات التحويل':`ادفع التأمين ${fmt(a.dep)} ر.ق`):lead?'حفظ الحد الأقصى':needDep?(BF.pm==='bank'?'عرض بيانات التحويل':`ادفع التأمين وزايد بـ ${fmt(BF.amt)} ر.ق`):`تأكيد المزايدة بـ ${fmt(BF.amt)} ر.ق`;
  const ok=!needDep||S.me.terms||BF.terms;
@@ -1433,21 +1457,27 @@ function bfGo(){const a=AA(BF.id),id=BF.id,bf=BF,w=S.wallet,me=S.me;
   if(BF.pm==='wallet'){d.cardAmt=Math.min(S.wallet.card,a.dep);S.wallet.card-=d.cardAmt;S.wallet.avail-=a.dep;txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','من المحفظة')}else txAdd(`تأمين محجوز — ${a.n}`,a.dep,'h','بطاقة');
   S.dep[id]=d;SHX=null;if(!BF.depOnly)placeMine(a,BF.amt);BF.step='done';upSheet();refresh()},1300)}
 
-/* Qatar National Address (zone / street / building) instead of a free-text line; nothing is prefilled */
-const adrLine=a=>a.line||[a.bldg&&`مبنى ${a.bldg}`,a.street&&`شارع ${a.street}`,a.zone&&`منطقة ${a.zone}`].filter(Boolean).join('، ');
-const adrOk=a=>!!(a&&a.country&&a.city&&(a.country==='قطر'?a.zone&&a.street&&a.bldg:a.line));
+/* a typed address that maps one-to-one onto SMSA's consignee fields (no GPS: a pin isn't an address a courier can use):
+   name → ContactName · phone → ContactPhoneNumber · country/city → Country/City · district → District
+   line1 → AddressLine1 (10–100 characters) · line2 → AddressLine2 (optional). Confirm against SMSA's sandbox. */
+const adrLine=a=>[a.line1,a.dist,a.line2].filter(Boolean).join('، ');
+const adrOk=a=>!!(a&&a.country&&a.city&&a.dist&&a.line1&&a.line1.length>=10&&a.name&&a.phone);
+const adrField=(id,l,v,ph,opt,im)=>`<label class="fl">${l}${opt?' <em class="opt2">(اختياري)</em>':''}<input class="in" id="${id}" value="${esc(v||'')}" placeholder="${ph}"${im?` inputmode="${im}"`:''}></label>`;
 const adrFields=a=>`<label class="fl">الدولة<select class="in" id="ac" onchange="saveAdr();upSheet()">${COUNTRIES.map(c=>`<option ${c===a.country?'selected':''}>${c}</option>`).join('')}</select></label>
- <label class="fl">المدينة<input class="in" id="aci" value="${esc(a.city||'')}" placeholder="${a.country==='قطر'?'مثال: لوسيل':'المدينة'}"></label>
- ${a.country==='قطر'?`<div class="fl" style="margin-bottom:8px">العنوان الوطني<div class="adr3" style="margin-top:6px"><input class="in" style="margin:0" id="az" inputmode="numeric" value="${esc(a.zone||'')}" placeholder="المنطقة"><input class="in" style="margin:0" id="as" inputmode="numeric" value="${esc(a.street||'')}" placeholder="الشارع"><input class="in" style="margin:0" id="ab" inputmode="numeric" value="${esc(a.bldg||'')}" placeholder="المبنى"></div></div>
- <button class="locb" onclick="locate()">${ic('loc')}تحديد موقعي الحالي</button>`:`<label class="fl">العنوان<input class="in" id="al" value="${esc(a.line||'')}" placeholder="الشارع، المبنى، الرمز البريدي"></label>`}`;
+ ${adrField('aci','المدينة',a.city,a.country==='قطر'?'مثال: الدوحة':'المدينة')}
+ ${adrField('adi','المنطقة / الحي',a.dist,a.country==='قطر'?'مثال: لوسيل، الوعب، الدفنة':'المنطقة أو الحي')}
+ ${adrField('al1','العنوان',a.line1,'اسم الشارع ورقمه، ورقم المبنى')}
+ ${adrField('al2','تفاصيل إضافية',a.line2,'الشقة أو المكتب، أقرب معلم',1)}
+ ${adrField('anm','اسم المستلم',a.name||(S.me?`${S.me.first} ${S.me.last}`:''),'الاسم الكامل')}
+ ${adrField('aph','جوال المستلم',a.phone||(S.me?S.me.phone:''),'+974 5512 3456',0,'tel')}`;
 function saveAdr(){if(!DF)return;const v=s=>{const e=$(s);return e?e.value.trim():''},c=$('#ac');if(!c)return;
- DF.adr={country:c.value,city:v('#aci'),zone:v('#az'),street:v('#as'),bldg:v('#ab'),line:v('#al')}}
-function locate(){saveAdr();toast('جارٍ تحديد موقعك…');setTimeout(()=>{if(!DF)return;Object.assign(DF.adr,{country:'قطر',city:'لوسيل',zone:'69',street:'300',bldg:'12'});upSheet();toast('تم تحديد موقعك')},900)}
+ DF.adr={country:c.value,city:v('#aci'),dist:v('#adi'),line1:v('#al1'),line2:v('#al2'),name:v('#anm'),phone:v('#aph')}}
 
 /* shop purchase */
 function buy(id){const p=PP(id);if(p.sizes&&!SZ[id])return toast('اختر المقاس أولاً');if(!S.me)return needLogin({k:'item',p:id,then:'buy'});CO={s:'del'};go('checkout',id)}
 function addrSheet(){DF={adr:Object.assign({country:'قطر'},(S.me&&S.me.addr)||{})};openSheet(()=>`<div class="shh"><h3>عنوان التوصيل</h3><p>نوصل القطعة إلى هذا العنوان مؤمَّنة بكامل قيمتها، وتُحسب رسوم التوصيل حسب الدولة.</p></div>${adrFields(DF.adr)}
- <button class="btn" onclick="saveAdr();if(!adrOk(DF.adr))return toast('أكمل العنوان: المدينة والمنطقة والشارع والمبنى');S.me.addr=Object.assign({},DF.adr);closeSheet();refresh();toast('تم حفظ العنوان')">حفظ العنوان</button>`)}
+ <button class="btn" onclick="saveAdr();if(!adrOk(DF.adr))return toast(adrMiss(DF.adr));S.me.addr=Object.assign({},DF.adr);closeSheet();refresh();toast('تم حفظ العنوان')">حفظ العنوان</button>`)}
+const adrMiss=a=>!a.city||!a.dist?'أكمل المدينة والمنطقة':!a.line1||a.line1.length<10?'اكتب العنوان كاملاً: الشارع ورقم المبنى':'أكمل اسم المستلم ورقم جواله';
 function place(id){const p=PP(id),m=effM(CO.s),tot=p.price+feeV(m);
  if(p.sold)return toast('تم بيع هذه القطعة');
  if(CO.s!=='pick'&&!m)return addrSheet();
@@ -1462,8 +1492,8 @@ function upReceipt(oid){const o=OO(oid);if(!o||o.state!=='await'||o.up)return;
  if(o.kind==='auction'){o.method=effM(o.s);if(!o.method)return addrSheet()}
  o.up=1;const w=S.wallet;openSheet(()=>`<div class="spin"></div><p class="bigs">جارٍ رفع الإيصال…</p>`,{modal:true});
  setTimeout(()=>{o.state='review';closeSheet();refresh();toast('تم رفع الإيصال — قيد المراجعة');
-  setTimeout(()=>{o.state='paid';markSold(o);if(o.kind==='auction'&&S.wallet===w)applyDep(o.itemId);
-   if(mine(w)){push('تم تأكيد التحويل',o.kind==='auction'?`وصل المبلغ، واحتسبنا تأمينك ${fmt(o.dep)} ر.ق من قيمة الفوز. نجهّز طلبك الآن`:'وصل المبلغ، ونجهّز طلبك الآن',['order',o.id],'check');
+  setTimeout(()=>{o.state='paid';markSold(o);if(o.kind==='auction'&&S.wallet===w)releaseDep(o.itemId,'بعد تأكيد دفع الفوز');
+   if(mine(w)){push('تم تأكيد التحويل',o.kind==='auction'?`وصل المبلغ، وأُعيد تأمينك ${fmt(o.dep)} ر.ق إلى محفظتك. نجهّز طلبك الآن`:'وصل المبلغ، ونجهّز طلبك الآن',['order',o.id],'check');
     if(cur.k==='pay'&&cur.p===o.id)replace('order',o.id);else bgRefresh()}progress(o)},6000)},1200)}
 function progress(o){const w=S.wallet;
  setTimeout(()=>{o.state='prep';if(mine(w))bgRefresh()},3500);
